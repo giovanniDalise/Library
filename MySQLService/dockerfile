@@ -1,0 +1,5 @@
+# Usa l'immagine ufficiale di MySQL
+FROM mysql:8.0
+
+# Copia il file data.sql all'interno del container nella directory di inizializzazione
+COPY data.sql /docker-entrypoint-initdb.d/

@@ -1,0 +1,78 @@
+services:
+  # MySQL con l'immagine personalizzata
+  mysql-container:
+    image: giovannidalise/librarymknwdot-mysql-container:latest  
+    build:
+      context: ./MySQLService  # Costruisce l'immagine dal Dockerfile nella cartella MySQLService
+      dockerfile: Dockerfile      
+    container_name: mysql-container
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env  # Carica le variabili di ambiente dal file .env
+    volumes:
+      - app-data:/docker-entrypoint-initdb.d  # Monta il volume per l'inizializzazione del DB
+    networks:
+      - library_default
+    restart: always
+
+  # Servizio per BookService
+  bookservice:
+    image: giovannidalise/librarymknwdot-bookservice:latest  
+    build:
+      context: ./BookService  # Percorso del servizio BookService
+      dockerfile: Dockerfile
+    container_name: bookservice-container
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+    ports:
+      - "5282:5000"
+    depends_on:
+      - mysql-container  # Dipendenza da MySQL
+    volumes:
+      - app-data:/app-data  # Monta il volume condiviso per il BookService
+    networks:
+      - library_default
+    restart: always
+    
+  authenticationservice:
+    image: giovannidalise/librarymknwdot-authenticationservice:latest  
+    build:
+      context: ./AuthenticationService  # Percorso del servizio AuthenticationService
+      dockerfile: Dockerfile
+    container_name: authenticationservice-container
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__AuthServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+    ports:
+      - "5073:5073"
+    depends_on:
+      - mysql-container  # Dipendenza da MySQL
+    volumes:
+      - app-data:/app-data  # Monta il volume condiviso per il BookService
+    networks:
+      - library_default
+    restart: always
+    
+  # Servizio per LibraryClient (frontend)
+  libraryclient:
+    image: giovannidalise/librarymknwdot-libraryclient:latest
+    build:
+      context: ./LibraryClient  # Percorso della cartella frontend
+      dockerfile: Dockerfile
+    container_name: libraryclient-container
+    ports:
+      - "4200:80"  
+    depends_on:
+      - bookservice  
+    networks:
+      - library_default
+    restart: always    
+
+networks:
+  library_default:
+    driver: bridge
+
+volumes:
+  app-data: {}  # Volume condiviso tra MySQL e BookService

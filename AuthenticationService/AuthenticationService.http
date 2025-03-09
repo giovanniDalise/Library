@@ -1,0 +1,16 @@
+@AuthenticationService_HostAddress = http://localhost:5073
+
+GET {{AuthenticationService_HostAddress}}/auth
+Accept: application/json
+
+###
+
+### POST Login
+POST http://localhost:5073/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "pieropiermenti@gmail.com",
+  "password": "alutamelom!!a88"
+}
