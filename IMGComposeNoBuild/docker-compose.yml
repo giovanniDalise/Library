@@ -1,0 +1,63 @@
+services:
+  mysql-container:
+    image: giovannidalise/librarymknwdot-mysql-container:latest
+    container_name: mysql-container
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env
+    volumes:
+      - app-data:/docker-entrypoint-initdb.d
+    networks:
+      - library_default
+    restart: always
+
+  bookservice:
+    image: giovannidalise/librarymknwdot-bookservice:latest
+    container_name: bookservice-container
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+    ports:
+      - "5282:5000"
+    depends_on:
+      - mysql-container
+    volumes:
+      - app-data:/app-data      
+    networks:
+      - library_default
+    restart: always
+
+  authenticationservice:
+    image: giovannidalise/librarymknwdot-authenticationservice:latest  
+    container_name: authenticationservice-container
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__AuthServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+    ports:
+      - "5073:5073"
+    depends_on:
+      - mysql-container  
+    volumes:
+      - app-data:/app-data 
+    networks:
+      - library_default
+    restart: always
+    
+  libraryclient:
+    image: giovannidalise/librarymknwdot-libraryclient:latest
+    container_name: libraryclient-container
+    ports:
+      - "4200:80"
+    depends_on:
+      - bookservice
+    networks:
+      - library_default
+    restart: always    
+
+networks:
+  library_default:
+    driver: bridge
+
+volumes:
+  app-data: {}
