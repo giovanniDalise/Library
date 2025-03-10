@@ -3,6 +3,7 @@ using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.Adapters;
 using Library.BookService.Infrastructure.Persistence;
 using Library.BookService.Infrastructure.Persistence.Mappers;
+using Library.BookService.Security;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,14 +23,8 @@ builder.Services.AddScoped<BookMapper>();  // Registrazione di BookMapper nel DI
 // Aggiungi i servizi per i controller
 builder.Services.AddControllers();  // Aggiungi questa riga per registrare i controller
 
-// Configura CORS: consenti tutte le origini (puoi restringerlo specificamente se necessario)
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
-});
+// Configura i servizi di sicurezza (JWT, CORS, etc.)
+builder.Services.ConfigureSecurity(builder.Configuration);
 
 // Swagger configuration (optional, for API documentation)
 builder.Services.AddEndpointsApiExplorer();
@@ -37,17 +32,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 // Usa CORS prima di UseRouting
-app.UseCors("AllowAllOrigins");  // Usa il middleware CORS qui
+app.UseCors("AllowAll");
 
-// Aggiungi il middleware per il routing e i controller
+// Abilita il middleware JWT
+app.UseMiddleware<JwtMiddleware>();
+
+// Abilita l'autenticazione e l'autorizzazione
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Configura routing
 app.UseRouting();
 
 app.MapControllers();  // Assicurati che i controller vengano mappati correttamente

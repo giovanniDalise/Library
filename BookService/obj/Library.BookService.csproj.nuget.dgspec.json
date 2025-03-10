@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GDalise\\OneDrive\\Desktop\\Workspace\\workspaceDotNet\\Library\\BookService\\Library.BookService.csproj": {}
+    "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Library.BookService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GDalise\\OneDrive\\Desktop\\Workspace\\workspaceDotNet\\Library\\BookService\\Library.BookService.csproj": {
+    "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Library.BookService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GDalise\\OneDrive\\Desktop\\Workspace\\workspaceDotNet\\Library\\BookService\\Library.BookService.csproj",
+        "projectUniqueName": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Library.BookService.csproj",
         "projectName": "Library.BookService",
-        "projectPath": "C:\\Users\\GDalise\\OneDrive\\Desktop\\Workspace\\workspaceDotNet\\Library\\BookService\\Library.BookService.csproj",
+        "projectPath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Library.BookService.csproj",
         "packagesPath": "C:\\Users\\GDalise\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GDalise\\OneDrive\\Desktop\\Workspace\\workspaceDotNet\\Library\\BookService\\obj\\",
+        "outputPath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -53,6 +53,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.7, )"
