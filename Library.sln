@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.BookService", "Book
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.AuthenticationService", "AuthenticationService\Library.AuthenticationService.csproj", "{C623D24D-9320-47D0-9D4C-95AA359DF589}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UserService", "Library.UserService\Library.UserService.csproj", "{11F52A7E-FCAB-4A2B-9E64-22CD05339034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E1ADF68-FCDA-4768-870C-957DD0BB1ACD}
 	EndGlobalSection
 EndGlobal

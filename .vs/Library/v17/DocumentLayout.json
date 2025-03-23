@@ -3,48 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\infrastructure\\queries\\query.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\infrastructure\\queries\\query.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\jwt\\jwtadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\jwt\\jwtadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\security\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\security\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\security\\securityconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\security\\securityconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\infrastructure\\adapters\\userrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\infrastructure\\adapters\\userrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\repository\\authrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\repository\\authrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\core\\ports\\userrepositoryport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\core\\ports\\userrepositoryport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\bookservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\bookservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\core\\ports\\authenticationrepositoryport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\core\\ports\\authenticationrepositoryport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\library.userservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\library.userservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\core\\ports\\authenticationserviceport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\core\\ports\\authenticationserviceport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\core\\ports\\jwtport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\core\\ports\\jwtport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\infrastructure\\adapters\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\infrastructure\\adapters\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\core\\domain\\models\\author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\core\\domain\\models\\author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\library.userservice\\core\\domain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|Library.UserService\\Library.UserService.csproj|solutionrelative:library.userservice\\core\\domain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,8 +62,89 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 30,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserRepositoryAdapter.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserRepositoryAdapter.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Adapters\\UserRepositoryAdapter.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserRepositoryAdapter.cs",
+              "RelativeToolTip": "Library.UserService\\Infrastructure\\Adapters\\UserRepositoryAdapter.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAQwEAAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T16:54:30.568Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthRepositoryAdapter.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
+              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T08:00:56.179Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\Core\\Domain\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Models\\User.cs",
+              "RelativeToolTip": "Library.UserService\\Core\\Domain\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T09:22:26.216Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Query.resx",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Queries\\Query.resx",
+              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Queries\\Query.resx",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Queries\\Query.resx",
+              "RelativeToolTip": "Library.UserService\\Infrastructure\\Queries\\Query.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-03-23T09:47:38.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:154:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:153:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:152:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:145:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -110,19 +199,11 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:131:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:137:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:139:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
@@ -138,154 +219,196 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:130:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:141:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:149:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:148:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:151:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:150:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:158:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:157:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:155:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:156:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:160:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:150:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:152:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:149:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:151:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "JwtMiddleware.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Security\\JwtMiddleware.cs",
-              "RelativeDocumentMoniker": "BookService\\Security\\JwtMiddleware.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Security\\JwtMiddleware.cs",
-              "RelativeToolTip": "BookService\\Security\\JwtMiddleware.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAgwEcAAAANAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "UserRepositoryPort.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
+              "RelativeToolTip": "Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T20:40:57.378Z",
+              "WhenOpened": "2025-03-16T09:49:53.971Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "Library.UserService.http",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Library.UserService.http",
+              "RelativeDocumentMoniker": "Library.UserService\\Library.UserService.http",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Library.UserService.http",
+              "RelativeToolTip": "Library.UserService\\Library.UserService.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-03-13T10:14:20.506Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\WeatherForecast.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\WeatherForecast.cs",
+              "RelativeToolTip": "Library.UserService\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T10:14:13.797Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Program.cs",
               "RelativeDocumentMoniker": "AuthenticationService\\Program.cs",
               "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Program.cs",
               "RelativeToolTip": "AuthenticationService\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAADQAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T20:25:04.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BookService.http",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\BookService.http",
-              "RelativeDocumentMoniker": "BookService\\BookService.http",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\BookService.http",
-              "RelativeToolTip": "BookService\\BookService.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-03-10T20:35:31.028Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "JwtAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Jwt\\JwtAdapter.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Jwt\\JwtAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Jwt\\JwtAdapter.cs",
-              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Jwt\\JwtAdapter.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAmwD4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:44:07.658Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AuthRepositoryAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:44:04.899Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AuthenticationServicePort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\AuthenticationServicePort.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Core\\Ports\\AuthenticationServicePort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\AuthenticationServicePort.cs",
-              "RelativeToolTip": "AuthenticationService\\Core\\Ports\\AuthenticationServicePort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:44:03.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T10:09:57.365Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "AuthenticationRepositoryPort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\AuthenticationRepositoryPort.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Core\\Ports\\AuthenticationRepositoryPort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\AuthenticationRepositoryPort.cs",
-              "RelativeToolTip": "AuthenticationService\\Core\\Ports\\AuthenticationRepositoryPort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:44:02.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "JwtPort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\JwtPort.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Core\\Ports\\JwtPort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\JwtPort.cs",
-              "RelativeToolTip": "AuthenticationService\\Core\\Ports\\JwtPort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:44:01.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "BookService\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\appsettings.Development.json",
-              "RelativeToolTip": "BookService\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-10T19:27:32.102Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Program.cs",
               "RelativeDocumentMoniker": "BookService\\Program.cs",
               "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Program.cs",
               "RelativeToolTip": "BookService\\Program.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAADwvygAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:23:33.688Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T10:06:09.943Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SecurityConfig.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Security\\SecurityConfig.cs",
-              "RelativeDocumentMoniker": "BookService\\Security\\SecurityConfig.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Security\\SecurityConfig.cs",
-              "RelativeToolTip": "BookService\\Security\\SecurityConfig.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Program.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\Program.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Program.cs",
+              "RelativeToolTip": "Library.UserService\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T19:22:48.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T10:00:52.3Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Author.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Core\\Domain\\Models\\Author.cs",
+              "RelativeDocumentMoniker": "BookService\\Core\\Domain\\Models\\Author.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Core\\Domain\\Models\\Author.cs",
+              "RelativeToolTip": "BookService\\Core\\Domain\\Models\\Author.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T09:52:44.49Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
+              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
+              "RelativeToolTip": "Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABMAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T09:47:32.389Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T09:44:06.457Z"
             }
           ]
         },
