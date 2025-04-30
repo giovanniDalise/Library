@@ -8,11 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Library.BookService.Core.Ports;
+using Library.AuthenticationService.Infrastructure.Adapters.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Registrazione dei servizi
+builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
 builder.Services.AddScoped<AuthenticationRepositoryPort, AuthRepositoryAdapter>();
 builder.Services.AddScoped<JwtPort>(provider =>
 {

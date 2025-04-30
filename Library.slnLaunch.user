@@ -11,7 +11,7 @@
         "Action": "Start"
       },
       {
-        "Path": "Library.UserService\\Library.UserService.csproj",
+        "Path": "UserService\\Library.UserService.csproj",
         "Action": "Start"
       }
     ]

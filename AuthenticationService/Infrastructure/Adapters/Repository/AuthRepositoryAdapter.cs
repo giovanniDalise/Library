@@ -7,10 +7,13 @@ namespace Library.AuthenticationService.Infrastructure.Adapters.Repository
     public class AuthRepositoryAdapter : AuthenticationRepositoryPort
     {
         private readonly string _connectionString;
+        private readonly IPasswordVerifierPort _passwordVerifier;
 
-        public AuthRepositoryAdapter(IConfiguration configuration)
+        public AuthRepositoryAdapter(IConfiguration configuration, IPasswordVerifierPort passwordVerifier)
         {
             _connectionString = configuration.GetConnectionString("AuthServiceDbConnection");
+            _passwordVerifier = passwordVerifier;
+            _passwordVerifier = passwordVerifier;
         }
 
         public async Task<bool> CheckUserCredentials(string email, string password)
@@ -20,15 +23,19 @@ namespace Library.AuthenticationService.Infrastructure.Adapters.Repository
                 using (var connection = new MySqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();
-                    string sql = "SELECT COUNT(1) FROM user WHERE email = @Email AND password = @Password";
+                    string sql = "SELECT password FROM user WHERE email = @Email";
+                    //non stiamo decriptando ma precuperiamo l'ash della psw associata alla mail a cui è stato
+                    //associato il salt in fase di creazione dell'utenza con la psw. Più sicuro del decrypting.
 
                     using (var command = new MySqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@Password", password);
 
-                        int count = Convert.ToInt32(await command.ExecuteScalarAsync());
-                        return count > 0; // Se il conteggio è > 0, l'utente esiste
+                        var result = await command.ExecuteScalarAsync();
+                        if (result == null) return false;
+
+                        string hashedPassword = result.ToString();
+                        return _passwordVerifier.Verify(password, hashedPassword);
                     }
                 }
             }

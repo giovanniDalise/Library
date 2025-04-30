@@ -48,7 +48,7 @@ CREATE TABLE user (
     name VARCHAR(100) NOT NULL,
     surname VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(15) NOT NULL,
+    password VARCHAR(60) NOT NULL,
     role BIGINT NOT NULL,
 	FOREIGN KEY (role) REFERENCES role(role_id)
 );

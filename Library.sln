@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.BookService", "Book
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.AuthenticationService", "AuthenticationService\Library.AuthenticationService.csproj", "{C623D24D-9320-47D0-9D4C-95AA359DF589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UserService", "Library.UserService\Library.UserService.csproj", "{11F52A7E-FCAB-4A2B-9E64-22CD05339034}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UserService", "UserService\Library.UserService.csproj", "{11F52A7E-FCAB-4A2B-9E64-22CD05339034}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
