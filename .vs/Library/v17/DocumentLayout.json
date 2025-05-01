@@ -3,106 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\repository\\authrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\repository\\authrepositoryadapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\userservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|solutionrelative:userservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\core\\domain\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\core\\domain\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\security\\bcryptpasswordverifieradapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\security\\bcryptpasswordverifieradapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\core\\ports\\ipasswordverifierport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\core\\ports\\ipasswordverifierport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\infrastructure\\adapters\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\infrastructure\\adapters\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\userservice\\infrastructure\\adapters\\bcryptpasswordhasheradapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|solutionrelative:userservice\\infrastructure\\adapters\\bcryptpasswordhasheradapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\userservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|solutionrelative:userservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\userservice\\library.userservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|solutionrelative:userservice\\library.userservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.203\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\authenticationservice\\library.authenticationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{C623D24D-9320-47D0-9D4C-95AA359DF589}|AuthenticationService\\Library.AuthenticationService.csproj|solutionrelative:authenticationservice\\library.authenticationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\infrastructure\\adapters\\bookrest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\infrastructure\\adapters\\bookrest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\infrastructure\\adapters\\bookrepositoryef.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\infrastructure\\adapters\\bookrepositoryef.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\core\\domain\\models\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\core\\domain\\models\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\bookservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}|BookService\\Library.BookService.csproj|solutionrelative:bookservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Core\\Domain\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Infrastructure\\Adapters\\UserController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserServicePort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Core\\Ports\\UserServicePort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Queries\\Query.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Infrastructure\\Queries\\Query.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserRepositoryPort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Core\\Ports\\UserRepositoryPort.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Services\\UserService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Core\\Domain\\Services\\UserService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Library.UserService.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library.UserService\\Library.UserService.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|c:\\users\\gdalise\\source\\repos\\giovannidalise\\workspacedotnet\\library\\userservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{11F52A7E-FCAB-4A2B-9E64-22CD05339034}|UserService\\Library.UserService.csproj|solutionrelative:userservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -112,73 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 45,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthRepositoryAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Repository\\AuthRepositoryAdapter.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T08:00:56.179Z",
+              "DocumentIndex": 2,
+              "Title": "dockerfile",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\dockerfile",
+              "RelativeDocumentMoniker": "BookService\\dockerfile",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\dockerfile",
+              "RelativeToolTip": "BookService\\dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-01T07:47:29.722Z",
               "IsPinned": true,
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Core\\Domain\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Models\\User.cs",
-              "RelativeToolTip": "Library.UserService\\Core\\Domain\\Models\\User.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T09:22:26.216Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "BookREST.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Infrastructure\\Adapters\\BookREST.cs",
-              "RelativeDocumentMoniker": "BookService\\Infrastructure\\Adapters\\BookREST.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Infrastructure\\Adapters\\BookREST.cs",
-              "RelativeToolTip": "BookService\\Infrastructure\\Adapters\\BookREST.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAA5wCwAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T09:20:15.604Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
-              "RelativeToolTip": "Library.UserService\\Infrastructure\\Adapters\\UserController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAuwBkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T09:47:32.389Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "UserServicePort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserServicePort.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Core\\Ports\\UserServicePort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserServicePort.cs",
-              "RelativeToolTip": "Library.UserService\\Core\\Ports\\UserServicePort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T19:46:40.186Z",
-              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -354,261 +220,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BCryptPasswordVerifierAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Security\\BCryptPasswordVerifierAdapter.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Security\\BCryptPasswordVerifierAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Security\\BCryptPasswordVerifierAdapter.cs",
-              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Security\\BCryptPasswordVerifierAdapter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T12:38:19.649Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Program.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Program.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Program.cs",
-              "RelativeToolTip": "AuthenticationService\\Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T10:09:57.365Z",
+              "Title": "dockerfile",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\dockerfile",
+              "RelativeDocumentMoniker": "UserService\\dockerfile",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\dockerfile",
+              "RelativeToolTip": "UserService\\dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-01T07:47:28.447Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthenticationService.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Domain\\Services\\AuthenticationService.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Core\\Domain\\Services\\AuthenticationService.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Domain\\Services\\AuthenticationService.cs",
-              "RelativeToolTip": "AuthenticationService\\Core\\Domain\\Services\\AuthenticationService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAkwB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T12:46:11.943Z",
+              "DocumentIndex": 0,
+              "Title": "dockerfile",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\dockerfile",
+              "RelativeDocumentMoniker": "AuthenticationService\\dockerfile",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\dockerfile",
+              "RelativeToolTip": "AuthenticationService\\dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-01T07:47:26.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "AuthenticationService\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\appsettings.Development.json",
+              "RelativeToolTip": "AuthenticationService\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-01T07:45:41.721Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "IPasswordVerifierPort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\IPasswordVerifierPort.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Core\\Ports\\IPasswordVerifierPort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Core\\Ports\\IPasswordVerifierPort.cs",
-              "RelativeToolTip": "AuthenticationService\\Core\\Ports\\IPasswordVerifierPort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T12:36:41.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "AuthenticationService\\Infrastructure\\Adapters\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAowC8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T12:33:44.522Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BCryptPasswordHasherAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "RelativeDocumentMoniker": "UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "RelativeToolTip": "UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T14:26:23.254Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Program.cs",
-              "RelativeDocumentMoniker": "UserService\\Program.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Program.cs",
-              "RelativeToolTip": "UserService\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAgAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T14:24:37.786Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Library.UserService.http",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Library.UserService.http",
-              "RelativeDocumentMoniker": "UserService\\Library.UserService.http",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\Library.UserService.http",
-              "RelativeToolTip": "UserService\\Library.UserService.http",
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "UserService\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\UserService\\appsettings.Development.json",
+              "RelativeToolTip": "UserService\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-25T14:24:15.437Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Microsoft.NET.Sdk.targets",
-              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.203\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.targets",
-              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\9.0.203\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.targets",
-              "ViewState": "AgIAAEwBAAAAAAAAAAAIwGABAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-04-25T13:17:10.397Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Library.AuthenticationService.csproj",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Library.AuthenticationService.csproj",
-              "RelativeDocumentMoniker": "AuthenticationService\\Library.AuthenticationService.csproj",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Library.AuthenticationService.csproj",
-              "RelativeToolTip": "AuthenticationService\\Library.AuthenticationService.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-25T13:20:50.668Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Microsoft.Common.CurrentVersion.targets",
-              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ViewState": "AgIAAOEUAAAAAAAAAAAuwO8UAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-04-25T12:54:31.987Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "BCryptPasswordHasherAdapter.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "RelativeToolTip": "Library.UserService\\Infrastructure\\Adapters\\BCryptPasswordHasherAdapter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T12:40:54.998Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "IPasswordHasherPort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs",
-              "RelativeToolTip": "Library.UserService\\Core\\Ports\\IPasswordHasherPort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T12:38:49.783Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Query.resx",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Queries\\Query.resx",
-              "RelativeDocumentMoniker": "Library.UserService\\Infrastructure\\Queries\\Query.resx",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Infrastructure\\Queries\\Query.resx",
-              "RelativeToolTip": "Library.UserService\\Infrastructure\\Queries\\Query.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-04-14T13:28:38.082Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Book.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Core\\Domain\\Models\\Book.cs",
-              "RelativeDocumentMoniker": "BookService\\Core\\Domain\\Models\\Book.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Core\\Domain\\Models\\Book.cs",
-              "RelativeToolTip": "BookService\\Core\\Domain\\Models\\Book.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T14:03:45.231Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "BookRepositoryEF.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Infrastructure\\Adapters\\BookRepositoryEF.cs",
-              "RelativeDocumentMoniker": "BookService\\Infrastructure\\Adapters\\BookRepositoryEF.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Infrastructure\\Adapters\\BookRepositoryEF.cs",
-              "RelativeToolTip": "BookService\\Infrastructure\\Adapters\\BookRepositoryEF.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAswC8AAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T08:15:08.139Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-01T07:45:23.011Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Program.cs",
-              "RelativeDocumentMoniker": "BookService\\Program.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\BookService\\Program.cs",
-              "RelativeToolTip": "BookService\\Program.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T10:06:09.943Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Program.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Program.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Program.cs",
-              "RelativeToolTip": "Library.UserService\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T10:00:52.3Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "UserRepositoryPort.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
-              "RelativeToolTip": "Library.UserService\\Core\\Ports\\UserRepositoryPort.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T09:49:53.971Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "Library.UserService\\Core\\Domain\\Services\\UserService.cs",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Core\\Domain\\Services\\UserService.cs",
-              "RelativeToolTip": "Library.UserService\\Core\\Domain\\Services\\UserService.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA1wBkAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T19:50:36.725Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "Library.UserService.http",
-              "DocumentMoniker": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Library.UserService.http",
-              "RelativeDocumentMoniker": "Library.UserService\\Library.UserService.http",
-              "ToolTip": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\Library.UserService\\Library.UserService.http",
-              "RelativeToolTip": "Library.UserService\\Library.UserService.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-03-13T10:14:20.506Z"
             }
           ]
         },

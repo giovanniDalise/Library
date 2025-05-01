@@ -1,0 +1,23 @@
+# Usa l'immagine runtime di ASP.NET Core 8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+
+# Copia solo i file pubblicati
+COPY bin/Release/net8.0/publish/ ./ 
+
+# Aggiungi repository HTTPS e aggiorna apt per installare netcat
+RUN apt-get update && apt-get install -y apt-transport-https curl \
+    && apt-get install -y netcat-openbsd
+
+# Scarica wait-for-it.sh per attendere MySQL
+RUN curl -o wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
+    chmod +x wait-for-it.sh
+
+# Esponi la porta HTTP
+EXPOSE 5022
+
+# Configura la variabile d'ambiente per ASP.NET Core
+ENV ASPNETCORE_URLS="http://+:5022"
+
+# Avvia l'applicazione solo quando MySQL è pronto
+ENTRYPOINT ["/app/wait-for-it.sh", "mysql:3306", "--", "dotnet", "Library.UserService.dll"]

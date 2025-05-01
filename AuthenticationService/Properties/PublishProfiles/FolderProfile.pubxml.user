@@ -2,8 +2,8 @@
 <!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\GDalise\OneDrive\Desktop\Workspace\workspaceDotNet\Library\AuthenticationService\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2025-03-09T14:54:17.6773203Z||;True|2025-03-09T15:09:35.4096558+01:00||;</History>
+    <_PublishTargetUrl>C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\bin\Release\net8.0\publish\</_PublishTargetUrl>
+    <History>True|2025-05-01T08:08:27.8722260Z||;True|2025-03-09T15:54:17.6773203+01:00||;True|2025-03-09T15:09:35.4096558+01:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

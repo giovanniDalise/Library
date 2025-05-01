@@ -32,6 +32,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Configurazione middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 // Usa CORS prima di UseRouting
 app.UseCors("AllowAll");
 
