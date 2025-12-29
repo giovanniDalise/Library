@@ -15,14 +15,15 @@ namespace Library.AuthenticationService.Core.Domain.Services
             _repositoryPort = authenticationRepositoryPort;
         }
 
-        public async Task<AuthResponse> Authenticate (LoginRequest loginRequest)
+        public async Task<AuthResult> Authenticate (Credentials loginRequest)
         {
             bool authenticated = await _repositoryPort.CheckUserCredentials(loginRequest.Email, loginRequest.Password);
             if (authenticated)
             {
                 string role = await _repositoryPort.GetUserRole(loginRequest.Email);
                 string token = await _jwtPort.GenerateJwtToken(loginRequest.Email, role);
-                return new AuthResponse(token);
+                return new AuthResult() { Token = token };
+
             }
             return null;
         }

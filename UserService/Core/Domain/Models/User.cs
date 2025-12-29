@@ -9,19 +9,6 @@
         public string Password { get; set; }
         public long Role { get; set; }
 
-
-        public User() { }
-
-        public User(long? id, string name, string surname, string email, string password, long role)
-        {
-            Id = id;
-            Name = name;
-            Surname = surname;
-            Email = email;
-            Password = password;
-            Role = role;
-        }
-
         public override bool Equals(object? obj)
         {
             return obj is User user &&

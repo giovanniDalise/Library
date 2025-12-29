@@ -4,6 +4,6 @@ namespace Library.BookService.Core.Ports
 {
     public interface AuthenticationServicePort
     {
-        Task<AuthResponse> Authenticate(LoginRequest loginRequest);
+        Task<AuthResult> Authenticate(Credentials loginRequest);
     }
 }

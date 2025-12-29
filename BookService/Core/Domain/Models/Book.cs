@@ -10,8 +10,6 @@ namespace Library.BookService.Core.Domain.Models
         public Editor Editor { get; set; }
         public HashSet<Author> Authors { get; set; } = new HashSet<Author>();
         public string? CoverReference { get; set; }
-        public Book() { }
-
         public override bool Equals(object obj)
         {
             if (obj is Book book)

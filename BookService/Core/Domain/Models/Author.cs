@@ -7,8 +7,6 @@
         public string Surname { get; set; }
         public HashSet<Book> Books { get; set; } = new HashSet<Book>();
 
-        public Author() { }
-
         public override bool Equals(object obj)
         {
             if (this == obj) return true;

@@ -6,9 +6,6 @@
         public string Name { get; set; }
         public HashSet<Book> Books { get; private set; } = new();
 
-        public Editor() { }
-
-
         public void SetId(long id)
         {
             Id = id;

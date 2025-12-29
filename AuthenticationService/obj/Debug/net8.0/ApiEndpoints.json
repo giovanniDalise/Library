@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Library.AuthenticationService.Core.Domain.Models.LoginRequest",
+        "Type": "Library.AuthenticationService.Infrastructure.Adapters.REST.DTO.LoginRequestDTO",
         "IsRequired": true
       }
     ],
