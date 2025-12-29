@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "v53bfLPTrlw=",
+  "dgSpecHash": "T1Dkf6M9OGQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Library.AuthenticationService.csproj",
   "expectedPackageFiles": [
@@ -57,8 +57,10 @@
     {
       "code": "NU1603",
       "level": "Warning",
-      "warningLevel": 1,
       "message": "Library.AuthenticationService depends on IdentityModel (>= 6.5.0) but IdentityModel 6.5.0 was not found. IdentityModel 7.0.0 was resolved instead.",
+      "projectPath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Library.AuthenticationService.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\GDalise\\source\\repos\\giovanniDalise\\WorkspaceDotnet\\Library\\AuthenticationService\\Library.AuthenticationService.csproj",
       "libraryId": "IdentityModel",
       "targetGraphs": [
         "net8.0"

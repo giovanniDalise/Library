@@ -8,10 +8,6 @@
 
         public Editor() { }
 
-        public Editor(string name)
-        {
-            Name = name;
-        }
 
         public void SetId(long id)
         {

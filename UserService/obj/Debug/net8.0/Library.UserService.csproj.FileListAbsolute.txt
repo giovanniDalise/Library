@@ -107,12 +107,6 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets\msbuild.Library.UserService.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets\msbuild.Library.UserService.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets\msbuild.build.Library.UserService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Library.UserService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Library.UserService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\Library..3BE2024D.Up2Date
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\Library.UserService.dll
@@ -120,3 +114,9 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\Library.UserService.pdb
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\Library.UserService.genruntimeconfig.cache
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\ref\Library.UserService.dll
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\UserService\obj\Debug\net8.0\swae.build.ex.cache

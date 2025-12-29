@@ -1,22 +1,25 @@
 ﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Infrastructure.Persistence.Entities;
+using Library.BookService.Infrastructure.Persistence.EF.Entities;
+using Library.BookService.Infrastructure.Persistence.Interfaces;
 using System.Linq;
 
-namespace Library.BookService.Infrastructure.Persistence.Mappers
+namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class BookMapper
+    public class BookMapper: IMapper<BookEntity, Book>
     {
         public Book ToDomain(BookEntity entity)
         {
-            return new Book(
-                entity.BookId,
-                entity.Title,
-                entity.Isbn,
-                EditorMapper.ToDomain(entity.Editor),
-                AuthorMapper.ToDomainSet(entity.Authors)
-
-            );
+            return new Book
+            {
+                BookId = entity.BookId,
+                Title = entity.Title,
+                Isbn = entity.Isbn,
+                Editor = EditorMapper.ToDomain(entity.Editor),
+                Authors = AuthorMapper.ToDomainSet(entity.Authors),
+                CoverReference = entity.CoverReference
+            };
         }
+
 
         public BookEntity ToEntity(Book book)
         {
@@ -26,7 +29,8 @@ namespace Library.BookService.Infrastructure.Persistence.Mappers
                 Title = book.Title,
                 Isbn = book.Isbn,
                 Editor = EditorMapper.ToEntity(book.Editor),
-                Authors = AuthorMapper.ToEntitySet(book.Authors)
+                Authors = AuthorMapper.ToEntitySet(book.Authors),
+                CoverReference = book.CoverReference ?? null
             };
             return entity;
         }

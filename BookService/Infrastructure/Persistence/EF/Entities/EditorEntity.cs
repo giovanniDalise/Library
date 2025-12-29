@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Library.BookService.Infrastructure.Persistence.Entities
+namespace Library.BookService.Infrastructure.Persistence.EF.Entities
 {
     [Table("editor")]
     public class EditorEntity

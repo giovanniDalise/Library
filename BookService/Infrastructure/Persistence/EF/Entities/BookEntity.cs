@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Library.BookService.Infrastructure.Persistence.Entities
+namespace Library.BookService.Infrastructure.Persistence.EF.Entities
 {
     [Table("book")]
     public class BookEntity
@@ -17,6 +17,9 @@ namespace Library.BookService.Infrastructure.Persistence.Entities
         [Column("ISBN")]
         public string Isbn { get; set; }
 
+        [Column("front_cover_path")]
+        public string? CoverReference { get; set; }
+
         // Relazione Many-to-One con EditorEntity
         [Column("editor")] // La colonna nel database è chiamata 'editor'
         public long? EditorId { get; set; }
@@ -26,15 +29,6 @@ namespace Library.BookService.Infrastructure.Persistence.Entities
         public virtual ICollection<AuthorEntity> Authors { get; set; } = new HashSet<AuthorEntity>();
 
         public BookEntity() { }
-
-        public BookEntity(long bookId, string title, string isbn, EditorEntity editor, IEnumerable<AuthorEntity> authors)
-        {
-            BookId = bookId;
-            Title = title;
-            Isbn = isbn;
-            Editor = editor;
-            Authors = authors != null ? new HashSet<AuthorEntity>(authors) : new HashSet<AuthorEntity>();
-        }
 
         public override bool Equals(object obj)
         {

@@ -1,8 +1,8 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.exceptions;
-using Library.BookService.Infrastructure.Persistence;
-using Library.BookService.Infrastructure.Persistence.Mappers;
+using Library.BookService.Infrastructure.Persistence.EF;
+using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.BookService.Infrastructure.Adapters

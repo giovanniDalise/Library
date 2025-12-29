@@ -9,7 +9,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Core.Domain.Models.Book, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Infrastructure.DTO.REST.Book.BookResponse, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -28,8 +28,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "book",
-        "Type": "Library.BookService.Core.Domain.Models.Book",
+        "Name": "request",
+        "Type": "Library.BookService.Infrastructure.DTO.REST.Book.BookRequest",
         "IsRequired": true
       }
     ],
@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Library.BookService.Core.Domain.Models.Book",
+        "Type": "Library.BookService.Infrastructure.DTO.REST.Book.BookResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -85,8 +85,8 @@
         "IsRequired": true
       },
       {
-        "Name": "book",
-        "Type": "Library.BookService.Core.Domain.Models.Book",
+        "Name": "request",
+        "Type": "Library.BookService.Infrastructure.DTO.REST.Book.BookRequest",
         "IsRequired": true
       }
     ],
@@ -137,14 +137,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "book",
-        "Type": "Library.BookService.Core.Domain.Models.Book",
+        "Name": "request",
+        "Type": "Library.BookService.Infrastructure.DTO.REST.Book.BookRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Core.Domain.Models.Book, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Infrastructure.DTO.REST.Book.BookResponse, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -170,7 +170,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Core.Domain.Models.Book, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[Library.BookService.Infrastructure.DTO.REST.Book.BookResponse, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

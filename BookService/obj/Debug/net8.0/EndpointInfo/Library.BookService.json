@@ -18,7 +18,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -26,7 +26,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -34,7 +34,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               }
@@ -50,17 +50,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             }
           }
@@ -114,17 +114,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "$ref": "#/components/schemas/BookResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "$ref": "#/components/schemas/BookResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "$ref": "#/components/schemas/BookResponse"
                 }
               }
             }
@@ -150,17 +150,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             }
           }
@@ -255,7 +255,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -263,7 +263,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -271,7 +271,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               }
@@ -289,17 +289,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookRequest"
               }
             }
           }
@@ -312,7 +312,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -320,7 +320,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               },
@@ -328,7 +328,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookResponse"
                   }
                 }
               }
@@ -340,7 +340,7 @@
   },
   "components": {
     "schemas": {
-      "Author": {
+      "AuthorRequest": {
         "type": "object",
         "properties": {
           "id": {
@@ -359,14 +359,32 @@
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Book"
+              "$ref": "#/components/schemas/BookRequest"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "Book": {
+      "AuthorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookRequest": {
         "type": "object",
         "properties": {
           "bookId": {
@@ -383,20 +401,58 @@
             "nullable": true
           },
           "editor": {
-            "$ref": "#/components/schemas/Editor"
+            "$ref": "#/components/schemas/EditorRequest"
           },
           "authors": {
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Author"
+              "$ref": "#/components/schemas/AuthorRequest"
             },
+            "nullable": true
+          },
+          "coverReference": {
+            "type": "string",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "Editor": {
+      "BookResponse": {
+        "type": "object",
+        "properties": {
+          "bookId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "isbn": {
+            "type": "string",
+            "nullable": true
+          },
+          "editor": {
+            "$ref": "#/components/schemas/EditorResponse"
+          },
+          "authors": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorResponse"
+            },
+            "nullable": true
+          },
+          "coverReference": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EditorRequest": {
         "type": "object",
         "properties": {
           "id": {
@@ -411,10 +467,24 @@
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Book"
+              "$ref": "#/components/schemas/BookRequest"
             },
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EditorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

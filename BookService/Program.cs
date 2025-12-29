@@ -1,10 +1,11 @@
 using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.Adapters;
-using Library.BookService.Infrastructure.Persistence;
-using Library.BookService.Infrastructure.Persistence.Mappers;
+using Library.BookService.Infrastructure.Persistence.EF;
+using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.BookService.Security;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        @"C:\LibraryMKNW"
+    ),
+    RequestPath = "/images"
+});
+
+
+// Configura routing
+app.UseRouting();
 
 // Usa CORS prima di UseRouting
 app.UseCors("AllowAll");
@@ -50,8 +62,7 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Configura routing
-app.UseRouting();
+
 
 app.MapControllers();  // Assicurati che i controller vengano mappati correttamente
 

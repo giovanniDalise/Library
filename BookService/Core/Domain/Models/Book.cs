@@ -9,17 +9,8 @@ namespace Library.BookService.Core.Domain.Models
         public string Isbn { get; set; }
         public Editor Editor { get; set; }
         public HashSet<Author> Authors { get; set; } = new HashSet<Author>();
-
+        public string? CoverReference { get; set; }
         public Book() { }
-
-        public Book(long? bookId, string title, string isbn, Editor editor, HashSet<Author> authors)
-        {
-            BookId = bookId;
-            Title = title;
-            Isbn = isbn;
-            Editor = editor;
-            Authors = authors ?? new HashSet<Author>();
-        }
 
         public override bool Equals(object obj)
         {

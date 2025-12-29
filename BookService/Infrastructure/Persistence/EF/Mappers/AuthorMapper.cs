@@ -1,7 +1,7 @@
 ﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Infrastructure.Persistence.Entities;
+using Library.BookService.Infrastructure.Persistence.EF.Entities;
 
-namespace Library.BookService.Infrastructure.Persistence.Mappers
+namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
     public class AuthorMapper
     {

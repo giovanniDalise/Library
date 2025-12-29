@@ -4,15 +4,18 @@
     "Projects": [
       {
         "Path": "BookService\\Library.BookService.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": "http"
       },
       {
         "Path": "AuthenticationService\\Library.AuthenticationService.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": "http"
       },
       {
         "Path": "UserService\\Library.UserService.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": "http"
       }
     ]
   }

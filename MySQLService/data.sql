@@ -27,11 +27,13 @@ create table book (
 	title VARCHAR (255) NOT NULL,
 	isbn VARCHAR (255) NOT NULL,
 	editor BIGINT NOT NULL,
+	front_cover_path VARCHAR(500) UNIQUE,
 	PRIMARY KEY (book_id),
 	FOREIGN KEY (editor) REFERENCES editor(editor_id)
 );
 
 CREATE TABLE books_authors (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,  
     book BIGINT,
     author BIGINT,
     FOREIGN KEY (book) REFERENCES book(book_id),
@@ -69,11 +71,17 @@ INSERT INTO editor (name) VALUES ('Michael Brown');
 INSERT INTO editor (name) VALUES ('Sophia Lee');
 INSERT INTO editor (name) VALUES ('David Wilson');
 
-INSERT INTO book (title, ISBN, editor) VALUES ('The Great Gatsby', '9780743273565', 1);
-INSERT INTO book (title, ISBN, editor) VALUES ('To Kill a Mockingbird', '9780061120084', 2);
-INSERT INTO book (title, ISBN, editor) VALUES ('1984', '9780451524935', 3);
-INSERT INTO book (title, ISBN, editor) VALUES ('Pride and Prejudice', '9780141439518', 4);
-INSERT INTO book (title, ISBN, editor) VALUES ('Harry Potter and the Sorcerer''s Stone', '9780590353427', 5);
+INSERT INTO book (title, ISBN, editor, front_cover_path) 
+VALUES ('The Great Gatsby', '9780743273565', 1, 'http://localhost:5282/images/1/3/1/917TF-0LAwL._SL1500_.jpg');
+INSERT INTO book (title, ISBN, editor, front_cover_path) 
+VALUES ('To Kill a Mockingbird', '9780061120084', 2, 'http://localhost:5282/images/2/4/2/9788807892790_0_0_536_0_75.jpg');
+INSERT INTO book (title, ISBN, editor, front_cover_path) 
+VALUES ('1984', '9780451524935', 3, 'http://localhost:5282/images/3/2/3/71uGFEVcEkL._SL1500_.jpg');
+INSERT INTO book (title, ISBN, editor, front_cover_path) 
+VALUES ('Pride and Prejudice', '9780141439518', 4, 'http://localhost:5282/images/4/1/4/71o0INZqSsL._SL1422_.jpg');
+INSERT INTO book (title, ISBN, editor, front_cover_path) 
+VALUES ('Harry Potter and the Sorcerer''s Stone', '9780590353427', 5, 'http://localhost:5282/images/5/5/5/81q77Q39nEL._SL1500_.jpg');
+
 
 INSERT INTO author (name, surname) VALUES ('Jane', 'Austen');
 INSERT INTO author (name, surname) VALUES ('George', 'Orwell');
@@ -81,11 +89,12 @@ INSERT INTO author (name, surname) VALUES ('F. Scott', 'Fitzgerald');
 INSERT INTO author (name, surname) VALUES ('Harper', 'Lee');
 INSERT INTO author (name, surname) VALUES ('J.K.', 'Rowling');
 
-INSERT INTO books_authors (book, author) VALUES (1, 1);  -- Jane Austen per "Pride and Prejudice"
-INSERT INTO books_authors (book, author) VALUES (2, 4);  -- Harper Lee per "To Kill a Mockingbird"
-INSERT INTO books_authors (book, author) VALUES (3, 2);  -- George Orwell per "1984"
-INSERT INTO books_authors (book, author) VALUES (4, 1);  -- Jane Austen per "Emma"
-INSERT INTO books_authors (book, author) VALUES (5, 5);  -- J.K. Rowling per "Harry Potter and the Sorcerer's Stone"
+INSERT INTO books_authors (book, author) VALUES (1, 3); 
+INSERT INTO books_authors (book, author) VALUES (2, 4); 
+INSERT INTO books_authors (book, author) VALUES (3, 2); 
+INSERT INTO books_authors (book, author) VALUES (4, 1); 
+INSERT INTO books_authors (book, author) VALUES (5, 5); 
+
 
 INSERT INTO role (name) VALUES ('user');
 INSERT INTO role (name) VALUES ('admin');

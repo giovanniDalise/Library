@@ -9,12 +9,6 @@
 
         public Author() { }
 
-        public Author(string name, string surname)
-        {
-            Name = name;
-            Surname = surname;
-        }
-
         public override bool Equals(object obj)
         {
             if (this == obj) return true;

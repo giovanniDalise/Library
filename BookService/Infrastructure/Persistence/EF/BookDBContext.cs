@@ -1,8 +1,8 @@
-﻿using Library.BookService.Infrastructure.Persistence.Entities;
+﻿using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace Library.BookService.Infrastructure.Persistence
+namespace Library.BookService.Infrastructure.Persistence.EF
 {
     public class BookDBContext : DbContext
     {
