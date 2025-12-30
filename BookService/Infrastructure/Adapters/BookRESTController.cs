@@ -14,10 +14,12 @@ namespace Library.BookService.Infrastructure.Adapters
     public class BookRESTController : ControllerBase
     {
         private readonly BookServicePort _bookService;
+        private readonly MediaStoragePort _mediaStorage;
 
-        public BookRESTController(BookServicePort bookService)
+        public BookRESTController(BookServicePort bookService, MediaStoragePort mediaStorage)
         {
             _bookService = bookService;
+            _mediaStorage = mediaStorage;
         }
 
         // GET /library
@@ -44,12 +46,44 @@ namespace Library.BookService.Infrastructure.Adapters
         // POST /library
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<long>> AddBook([FromBody] BookRequest request)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<long>> AddBook([FromForm] BookRequest request)
         {
-            var bookDomain = BookDTOMapper.ToDomain(request);
-            var newId = await _bookService.CreateBookAsync(bookDomain);
-            return Ok(newId);
+            // 1️⃣ Crei il dominio senza cover
+            var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
+
+            // 2️⃣ Salvi il libro nel DB (gli ID vengono generati e restituiti)
+            var createdBook = await _bookService.CreateBookAsync(bookDomain);
+
+            string? coverUrl = null;
+
+            // 3️⃣ Se è presente la cover, salvala sul filesystem usando gli ID effettivi
+            if (request.Cover is not null)
+            {
+                using var stream = request.Cover.OpenReadStream();
+
+                var editorId = createdBook.Editor.Id; // ID reale dell'editor
+                var authorIds = createdBook.Authors.Select(a => a.Id); // ID reali degli autori
+                var bookId = createdBook.BookId.Value; // .Value perché BookId è nullable
+
+                coverUrl = await _mediaStorage.SaveAsync(
+                    stream,
+                    request.Cover.FileName,
+                    request.Cover.ContentType,
+                    editorId,
+                    authorIds,
+                    bookId
+                );
+
+                // 4️⃣ Aggiorna il libro con la cover
+                createdBook.CoverReference = coverUrl;
+                await _bookService.UpdateBookAsync(bookId, createdBook);
+            }
+
+            return Ok(createdBook.BookId);
         }
+
+
 
         // PUT /library/{id}
         [HttpPut("{id}")]

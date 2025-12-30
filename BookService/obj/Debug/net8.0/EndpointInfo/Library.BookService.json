@@ -48,19 +48,72 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/BookRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BookRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/BookRequest"
+                "type": "object",
+                "properties": {
+                  "BookId": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "Title": {
+                    "type": "string"
+                  },
+                  "Isbn": {
+                    "type": "string"
+                  },
+                  "Editor.Id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "Editor.Name": {
+                    "type": "string"
+                  },
+                  "Editor.Books": {
+                    "uniqueItems": true,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BookRequest"
+                    }
+                  },
+                  "Authors": {
+                    "uniqueItems": true,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AuthorRequest"
+                    }
+                  },
+                  "Cover": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "BookId": {
+                  "style": "form"
+                },
+                "Title": {
+                  "style": "form"
+                },
+                "Isbn": {
+                  "style": "form"
+                },
+                "Editor.Id": {
+                  "style": "form"
+                },
+                "Editor.Name": {
+                  "style": "form"
+                },
+                "Editor.Books": {
+                  "style": "form"
+                },
+                "Authors": {
+                  "style": "form"
+                },
+                "Cover": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -389,8 +442,7 @@
         "properties": {
           "bookId": {
             "type": "integer",
-            "format": "int64",
-            "nullable": true
+            "format": "int64"
           },
           "title": {
             "type": "string",
@@ -411,8 +463,9 @@
             },
             "nullable": true
           },
-          "coverReference": {
+          "cover": {
             "type": "string",
+            "format": "binary",
             "nullable": true
           }
         },

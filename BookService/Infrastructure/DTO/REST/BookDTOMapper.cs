@@ -37,14 +37,14 @@ namespace Library.BookService.Infrastructure.DTO.REST
         }
 
         // DTO Request → Domain
-        public static Library.BookService.Core.Domain.Models.Book ToDomain(BookRequest request)
+        public static Library.BookService.Core.Domain.Models.Book ToDomain(BookRequest request, string? coverReference = null)
         {
             return new Library.BookService.Core.Domain.Models.Book
             {
                 BookId = request.BookId,
                 Title = request.Title,
                 Isbn = request.Isbn,
-                CoverReference = request.CoverReference,
+                CoverReference = coverReference,
                 Editor = new Library.BookService.Core.Domain.Models.Editor
                 {
                     Id = request.Editor.Id,
@@ -57,11 +57,6 @@ namespace Library.BookService.Infrastructure.DTO.REST
                     Surname = a.Surname
                 }).ToHashSet()
             };
-        }
-
-        public static List<Library.BookService.Core.Domain.Models.Book> ToDomainList(IEnumerable<BookRequest> requests)
-        {
-            return requests.Select(ToDomain).ToList();
         }
     }
 }

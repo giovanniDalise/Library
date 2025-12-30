@@ -2,6 +2,7 @@
 using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
+using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,20 +19,49 @@ namespace Library.BookService.Infrastructure.Adapters
             _context = context;
         }
 
-        public async Task<long> CreateAsync(Book book)
+        public async Task<Book> CreateAsync(Book book)
         {
             try
             {
-                var bookEntity = _bookMapper.ToEntity(book);
+                // Controlla se l'editor esiste
+                var editorEntity = await _context.Editors
+                    .FirstOrDefaultAsync(e => e.Name == book.Editor.Name);
+
+                // Se l'editor non esiste, lasciamo null (o gestire lato frontend)
+
+                // Controlla autori esistenti
+                var authorEntities = new List<AuthorEntity>();
+                foreach (var author in book.Authors)
+                {
+                    var authorEntity = await _context.Authors
+                        .FirstOrDefaultAsync(a => a.Name == author.Name && a.Surname == author.Surname);
+
+                    if (authorEntity != null)
+                        authorEntities.Add(authorEntity); // aggiungi solo se esiste
+                }
+
+                // Crea la BookEntity senza creare nuovi autori o editor
+                var bookEntity = new BookEntity
+                {
+                    Title = book.Title,
+                    Isbn = book.Isbn,
+                    CoverReference = book.CoverReference,
+                    Editor = editorEntity,
+                    Authors = authorEntities
+                };
+
                 await _context.Books.AddAsync(bookEntity);
                 await _context.SaveChangesAsync();
-                return bookEntity.BookId;
+
+                return _bookMapper.ToDomain(bookEntity);
             }
             catch (Exception e)
             {
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
+
+
 
         public async Task<List<Book>> ReadAsync()
         {
@@ -84,26 +114,34 @@ namespace Library.BookService.Infrastructure.Adapters
             try
             {
                 var existingEntity = await _context.Books
-                    .Include(b => b.Authors)  // Se hai relazioni, le includi per evitare problemi di tracking
+                    .Include(b => b.Authors)
+                    .Include(b => b.Editor)
                     .FirstOrDefaultAsync(b => b.BookId == id);
 
                 if (existingEntity == null)
-                {
                     throw new BookRepositoryEFException("Book not found");
-                }
 
-                // Aggiorna solo i campi necessari senza creare una nuova entità
+                // Aggiorna i campi base
                 existingEntity.Title = book.Title;
                 existingEntity.Isbn = book.Isbn;
-                // Se gestisci relazioni (many-to-many con Authors)
-                existingEntity.Authors.Clear();  // Rimuove le associazioni esistenti
+                existingEntity.CoverReference = book.CoverReference;
+
+                // Aggiorna editor solo se esiste
+                var editorEntity = await _context.Editors
+                    .FirstOrDefaultAsync(e => e.Name == book.Editor.Name);
+
+                if (editorEntity != null)
+                    existingEntity.Editor = editorEntity;
+
+                // Aggiorna autori esistenti
+                existingEntity.Authors.Clear();
                 foreach (var author in book.Authors)
                 {
-                    var authorEntity = await _context.Authors.FindAsync(author.Id);
+                    var authorEntity = await _context.Authors
+                        .FirstOrDefaultAsync(a => a.Name == author.Name && a.Surname == author.Surname);
+
                     if (authorEntity != null)
-                    {
-                        existingEntity.Authors.Add(authorEntity);  // Riaggiunge gli autori esistenti
-                    }
+                        existingEntity.Authors.Add(authorEntity);
                 }
 
                 await _context.SaveChangesAsync();
@@ -114,6 +152,7 @@ namespace Library.BookService.Infrastructure.Adapters
                 throw new BookRepositoryEFException("Error updating book: " + e.Message);
             }
         }
+
 
 
         public async Task<Book> GetByIdAsync(long id)

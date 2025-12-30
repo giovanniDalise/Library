@@ -28,9 +28,44 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Library.BookService.Infrastructure.DTO.REST.Book.BookRequest",
-        "IsRequired": true
+        "Name": "BookId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Title",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Isbn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Editor.Id",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Editor.Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Editor.Books",
+        "Type": "System.Collections.Generic.HashSet\u00601[[Library.BookService.Infrastructure.DTO.REST.Book.BookRequest, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Authors",
+        "Type": "System.Collections.Generic.HashSet\u00601[[Library.BookService.Infrastructure.DTO.REST.Author.AuthorRequest, Library.BookService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cover",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();  // Registrazione dell'interfaccia e dell'implementazione
 builder.Services.AddScoped<BookServicePort, BookService>();  // Registrazione del BookService
+builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>(); 
 
 // Aggiungi DbContext per la connessione a MySQL
 var connectionString = builder.Configuration.GetConnectionString("BookDbConnection");

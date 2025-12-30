@@ -25,7 +25,7 @@ namespace Library.BookService.Core.Domain.Services
             return await _bookRepositoryPort.GetByIdAsync(id);
         }
 
-        public async Task<long> CreateBookAsync(Book book)
+        public async Task<Book> CreateBookAsync(Book book)
         {
             return await _bookRepositoryPort.CreateAsync(book);
         }
