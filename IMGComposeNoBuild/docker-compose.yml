@@ -18,6 +18,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      Media__BasePath: /app/images
+      Media__BaseUrl: http://localhost:5282      
     ports:
       - "5282:5282"
     depends_on:
@@ -53,7 +55,7 @@ services:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__UserServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
     ports:
-      - "5073:5073"
+      - "5022:5022"
     depends_on:
       - mysql-container  
     volumes:
@@ -72,10 +74,9 @@ services:
     networks:
       - library_default
     restart: always    
+    
   images-init:
-    build:
-      context: ./LibraryImages
-      dockerfile: Dockerfile
+    image: giovannidalise/librarymknwdot-images-init:latest  
     volumes:
       - book-images:/app/images              
                          

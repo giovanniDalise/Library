@@ -94,6 +94,7 @@ services:
     restart: always    
     
   images-init:
+    image: giovannidalise/librarymknwdot-images-init:latest    
     build:
       context: ./LibraryImages
       dockerfile: Dockerfile
