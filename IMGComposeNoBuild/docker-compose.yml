@@ -19,10 +19,11 @@ services:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
     ports:
-      - "5282:5000"
+      - "5282:5282"
     depends_on:
       - mysql-container
     volumes:
+      - book-images:/app/images    
       - app-data:/app-data      
     networks:
       - library_default
@@ -38,6 +39,7 @@ services:
       - "5073:5073"
     depends_on:
       - mysql-container  
+      - images-init                   
     volumes:
       - app-data:/app-data 
     networks:
@@ -70,6 +72,13 @@ services:
     networks:
       - library_default
     restart: always    
+  images-init:
+    build:
+      context: ./LibraryImages
+      dockerfile: Dockerfile
+    volumes:
+      - book-images:/app/images              
+                         
 
 networks:
   library_default:
@@ -77,3 +86,4 @@ networks:
 
 volumes:
   app-data: {}
+  book-images: {}
