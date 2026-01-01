@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();  // Registrazione dell'interfaccia e dell'implementazione
 builder.Services.AddScoped<BookServicePort, BookService>();  // Registrazione del BookService
-builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>(); 
+builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>();
 
 // Aggiungi DbContext per la connessione a MySQL
 var connectionString = builder.Configuration.GetConnectionString("BookDbConnection");
@@ -21,6 +21,7 @@ builder.Services.AddDbContext<BookDBContext>(options =>
 
 // Registrazione del BookMapper
 builder.Services.AddScoped<BookMapper>();  // Registrazione di BookMapper nel DI
+
 
 // Aggiungi i servizi per i controller
 builder.Services.AddControllers();  // Aggiungi questa riga per registrare i controller
@@ -41,11 +42,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var imagesPath = builder.Configuration["Media:BasePath"]
+    ?? throw new Exception("Media:BasePath not configured");
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        @"C:\LibraryMKNW"
-    ),
+    FileProvider = new PhysicalFileProvider(imagesPath),
     RequestPath = "/images"
 });
 

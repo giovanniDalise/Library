@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class BookMapper: IMapper<BookEntity, Book>
+    public class BookMapper : IMapper<BookEntity, Book>
     {
         public Book ToDomain(BookEntity entity)
         {
@@ -25,7 +25,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         {
             var entity = new BookEntity
             {
-                BookId = book.BookId ?? 0, 
+                BookId = book.BookId ?? 0,
                 Title = book.Title,
                 Isbn = book.Isbn,
                 Editor = EditorMapper.ToEntity(book.Editor),

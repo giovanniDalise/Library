@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "HWumVpadFzeT463erS/qccDeAd5ps1uzQJsCrbtZRo8=",
-  "Source": "Library.BookService",
-  "BasePath": "_content/Library.BookService",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"5z4Mnu+FWDonVmxrkD7fAGan8lUBWZqC2KuOBm1Xs4c=","Source":"Library.BookService","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

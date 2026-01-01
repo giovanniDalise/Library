@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "53qIMncHIkJrwM8sIM8DF7MY05ZiGZtaol27m42UXcM=",
-  "Source": "Library.UserService",
-  "BasePath": "_content/Library.UserService",
-  "Mode": "Default",
-  "ManifestType": "Publish",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"NPVXT2C+7LI2PdV2yu7eXH0RjHn8y/NLWTGp2t7jlRM=","Source":"Library.UserService","BasePath":"/","Mode":"Root","ManifestType":"Publish","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

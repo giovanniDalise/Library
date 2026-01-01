@@ -118,12 +118,6 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.build.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.development.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.build.endpoints.json
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets\msbuild.Library.BookService.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets\msbuild.Library.BookService.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets\msbuild.build.Library.BookService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets\msbuild.buildMultiTargeting.Library.BookService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets\msbuild.buildTransitive.Library.BookService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.pack.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\Library..E6B659BF.Up2Date
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\Library.BookService.dll
@@ -131,3 +125,9 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\Library.BookService.pdb
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\Library.BookService.genruntimeconfig.cache
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\ref\Library.BookService.dll
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\rpswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\rjimswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\staticwebassets.build.json.cache
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\obj\Release\net8.0\swae.build.ex.cache

@@ -17,7 +17,7 @@ RUN curl -o wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-
 EXPOSE 5000
 
 # Configura la variabile d'ambiente per ASP.NET Core
-ENV ASPNETCORE_URLS="http://+:5000"
+ENV ASPNETCORE_URLS="http://+:5282"
 
 # Avvia l'applicazione solo quando MySQL è pronto
 ENTRYPOINT ["/app/wait-for-it.sh", "mysql:3306", "--", "dotnet", "Library.BookService.dll"]

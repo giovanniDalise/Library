@@ -1,0 +1,5 @@
+FROM alpine:latest
+# Copia le immagini nella cartella interna dell'immagine temporanea
+COPY . /docker-entrypoint-initimages/
+# Copia le immagini nel volume quando il container parte
+CMD sh -c "cp -r /docker-entrypoint-initimages/* /app/images && echo 'Images initialized' && exit 0"

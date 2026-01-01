@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "ZGXWDOwFVlKiFB1H5upUSUQBvmux6tv1US7o4ZAvzps=",
-  "Source": "Library.AuthenticationService",
-  "BasePath": "_content/Library.AuthenticationService",
-  "Mode": "Default",
-  "ManifestType": "Publish",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"MXiXv/KBHA+gEO1aTfonceFfYYMYCt7w+Giukp4ptIE=","Source":"Library.AuthenticationService","BasePath":"/","Mode":"Root","ManifestType":"Publish","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

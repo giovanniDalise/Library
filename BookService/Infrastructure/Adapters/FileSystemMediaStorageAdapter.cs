@@ -18,7 +18,7 @@ namespace Library.BookService.Infrastructure.Adapters
 
         public async Task<string> SaveAsync(Stream content, string fileName, string contentType, long editorId, IEnumerable<long> authorIds, long? bookId)
         {
-            var authorsFolder = authorIds.Count() == 1? authorIds.First().ToString(): string.Join(" - ", authorIds);
+            var authorsFolder = authorIds.Count() == 1? authorIds.First().ToString(): string.Join("-", authorIds);
 
             var dirPath = Path.Combine(_basePath, editorId.ToString(), authorsFolder, bookId.ToString());
             Directory.CreateDirectory(dirPath); 

@@ -118,12 +118,6 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\Authenticat
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.build.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.development.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.build.endpoints.json
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets\msbuild.Library.AuthenticationService.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets\msbuild.Library.AuthenticationService.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets\msbuild.build.Library.AuthenticationService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets\msbuild.buildMultiTargeting.Library.AuthenticationService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets\msbuild.buildTransitive.Library.AuthenticationService.props
-C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.pack.json
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\Library..84B858A1.Up2Date
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\Library.AuthenticationService.dll
@@ -131,3 +125,9 @@ C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\Authenticat
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\Library.AuthenticationService.pdb
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\Library.AuthenticationService.genruntimeconfig.cache
 C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\ref\Library.AuthenticationService.dll
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\rpswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\rjimswa.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\staticwebassets.build.json.cache
+C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\AuthenticationService\obj\Release\net8.0\swae.build.ex.cache
