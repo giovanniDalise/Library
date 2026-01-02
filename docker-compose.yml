@@ -93,14 +93,27 @@ services:
       - library_default
     restart: always    
     
-  images-init:
+  images-init: # one-job service per inizializzare le immagini nel volume
     image: giovannidalise/librarymknwdot-images-init:latest    
     build:
       context: ./LibraryImages
       dockerfile: Dockerfile
     volumes:
       - book-images:/app/images
-
+      
+  api-gateway: #Service che utilizza nginx.conf che attenzione è doverso da quello del progetto LibraryCLient che serve file statici, questo invece fa Routing API per docker
+    build:
+      context: ./ApiGateway
+    container_name: api-gateway
+    ports:
+      - "8080:80"
+    depends_on:
+      - bookservice
+      - userservice
+      - authenticationservice
+    networks:
+      - library_default
+      
 networks:
   library_default:
     driver: bridge
