@@ -79,8 +79,18 @@ services:
     image: giovannidalise/librarymknwdot-images-init:latest  
     volumes:
       - book-images:/app/images              
-                         
 
+  api-gateway: #Service che utilizza nginx.conf che attenzione è doverso da quello del progetto LibraryCLient che serve file statici, questo invece fa Routing API per docker
+    image: giovannidalise/librarymknwdot-api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8080:80"
+    depends_on:
+      - bookservice
+      - userservice
+      - authenticationservice
+    networks:
+      - library_default      
 networks:
   library_default:
     driver: bridge
