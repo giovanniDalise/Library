@@ -1,4 +1,5 @@
 ﻿using Library.BookService.Core.Ports;
+using Library.Logging.Abstractions;
 
 namespace Library.BookService.Infrastructure.Adapters
 {
@@ -6,32 +7,53 @@ namespace Library.BookService.Infrastructure.Adapters
     {
         private readonly string _basePath;
         private readonly string _baseUrl;
-        public FileSystemMediaStorageAdapter(IConfiguration configuration)
-        {
-            _basePath = configuration["Media:BasePath"]
-                        ?? throw new ArgumentNullException("BasePath not configured");
+        private readonly ILoggerPort _logger;
 
-            // Base URL completa per il front-end
+        public FileSystemMediaStorageAdapter(
+            IConfiguration configuration,
+            ILoggerPort logger)
+        {
+            _logger = logger;
+
+            _basePath = configuration["Media:BasePath"]
+                ?? throw new ArgumentNullException("Media:BasePath not configured");
+
             _baseUrl = configuration["Media:BaseUrl"]
-                       ?? throw new ArgumentNullException("BaseUrl not configured");
+                ?? throw new ArgumentNullException("Media:BaseUrl not configured");
         }
 
         public async Task<string> SaveAsync(Stream content, string fileName, string contentType, long editorId, IEnumerable<long> authorIds, long? bookId)
         {
-            var authorsFolder = authorIds.Count() == 1? authorIds.First().ToString(): string.Join("-", authorIds);
+            _logger.Info($"SaveAsync - Start | File={fileName} | EditorId={editorId} | BookId={bookId}");
 
-            var dirPath = Path.Combine(_basePath, editorId.ToString(), authorsFolder, bookId.ToString());
-            Directory.CreateDirectory(dirPath); 
+            try
+            {
+                var authorsFolder = authorIds.Count() == 1 ? authorIds.First().ToString() : string.Join("-", authorIds);
 
-            var fullPath = Path.Combine(dirPath, fileName);
+                var dirPath = Path.Combine(_basePath, editorId.ToString(), authorsFolder, bookId.ToString());
+                _logger.Debug($"SaveAsync - Creating directory | Path={dirPath}");
+                Directory.CreateDirectory(dirPath);
 
-            using var fs = new FileStream(fullPath, FileMode.Create);
-            await content.CopyToAsync(fs);
+                var fullPath = Path.Combine(dirPath, fileName);
 
-            // Genera path relativo pubblico
-            var relativePath = $"/images/{editorId}/{authorsFolder}/{bookId}/{fileName}";
+                _logger.Debug($"SaveAsync - Writing file | Path={fullPath}");
 
-            return $"{_baseUrl.TrimEnd('/')}{relativePath}";
+                using var fs = new FileStream(fullPath, FileMode.Create);
+                await content.CopyToAsync(fs);
+
+                // Genera path relativo pubblico
+                var relativePath = $"/images/{editorId}/{authorsFolder}/{bookId}/{fileName}";
+                var publicUrl = $"{_baseUrl.TrimEnd('/')}{relativePath}";
+
+                _logger.Info($"SaveAsync - Completed | Url={publicUrl}");
+
+                return publicUrl;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"SaveAsync - Error | File={fileName} | EditorId={editorId} | BookId={bookId}", ex);
+                throw;
+            }
         }
     }
 }

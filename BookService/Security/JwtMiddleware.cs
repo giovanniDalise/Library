@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Library.Logging.Abstractions;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,11 +13,13 @@ namespace Library.BookService.Security
     {
         private readonly RequestDelegate _next;
         private readonly string _secretKey;
+        private readonly ILoggerPort _logger;
 
-        public JwtMiddleware(RequestDelegate next, IConfiguration configuration)
+        public JwtMiddleware(RequestDelegate next, IConfiguration configuration, ILoggerPort logger)
         {
             _next = next;
             _secretKey = configuration["Jwt:Secret"]; // Leggiamo la chiave dal file di configurazione (appsettings.json)
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -24,8 +27,14 @@ namespace Library.BookService.Security
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
             if (token != null)
-                AttachUserToContext(context, token);
-
+            {
+                _logger.Debug($"JWT token found for request {context.Request.Method} {context.Request.Path}");
+                await AttachUserToContext(context, token);
+            }
+            else
+            {
+                _logger.Debug($"JWT token NOT present for request {context.Request.Method} {context.Request.Path}");
+            }
             await _next(context);
         }
 
@@ -53,13 +62,15 @@ namespace Library.BookService.Security
                     var username = identity.FindFirst(ClaimTypes.Name)?.Value;
                     var role = identity.FindFirst(ClaimTypes.Role)?.Value ?? "USER"; // Default USER
 
+                    _logger.Info($"JWT validated | User={username} | Role={role}");
+
                     if (!string.IsNullOrEmpty(username))
                     {
                         var claims = new[]
                         {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, role)
-                };
+                            new Claim(ClaimTypes.Name, username),
+                            new Claim(ClaimTypes.Role, role)
+                        };
 
                         var claimsIdentity = new ClaimsIdentity(claims, "jwt");
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -70,6 +81,8 @@ namespace Library.BookService.Security
             }
             catch (SecurityTokenException ex)
             {
+                _logger.Warn($"Invalid JWT token | Path={context.Request.Path}");
+
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync("Unauthorized: Invalid token.");
                 return;

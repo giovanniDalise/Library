@@ -4,6 +4,7 @@ using Library.BookService.Infrastructure.exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
+using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.BookService.Infrastructure.Adapters
@@ -12,14 +13,20 @@ namespace Library.BookService.Infrastructure.Adapters
     {
         private readonly BookMapper _bookMapper;
         private readonly BookDBContext _context;
+        private readonly ILoggerPort _logger;
 
-        public BookRepositoryEF(BookMapper bookMapper, BookDBContext context)
+        public BookRepositoryEF(
+            BookMapper bookMapper,
+            BookDBContext context,
+            ILoggerPort logger)
         {
             _bookMapper = bookMapper;
             _context = context;
+            _logger = logger;
         }
         public async Task<Book> CreateAsync(Book book)
         {
+            _logger.Info($"[Repository] Creazione libro: {book.Title}");
             try
             {
                 // Controlla se l'editor esiste
@@ -29,6 +36,7 @@ namespace Library.BookService.Infrastructure.Adapters
                 // Se non esiste, crealo
                 if (editorEntity == null)
                 {
+                    _logger.Debug($"Editor non trovato, creazione: {book.Editor.Name}");
                     editorEntity = new EditorEntity { Name = book.Editor.Name };
                     await _context.Editors.AddAsync(editorEntity);
                     await _context.SaveChangesAsync(); // salva subito per avere l'ID
@@ -43,6 +51,7 @@ namespace Library.BookService.Infrastructure.Adapters
 
                     if (authorEntity == null)
                     {
+                        _logger.Debug($"Autore non trovato, creazione: {author.Name} {author.Surname}");
                         // Se non esiste, crealo
                         authorEntity = new AuthorEntity { Name = author.Name, Surname = author.Surname };
                         await _context.Authors.AddAsync(authorEntity);
@@ -65,10 +74,12 @@ namespace Library.BookService.Infrastructure.Adapters
                 await _context.Books.AddAsync(bookEntity);
                 await _context.SaveChangesAsync();
 
+                _logger.Info($"Libro creato con ID {bookEntity.BookId}");
                 return _bookMapper.ToDomain(bookEntity);
             }
             catch (Exception e)
             {
+                _logger.Error($"Errore durante CreateAsync per libro {book.Title}", e);
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
@@ -77,22 +88,27 @@ namespace Library.BookService.Infrastructure.Adapters
 
         public async Task<List<Book>> ReadAsync()
         {
+            _logger.Info("[Repository] Lettura di tutti i libri");
             try
             {
                 var bookEntities = await _context.Books
                                                   .Include(b => b.Editor)
                                                   .Include(b => b.Authors)
                                                   .ToListAsync();
+
+                _logger.Info($"Trovati {bookEntities.Count} libri");
                 return _bookMapper.ToDomainList(bookEntities);
             }
             catch (Exception e)
             {
+                _logger.Error("Errore durante ReadAsync", e);
                 throw new BookRepositoryEFException("Error reading books: " + e.Message);
             }
         }
 
         public async Task<long> DeleteAsync(long id)
         {
+            _logger.Info($"[Repository] Eliminazione libro ID {id}");
             try
             {
                 var bookEntity = await _context.Books
@@ -101,6 +117,7 @@ namespace Library.BookService.Infrastructure.Adapters
 
                 if (bookEntity == null)
                 {
+                    _logger.Warn($"Tentativo delete libro inesistente ID {id}");
                     throw new BookRepositoryEFException($"Book not found with id {id}");
                 }
 
@@ -112,17 +129,19 @@ namespace Library.BookService.Infrastructure.Adapters
                 _context.Books.Remove(bookEntity);
                 await _context.SaveChangesAsync();
 
+                _logger.Info($"Libro eliminato ID {id}");
                 return id;
             }
             catch (Exception e)
             {
+                _logger.Error($"Errore DeleteAsync ID {id}", e);
                 throw new BookRepositoryEFException($"Error deleting book: {e.Message}", e);
             }
         }
 
-
         public async Task<long> UpdateAsync(long id, Book book)
         {
+            _logger.Info($"UpdateAsync - Start | BookId={id}");
             try
             {
                 var existingEntity = await _context.Books
@@ -130,8 +149,11 @@ namespace Library.BookService.Infrastructure.Adapters
                     .Include(b => b.Editor)
                     .FirstOrDefaultAsync(b => b.BookId == id);
 
-                if (existingEntity == null)
+                if (existingEntity == null) 
+                {
+                    _logger.Warn($"UpdateAsync - Book not found | BookId={id}");
                     throw new BookRepositoryEFException("Book not found");
+                }
 
                 // Aggiorna campi base
                 existingEntity.Title = book.Title;
@@ -144,11 +166,15 @@ namespace Library.BookService.Infrastructure.Adapters
 
                 if (editorEntity == null)
                 {
+                    _logger.Info($"UpdateAsync - Creating new editor | Name={book.Editor.Name}");
+
                     editorEntity = new EditorEntity { Name = book.Editor.Name };
                     await _context.Editors.AddAsync(editorEntity);
                     await _context.SaveChangesAsync(); // salva subito per avere l'ID
                 }
                 existingEntity.Editor = editorEntity;
+
+                _logger.Info($"UpdateAsync - Updating authors | Count={book.Authors.Count}");
 
                 // Gestione autori
                 existingEntity.Authors.Clear(); // rimuove le associazioni esistenti
@@ -159,6 +185,7 @@ namespace Library.BookService.Infrastructure.Adapters
 
                     if (authorEntity == null)
                     {
+                        _logger.Info($"UpdateAsync - Creating new author | {author.Name} {author.Surname}");
                         authorEntity = new AuthorEntity { Name = author.Name, Surname = author.Surname };
                         await _context.Authors.AddAsync(authorEntity);
                         await _context.SaveChangesAsync(); // salva subito per avere l'ID
@@ -168,19 +195,20 @@ namespace Library.BookService.Infrastructure.Adapters
                 }
 
                 await _context.SaveChangesAsync();
+
+                _logger.Info($"UpdateAsync - Completed | BookId={id}");
                 return id;
             }
             catch (Exception e)
             {
+                _logger.Error($"UpdateAsync - Error | BookId={id}", e);
                 throw new BookRepositoryEFException("Error updating book: " + e.Message);
             }
         }
 
-
-
-
         public async Task<Book> GetByIdAsync(long id)
         {
+            _logger.Info($"[Repository] Recupero libro ID {id}");
             try
             {
                 var bookEntity = await _context.Books
@@ -191,12 +219,14 @@ namespace Library.BookService.Infrastructure.Adapters
             }
             catch (Exception e)
             {
+                _logger.Error($"Errore GetByIdAsync ID {id}", e);
                 throw new BookRepositoryEFException("Error getting book by id: " + e.Message);
             }
         }
 
         public async Task<List<Book>> FindByTextAsync(string searchText)
         {
+            _logger.Info($"FindByTextAsync - Start | SearchText='{searchText}'");
             try
             {
                 var query = _context.Books
@@ -209,16 +239,21 @@ namespace Library.BookService.Infrastructure.Adapters
                                     .ToListAsync();
 
                 var result = await query;
+
+                _logger.Info($"FindByTextAsync - Completed | SearchText='{searchText}' | Results={result.Count}");
                 return _bookMapper.ToDomainList(result);
             }
             catch (Exception e)
             {
+                _logger.Error($"FindByTextAsync - Error | SearchText='{searchText}'", e);
                 throw new BookRepositoryEFException("Error finding books by text: " + e.Message);
             }
         }
 
         public async Task<List<Book>> FindByObjectAsync(Book searchBook)
         {
+            _logger.Info($"FindByObjectAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
+
             try
             {
                 var query = _context.Books
@@ -237,10 +272,15 @@ namespace Library.BookService.Infrastructure.Adapters
                 }
 
                 var bookEntities = await query.ToListAsync();
+
+                _logger.Info($"FindByObjectAsync - Completed | Results={bookEntities.Count}");
+
                 return _bookMapper.ToDomainList(bookEntities);
             }
             catch (Exception e)
             {
+                _logger.Error("FindByObjectAsync - Error", e);
+
                 throw new BookRepositoryEFException("Error finding books by object: " + e.Message);
             }
         }
