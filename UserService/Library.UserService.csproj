@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,6 +14,11 @@
 
   <ItemGroup>
     <Folder Include="Core\Domain\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library.Logging.Abstractions\Library.Logging.Abstractions.csproj" />
+    <ProjectReference Include="..\Library.Logging.NLog\Library.Logging.NLog.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,10 +4,17 @@ using Library.BookService.Infrastructure.Adapters;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.BookService.Security;
+using Library.Logging.Abstractions;
+using Library.Logging.NLog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Aggiungi NLogAdapter come ILoggerPort
+builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("BookService"));
+
 
 // Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();  // Registrazione dell'interfaccia e dell'implementazione

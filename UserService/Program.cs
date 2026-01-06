@@ -1,8 +1,13 @@
+using Library.Logging.Abstractions;
+using Library.Logging.NLog;
 using Library.UserService.Core.Domain.Services;
 using Library.UserService.Core.Ports;
 using Library.UserService.Infrastructure.Adapters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Aggiungi NLogAdapter come ILoggerPort
+builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("UserService"));
 
 // Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<UserRepositoryPort, UserRepositoryAdapter>();  // Registrazione dell'interfaccia e dell'implementazione

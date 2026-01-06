@@ -1,11 +1,9 @@
 ﻿using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Book;
+using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.BookService.Infrastructure.Adapters
 {
@@ -15,11 +13,15 @@ namespace Library.BookService.Infrastructure.Adapters
     {
         private readonly BookServicePort _bookService;
         private readonly MediaStoragePort _mediaStorage;
-
-        public BookRESTController(BookServicePort bookService, MediaStoragePort mediaStorage)
+        private readonly ILoggerPort _logger;
+        public BookRESTController(
+            BookServicePort bookService,
+            MediaStoragePort mediaStorage,
+            ILoggerPort logger)
         {
             _bookService = bookService;
             _mediaStorage = mediaStorage;
+            _logger = logger;
         }
 
         // GET /library
@@ -27,9 +29,21 @@ namespace Library.BookService.Infrastructure.Adapters
         [AllowAnonymous]
         public async Task<ActionResult<List<BookResponse>>> GetBooks()
         {
-            var books = await _bookService.GetAllBooksAsync();
-            var response = BookDTOMapper.ToResponseList(books);
-            return Ok(response);
+            _logger.Info("Chiamata a GetBooks()");
+
+            try
+            {
+                var books = await _bookService.GetAllBooksAsync();
+                var response = BookDTOMapper.ToResponseList(books);
+
+                _logger.Info($"Restituiti {response.Count} libri");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Errore durante il recupero di tutti i libri");
+                return StatusCode(500,"Errore interno del server");
+            }
         }
 
         // GET /library/{id}
@@ -37,10 +51,25 @@ namespace Library.BookService.Infrastructure.Adapters
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<BookResponse>> GetBookById(long id)
         {
-            var book = await _bookService.GetBookByIdAsync(id);
-            if (book == null) return NotFound();
-            var response = BookDTOMapper.ToResponse(book);
-            return Ok(response);
+            _logger.Info($"Chiamata a GetBookById() con ID {id}");
+
+            try
+            {
+                var book = await _bookService.GetBookByIdAsync(id);
+                if (book == null)
+                {
+                    _logger.Warn($"Libro non trovato per ID {id}");
+                    return NotFound();
+                }
+
+                var response = BookDTOMapper.ToResponse(book);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante il recupero del libro ID {id}", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
 
         // POST /library
@@ -49,50 +78,66 @@ namespace Library.BookService.Infrastructure.Adapters
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<long>> AddBook([FromForm] BookRequest request)
         {
-            // 1️⃣ Crei il dominio senza cover
-            var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
+            _logger.Info($"Tentativo di aggiungere un nuovo libro: {request.Title}");
 
-            // 2️⃣ Salvi il libro nel DB (gli ID vengono generati e restituiti)
-            var createdBook = await _bookService.CreateBookAsync(bookDomain);
-
-            string? coverUrl = null;
-
-            // 3️⃣ Se è presente la cover, salvala sul filesystem usando gli ID effettivi
-            if (request.Cover is not null)
+            try
             {
-                using var stream = request.Cover.OpenReadStream();
+                // Creazione libro senza cover
+                var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
+                var createdBook = await _bookService.CreateBookAsync(bookDomain);
 
-                var editorId = createdBook.Editor.Id; // ID reale dell'editor
-                var authorIds = createdBook.Authors.Select(a => a.Id); // ID reali degli autori
-                var bookId = createdBook.BookId.Value; // .Value perché BookId è nullable
+                string? coverUrl = null;
 
-                coverUrl = await _mediaStorage.SaveAsync(
-                    stream,
-                    request.Cover.FileName,
-                    request.Cover.ContentType,
-                    editorId,
-                    authorIds,
-                    bookId
-                );
+                if (request.Cover is not null)
+                {
+                    _logger.Info($"Salvataggio cover per il libro ID {createdBook.BookId}");
 
-                // 4️⃣ Aggiorna il libro con la cover
-                createdBook.CoverReference = coverUrl;
-                await _bookService.UpdateBookAsync(bookId, createdBook);
+                    using var stream = request.Cover.OpenReadStream();
+                    coverUrl = await _mediaStorage.SaveAsync(
+                        stream,
+                        request.Cover.FileName,
+                        request.Cover.ContentType,
+                        createdBook.Editor.Id,
+                        createdBook.Authors.Select(a => a.Id),
+                        createdBook.BookId!.Value
+                    );
+
+                    // Aggiornamento libro con cover
+                    createdBook.CoverReference = coverUrl;
+                    await _bookService.UpdateBookAsync(createdBook.BookId.Value, createdBook);
+
+                    _logger.Info($"Cover salvata all'URL: {coverUrl}");
+                }
+
+                return Ok(createdBook.BookId);
             }
-
-            return Ok(createdBook.BookId);
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante l'aggiunta del libro: {request.Title}", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
-
-
 
         // PUT /library/{id}
         [HttpPut("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> UpdateBook(long id, [FromBody] BookRequest request)
         {
-            var bookDomain = BookDTOMapper.ToDomain(request);
-            var updatedId = await _bookService.UpdateBookAsync(id, bookDomain);
-            return Ok(updatedId);
+            _logger.Info($"Tentativo di aggiornare libro ID {id}");
+
+            try
+            {
+                var bookDomain = BookDTOMapper.ToDomain(request);
+                var updatedId = await _bookService.UpdateBookAsync(id, bookDomain);
+
+                _logger.Info($"Libro aggiornato ID {updatedId}");
+                return Ok(updatedId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante l'aggiornamento del libro ID {id}", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
 
         // DELETE /library/{id}
@@ -100,7 +145,19 @@ namespace Library.BookService.Infrastructure.Adapters
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> DeleteBook(long id)
         {
-            return Ok(await _bookService.DeleteBookAsync(id));
+            _logger.Info($"Tentativo di eliminare libro ID {id}");
+
+            try
+            {
+                var deletedId = await _bookService.DeleteBookAsync(id);
+                _logger.Info($"Libro eliminato ID {deletedId}");
+                return Ok(deletedId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante l'eliminazione del libro ID {id}", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
 
         // GET /library/findByString?param=...
@@ -108,9 +165,21 @@ namespace Library.BookService.Infrastructure.Adapters
         [AllowAnonymous]
         public async Task<ActionResult<List<BookResponse>>> FindBooksByString([FromQuery] string param)
         {
-            var books = await _bookService.GetBooksByTextAsync(param);
-            var response = BookDTOMapper.ToResponseList(books);
-            return Ok(response);
+            _logger.Info($"Ricerca libri per parametro: {param}");
+
+            try
+            {
+                var books = await _bookService.GetBooksByTextAsync(param);
+                var response = BookDTOMapper.ToResponseList(books);
+
+                _logger.Info($"Trovati {response.Count} libri per parametro: {param}");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante la ricerca libri con parametro '{param}'", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
 
         // POST /library/findByBook
@@ -118,10 +187,22 @@ namespace Library.BookService.Infrastructure.Adapters
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<BookResponse>>> FindBooksByBook([FromBody] BookRequest request)
         {
-            var bookDomain = BookDTOMapper.ToDomain(request);
-            var books = await _bookService.GetBooksByObjectAsync(bookDomain);
-            var response = BookDTOMapper.ToResponseList(books);
-            return Ok(response);
+            _logger.Info($"Ricerca libri per oggetto BookRequest: {request.Title}");
+
+            try
+            {
+                var bookDomain = BookDTOMapper.ToDomain(request);
+                var books = await _bookService.GetBooksByObjectAsync(bookDomain);
+                var response = BookDTOMapper.ToResponseList(books);
+
+                _logger.Info($"Trovati {response.Count} libri per oggetto BookRequest: {request.Title}");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante la ricerca libri per oggetto BookRequest: {request.Title}", ex);
+                return StatusCode(500, "Errore interno del server");
+            }
         }
     }
 }
