@@ -25,7 +25,8 @@ builder.Services.AddScoped<AuthenticationRepositoryPort, AuthRepositoryAdapter>(
 builder.Services.AddScoped<JwtPort>(provider =>
 {
     var jwtExpirationMs = configuration.GetValue<double>("JwtSettings:ExpirationMilliseconds");
-    return new JwtAdapter(configuration, jwtExpirationMs);
+    var logger = provider.GetRequiredService<ILoggerPort>(); // recupero il logger dal DI
+    return new JwtAdapter(configuration, jwtExpirationMs, logger);
 });
 builder.Services.AddScoped<AuthenticationServicePort, AuthenticationService>();
 

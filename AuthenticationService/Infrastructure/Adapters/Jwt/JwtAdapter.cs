@@ -1,62 +1,64 @@
-﻿namespace Library.AuthenticationService.Infrastructure.Adapters.Jwt
-{
-    using System;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using Library.AuthenticationService.Core.Ports;
-    using Microsoft.IdentityModel.Tokens;
-    using Microsoft.Extensions.Configuration;  // Aggiungi questa direttiva per accedere alla configurazione
+﻿using Library.AuthenticationService.Core.Ports;
+using Library.Logging.Abstractions;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
+namespace Library.AuthenticationService.Infrastructure.Adapters.Jwt
+{
     public class JwtAdapter : JwtPort
     {
         private readonly string _jwtSecret;
         private readonly double _jwtExpirationMs;
+        private readonly ILoggerPort _logger;
 
-        // Costruttore che accetta IConfiguration per caricare i valori dalla configurazione
-        public JwtAdapter(IConfiguration configuration, double jwtExpirationMs)
+        public JwtAdapter(
+            IConfiguration configuration,
+            double jwtExpirationMs,
+            ILoggerPort logger)
         {
-            _jwtSecret = configuration["Jwt:Secret"] ?? throw new ArgumentNullException("Jwt Secret not configured");
+            _jwtSecret = configuration["Jwt:Secret"]
+                ?? throw new ArgumentNullException("Jwt Secret not configured");
+
             _jwtExpirationMs = double.Parse(configuration["Jwt:ExpirationMs"]);
+            _logger = logger;
         }
 
         public async Task<string> GenerateJwtToken(string email, string role)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                throw new ArgumentNullException(nameof(email), "Email cannot be null or empty");
-            }
+            _logger.Debug($"Generating JWT token for email: {email}, role: {role}");
 
-            if (string.IsNullOrEmpty(role))
-            {
-                throw new ArgumentNullException(nameof(role), "Role cannot be null or empty");
-            }
+            var securityKey = new SymmetricSecurityKey(
+                System.Text.Encoding.UTF8.GetBytes(_jwtSecret));
 
-            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSecret)); // Key for signing the token
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature); // Set the signing algorithm
+            var credentials = new SigningCredentials(
+                securityKey,
+                SecurityAlgorithms.HmacSha512Signature);
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, email), // Subject: email
-                new Claim(ClaimTypes.Role, role)   // Add role as a claim
+                new Claim(ClaimTypes.Name, email),
+                new Claim(ClaimTypes.Role, role)
             };
 
-            // Recupera il fuso orario desiderato (ad esempio, per l'Italia, che è UTC+1 o UTC+2 con l'ora legale)
             var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
-            var expirationTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow.AddMilliseconds(_jwtExpirationMs), timeZoneInfo);
+            var expirationTime = TimeZoneInfo.ConvertTime(
+                DateTime.UtcNow.AddMilliseconds(_jwtExpirationMs),
+                timeZoneInfo);
 
-
-            // Log della data di scadenza
-            Console.WriteLine($"Token expiration time (Local Time Zone): {expirationTime}");
+            _logger.Info($"JWT token expiration time set to: {expirationTime}");
 
             var tokenDescriptor = new JwtSecurityToken(
-                claims: claims, // Claims
-                expires: expirationTime, // Imposta la scadenza nel fuso orario locale
-                signingCredentials: credentials); // Usa le credenziali di firma
+                claims: claims,
+                expires: expirationTime,
+                signingCredentials: credentials);
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.WriteToken(tokenDescriptor); // Genera il token JWT
+            var token = tokenHandler.WriteToken(tokenDescriptor);
 
-            return await Task.FromResult(token); // Restituisci il token in modo asincrono
+            _logger.Info($"JWT token successfully generated for email: {email}");
+
+            return await Task.FromResult(token);
         }
     }
 }
