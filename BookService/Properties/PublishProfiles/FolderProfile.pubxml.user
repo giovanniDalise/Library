@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <History>True|2025-12-31T18:08:29.3987330Z||;True|2025-12-31T18:51:22.1651282+01:00||;True|2025-12-31T18:50:50.2374645+01:00||;True|2025-12-31T16:56:48.9731039+01:00||;True|2025-05-01T10:06:04.1571912+02:00||;True|2025-03-09T15:54:24.8220916+01:00||;True|2025-02-25T21:19:53.8715247+01:00||;False|2025-02-25T21:18:48.5822368+01:00||;</History>
+    <History>True|2026-01-10T08:38:19.6775395Z||;True|2026-01-10T09:21:02.3882907+01:00||;True|2025-12-31T19:08:29.3987330+01:00||;True|2025-12-31T18:51:22.1651282+01:00||;True|2025-12-31T18:50:50.2374645+01:00||;True|2025-12-31T16:56:48.9731039+01:00||;True|2025-05-01T10:06:04.1571912+02:00||;True|2025-03-09T15:54:24.8220916+01:00||;True|2025-02-25T21:19:53.8715247+01:00||;False|2025-02-25T21:18:48.5822368+01:00||;</History>
     <LastFailureDetails />
     <_PublishTargetUrl>C:\Users\GDalise\source\repos\giovanniDalise\WorkspaceDotnet\Library\BookService\bin\Release\net8.0\publish\</_PublishTargetUrl>
   </PropertyGroup>

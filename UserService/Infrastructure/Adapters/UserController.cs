@@ -48,7 +48,7 @@ namespace Library.UserService.Infrastructure.Adapters
         [HttpPost]
         public async Task<ActionResult<long>> AddUser([FromBody] UserRequest request)
         {
-            _logger.Info($"AddUser called for username={request.Username}");
+            _logger.Info($"AddUser {request.Name} {request.Surname}");
             var user = UserDTOMapper.ToDomain(request);
             var id = await _userService.CreateUserAsync(user);
             _logger.Info($"User created with id={id}");

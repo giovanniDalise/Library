@@ -35,6 +35,7 @@ services:
     volumes:
       - book-images:/app/images
       - app-data:/app-data  # Monta il volume condiviso per il BookService
+      - logs-data:/app/logs
     networks:
       - library_default
     restart: always
@@ -55,6 +56,7 @@ services:
       - images-init
     volumes:
       - app-data:/app-data  # Monta il volume condiviso per il BookService
+      - logs-data:/app/logs
     networks:
       - library_default
     restart: always
@@ -74,6 +76,7 @@ services:
       - mysql-container  # Dipendenza da MySQL
     volumes:
       - app-data:/app-data  # Monta il volume condiviso per il BookService
+      - logs-data:/app/logs
     networks:
       - library_default
     restart: always    
@@ -119,5 +122,6 @@ networks:
     driver: bridge
 
 volumes:
-  app-data: {}  # Volume condiviso tra MySQL e BookService
+  app-data: {}
   book-images: {}
+  logs-data: {}   

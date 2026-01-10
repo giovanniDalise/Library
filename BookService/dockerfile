@@ -2,8 +2,11 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
+# Scrittura logs
+RUN mkdir -p /app/logs
+
 # Copia solo i file pubblicati
-COPY bin/Release/net8.0/publish/ ./ 
+COPY bin/Release/net8.0/publish/ ./
 
 # Aggiungi repository HTTPS e aggiorna apt per installare netcat
 RUN apt-get update && apt-get install -y apt-transport-https curl \

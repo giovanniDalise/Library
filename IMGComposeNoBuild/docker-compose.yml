@@ -26,7 +26,8 @@ services:
       - mysql-container
     volumes:
       - book-images:/app/images    
-      - app-data:/app-data      
+      - app-data:/app-data
+      - logs-data:/app/logs      
     networks:
       - library_default
     restart: always
@@ -43,7 +44,8 @@ services:
       - mysql-container  
       - images-init                   
     volumes:
-      - app-data:/app-data 
+      - app-data:/app-data
+      - logs-data:/app/logs      
     networks:
       - library_default
     restart: always
@@ -59,7 +61,8 @@ services:
     depends_on:
       - mysql-container  
     volumes:
-      - app-data:/app-data 
+      - app-data:/app-data
+      - logs-data:/app/logs      
     networks:
       - library_default
     restart: always   
@@ -98,3 +101,4 @@ networks:
 volumes:
   app-data: {}
   book-images: {}
+  logs-data: {}
