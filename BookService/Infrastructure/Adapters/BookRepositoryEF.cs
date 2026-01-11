@@ -86,14 +86,20 @@ namespace Library.BookService.Infrastructure.Adapters
 
 
 
-        public async Task<List<Book>> ReadAsync()
+        public async Task<List<Book>> ReadAsync(int page, int pageSize)
         {
             _logger.Info("[Repository] Lettura di tutti i libri");
             try
             {
+                // Calcolo offset per la paginazione
+                int offset = (page - 1) * pageSize;
+
                 var bookEntities = await _context.Books
                                                   .Include(b => b.Editor)
                                                   .Include(b => b.Authors)
+                                                  .OrderBy(b => b.BookId)
+                                                  .Skip(offset)
+                                                  .Take(pageSize)
                                                   .ToListAsync();
 
                 _logger.Info($"Trovati {bookEntities.Count} libri");

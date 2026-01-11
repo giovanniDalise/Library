@@ -4,6 +4,7 @@ using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace Library.BookService.Infrastructure.Adapters
 {
@@ -27,13 +28,26 @@ namespace Library.BookService.Infrastructure.Adapters
         // GET /library
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<BookResponse>>> GetBooks()
+        public async Task<ActionResult<List<BookResponse>>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             _logger.Info("Chiamata a GetBooks()");
 
+            if (page <1)
+            {
+                _logger.Warn($"Tentativo di accesso con Page non valido: {page}");
+                return BadRequest(new { error = "Page deve essere >=1" });
+            }
+
+            if (pageSize < 1 || pageSize > 100)
+            {
+                _logger.Warn($"Tentativo di accesso con PageSize non valido: {pageSize}");
+                return BadRequest(new { error = "PageSize deve essere tra 1 e 100" });
+            }
+
+
             try
             {
-                var books = await _bookService.GetAllBooksAsync();
+                var books = await _bookService.GetAllBooksAsync(page, pageSize);
                 var response = BookDTOMapper.ToResponseList(books);
 
                 _logger.Info($"Restituiti {response.Count} libri");
