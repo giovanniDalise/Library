@@ -1,6 +1,6 @@
 ﻿namespace Library.BookService.Infrastructure.DTO.REST.Book
 {
-    public class PagedBookResponse
+    public class PagedBookResponse<T>
     {
         public IEnumerable<BookResponse> BookResponse { get; set;} = new List<BookResponse>();
         public int Page { get; set; }

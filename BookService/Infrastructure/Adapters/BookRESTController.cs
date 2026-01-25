@@ -1,4 +1,5 @@
-﻿using Library.BookService.Core.Ports;
+﻿using Library.BookService.Core.Domain.Models;
+using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.Logging.Abstractions;
@@ -28,11 +29,11 @@ namespace Library.BookService.Infrastructure.Adapters
         // GET /library
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedBookResponse>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<PagedBookResponse<BookResponse>>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             _logger.Info("Chiamata a GetBooks()");
 
-            if (page <1)
+            if (page < 1)
             {
                 _logger.Warn($"Tentativo di accesso con Page non valido: {page}");
                 return BadRequest(new { error = "Page deve essere >=1" });
@@ -47,10 +48,9 @@ namespace Library.BookService.Infrastructure.Adapters
 
             try
             {
-                var books = await _bookService.GetAllBooksAsync(page, pageSize);
-                var totalRecords = await _bookService.GetTotalBooksAsync();         
+                var (books, totalRecords) = await _bookService.GetAllBooksAsync(page, pageSize);
 
-                var response = new PagedBookResponse
+                var response = new PagedBookResponse<BookResponse>
                 {
                     BookResponse = BookDTOMapper.ToResponseList(books),
                     Page = page,
@@ -64,7 +64,7 @@ namespace Library.BookService.Infrastructure.Adapters
             catch (Exception ex)
             {
                 _logger.Error("Errore durante il recupero di tutti i libri");
-                return StatusCode(500,"Errore interno del server");
+                return StatusCode(500, "Errore interno del server");
             }
         }
 
@@ -185,16 +185,35 @@ namespace Library.BookService.Infrastructure.Adapters
         // GET /library/findByString?param=...
         [HttpGet("findByString")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<BookResponse>>> FindBooksByString([FromQuery] string param)
+        public async Task<ActionResult<PagedBookResponse<BookResponse>>> FindBooksByString([FromQuery] string param, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            _logger.Info($"Ricerca libri per parametro: {param}");
+            _logger.Info($"Chiamata a FindBooksByString() con parametro: {param}");
+
+            if(page<1)
+            {
+                _logger.Warn($"Tentativo di accesso con Page non valido: {page}");
+                return BadRequest(new { error = "Page deve essere >=1" });
+            }
+
+            if (pageSize < 1 || pageSize > 10)
+            {
+                _logger.Warn($"Tentativo di accesso con PageSize non valido: {pageSize}");
+                return BadRequest(new { error = "Pagesize deve essere tra 1 e 100" });
+            }
 
             try
             {
-                var books = await _bookService.GetBooksByTextAsync(param);
-                var response = BookDTOMapper.ToResponseList(books);
+                var (books, totalRecords) = await _bookService.GetBooksByTextAsync(param, page, pageSize);
 
-                _logger.Info($"Trovati {response.Count} libri per parametro: {param}");
+                var response = new PagedBookResponse<BookResponse>
+                {
+                    BookResponse = BookDTOMapper.ToResponseList(books),
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalRecords = totalRecords,
+                };
+
+                _logger.Info($"Trovati {response.TotalRecords} libri per parametro: {param}");
                 return Ok(response);
             }
             catch (Exception ex)

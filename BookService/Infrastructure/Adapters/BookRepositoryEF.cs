@@ -1,11 +1,14 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports;
+using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.BookService.Infrastructure.exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 
 namespace Library.BookService.Infrastructure.Adapters
 {
@@ -90,7 +93,7 @@ namespace Library.BookService.Infrastructure.Adapters
 
 
 
-        public async Task<List<Book>> ReadAsync(int page, int pageSize)
+        public async Task<(List<Book> Items, int TotalRecords)> ReadAsync(int page, int pageSize)
         {
             _logger.Info("[Repository] Lettura di tutti i libri");
             try
@@ -110,7 +113,7 @@ namespace Library.BookService.Infrastructure.Adapters
                                                   .ToListAsync();
 
                 _logger.Info($"Trovati {bookEntities.Count} libri");
-                return _bookMapper.ToDomainList(bookEntities);
+                return (_bookMapper.ToDomainList(bookEntities), totalRecords);
             }
             catch (Exception e)
             {
@@ -237,24 +240,33 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        public async Task<List<Book>> FindByTextAsync(string searchText)
+        public async Task<(List<Book> Items, int TotalRecords)> FindByTextAsync(string searchText, int page, int pageSize)
         {
             _logger.Info($"FindByTextAsync - Start | SearchText='{searchText}'");
             try
             {
-                var query = _context.Books
-                                    .Include(b => b.Editor)
-                                    .Include(b => b.Authors)
-                                    .Where(b => b.Title.Contains(searchText) ||
-                                                b.Isbn.Contains(searchText) ||
-                                                b.Editor.Name.Contains(searchText) ||
-                                                b.Authors.Any(a => a.Name.Contains(searchText) || a.Surname.Contains(searchText)))
-                                    .ToListAsync();
+                int offset = (page - 1) * pageSize;
 
-                var result = await query;
+                var baseQuery = _context.Books
+                    .Include(b => b.Editor)
+                    .Include(b => b.Authors)
+                    .Where(b =>
+                        b.Title.Contains(searchText) ||
+                        b.Isbn.Contains(searchText) ||
+                        b.Editor.Name.Contains(searchText) ||
+                        b.Authors.Any(a => a.Name.Contains(searchText) || a.Surname.Contains(searchText)));
 
-                _logger.Info($"FindByTextAsync - Completed | SearchText='{searchText}' | Results={result.Count}");
-                return _bookMapper.ToDomainList(result);
+                int total = await baseQuery.CountAsync();
+
+                var items = await baseQuery
+                    .OrderBy(b => b.BookId)
+                    .Skip(offset)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                _logger.Info($"FindByTextAsync - Completed | SearchText='{searchText}' | Results={total}");
+                return (_bookMapper.ToDomainList(items), total);
+
             }
             catch (Exception e)
             {
