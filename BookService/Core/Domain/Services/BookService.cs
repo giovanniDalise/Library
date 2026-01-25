@@ -49,5 +49,9 @@ namespace Library.BookService.Core.Domain.Services
         {
             return await _bookRepositoryPort.FindByObjectAsync(searchBook);
         }
+        public async Task<int> GetTotalBooksAsync()
+        {
+            return await _bookRepositoryPort.CountAsync();
+        }
     }
 }

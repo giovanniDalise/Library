@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Library.BookService.Core.Domain.Models;
+using Library.BookService.Infrastructure.DTO.REST.Book;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Library.BookService.Core.Domain.Models;
 
 namespace Library.BookService.Core.Ports
 {
@@ -13,5 +14,6 @@ namespace Library.BookService.Core.Ports
         Task<long> DeleteBookAsync(long id);
         Task<List<Book>> GetBooksByTextAsync(string searchText);
         Task<List<Book>> GetBooksByObjectAsync(Book searchBook);
+        Task<int> GetTotalBooksAsync();
     }
 }

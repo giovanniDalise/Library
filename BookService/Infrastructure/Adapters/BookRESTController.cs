@@ -28,7 +28,7 @@ namespace Library.BookService.Infrastructure.Adapters
         // GET /library
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<BookResponse>>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<PagedBookResponse>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             _logger.Info("Chiamata a GetBooks()");
 
@@ -48,9 +48,17 @@ namespace Library.BookService.Infrastructure.Adapters
             try
             {
                 var books = await _bookService.GetAllBooksAsync(page, pageSize);
-                var response = BookDTOMapper.ToResponseList(books);
+                var totalRecords = await _bookService.GetTotalBooksAsync();         
 
-                _logger.Info($"Restituiti {response.Count} libri");
+                var response = new PagedBookResponse
+                {
+                    BookResponse = BookDTOMapper.ToResponseList(books),
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalRecords = totalRecords
+                };
+
+                _logger.Info($"Restituiti {response.BookResponse.Count()} libri su {response.TotalRecords} totali");
                 return Ok(response);
             }
             catch (Exception ex)

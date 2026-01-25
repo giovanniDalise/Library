@@ -83,6 +83,10 @@ namespace Library.BookService.Infrastructure.Adapters
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
+        public async Task<int> CountAsync()
+        {
+            return await _context.Books.CountAsync();
+        }
 
 
 
@@ -91,6 +95,9 @@ namespace Library.BookService.Infrastructure.Adapters
             _logger.Info("[Repository] Lettura di tutti i libri");
             try
             {
+                // Totale libri
+                int totalRecords = await _context.Books.CountAsync();
+
                 // Calcolo offset per la paginazione
                 int offset = (page - 1) * pageSize;
 
