@@ -46,9 +46,9 @@ namespace Library.BookService.Core.Domain.Services
             return await _bookRepositoryPort.FindByTextAsync(searchText, page, pageSize);
         }
 
-        public async Task<List<Book>> GetBooksByObjectAsync(Book searchBook)
+        public async Task<(List<Book> Books, int TotalRecords)> GetBooksByObjectAsync(Book searchBook, int page, int pageSize)
         {
-            return await _bookRepositoryPort.FindByObjectAsync(searchBook);
+            return await _bookRepositoryPort.FindByObjectAsync(searchBook, page, pageSize);
         }
     }
 }

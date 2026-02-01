@@ -13,6 +13,6 @@ namespace Library.BookService.Core.Ports
         Task<long> UpdateBookAsync(long id, Book book);
         Task<long> DeleteBookAsync(long id);
         Task<(List<Book> Books, int TotalRecords)> GetBooksByTextAsync(string searchText, int page, int pagesize);
-        Task<List<Book>> GetBooksByObjectAsync(Book searchBook);
+        Task<(List<Book> Books, int TotalRecords)> GetBooksByObjectAsync(Book searchBook, int page, int pageSize);
     }
 }

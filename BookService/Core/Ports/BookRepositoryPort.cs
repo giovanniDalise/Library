@@ -11,6 +11,6 @@ namespace Library.BookService.Core.Ports
         Task<long> UpdateAsync(long id, Book book);
         Task<long> DeleteAsync(long id);
         Task<(List<Book> Items, int TotalRecords)> FindByTextAsync(string searchText, int page, int pageSize);
-        Task<List<Book>> FindByObjectAsync(Book searchBook);
+        Task<(List<Book> Items, int TotalRecords)> FindByObjectAsync(Book searchBook, int page, int pageSize);
     }
 }

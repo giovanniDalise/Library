@@ -226,17 +226,38 @@ namespace Library.BookService.Infrastructure.Adapters
         // POST /library/findByBook
         [HttpPost("findByBook")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<List<BookResponse>>> FindBooksByBook([FromBody] BookRequest request)
+        public async Task<ActionResult<List<BookResponse>>> FindBooksByBook(
+            [FromBody] BookRequest request,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10
+            )
         {
-            _logger.Info($"Ricerca libri per oggetto BookRequest: {request.Title}");
+            _logger.Info($"Chiamata a FindbooksByBook per libro con titolo: {request.Title}");
+
+            if (page < 1)
+            {
+                _logger.Warn($"Tentativo non valido con Page: {page}");
+                return BadRequest(new { error = "Page deve essere >=1" });
+            }
+            if (pageSize < 1 || pageSize > 10)
+            {
+                _logger.Warn($"Tentativo non valido con PageSize: {pageSize}");
+                return BadRequest(new { error = "Pagesize deve essere tra 1 e 100" });
+            }
 
             try
             {
                 var bookDomain = BookDTOMapper.ToDomain(request);
-                var books = await _bookService.GetBooksByObjectAsync(bookDomain);
-                var response = BookDTOMapper.ToResponseList(books);
+                var (books, totalRecords) = await _bookService.GetBooksByObjectAsync(bookDomain, page, pageSize);
+                var response = new PagedBookResponse<BookResponse>
+                {
+                    BookResponse = BookDTOMapper.ToResponseList(books),
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalRecords = totalRecords
+                };
 
-                _logger.Info($"Trovati {response.Count} libri per oggetto BookRequest: {request.Title}");
+                _logger.Info($"Trovati {response.TotalRecords} libri per oggetto BookRequest: {request.Title}");
                 return Ok(response);
             }
             catch (Exception ex)

@@ -275,12 +275,14 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        public async Task<List<Book>> FindByObjectAsync(Book searchBook)
+        public async Task<(List<Book> Items, int TotalRecords)> FindByObjectAsync(Book searchBook, int page, int pageSize)
         {
             _logger.Info($"FindByObjectAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
 
             try
             {
+                int offset = (page -1) * pageSize;
+
                 var query = _context.Books
                                     .Include(b => b.Editor)
                                     .Include(b => b.Authors)
@@ -296,11 +298,36 @@ namespace Library.BookService.Infrastructure.Adapters
                     query = query.Where(b => b.Isbn.Contains(searchBook.Isbn));
                 }
 
-                var bookEntities = await query.ToListAsync();
+                if (searchBook.Editor != null &&
+                    !string.IsNullOrEmpty(searchBook.Editor.Name))
+                {
+                    query = query.Where(b =>
+                        b.Editor != null &&
+                        b.Editor.Name.Contains(searchBook.Editor.Name));
+                }
+
+                if (searchBook.Authors != null && searchBook.Authors.Any())
+                {
+                    var author = searchBook.Authors.First();
+
+                    query = query.Where(b =>
+                        b.Authors.Any(a =>
+                            (string.IsNullOrEmpty(author.Name) || a.Name.Contains(author.Name)) &&
+                            (string.IsNullOrEmpty(author.Surname) || a.Surname.Contains(author.Surname))
+                        ));
+                }
+
+                int total = await query.CountAsync();
+
+                var bookEntities = await query
+                    .OrderBy(b =>b.BookId)
+                    .Skip(offset)
+                    .Take(pageSize)
+                    .ToListAsync();
 
                 _logger.Info($"FindByObjectAsync - Completed | Results={bookEntities.Count}");
 
-                return _bookMapper.ToDomainList(bookEntities);
+                return (_bookMapper.ToDomainList(bookEntities), total);
             }
             catch (Exception e)
             {
