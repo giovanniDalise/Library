@@ -7,12 +7,10 @@ namespace Library.BookService.Core.Ports
 {
     public interface BookServicePort
     {
-        Task<(List<Book> Books, int TotalRecords)> GetAllBooksAsync(int page, int pageSize);
         Task<Book> GetBookByIdAsync(long id);
         Task<Book> CreateBookAsync(Book book);
         Task<long> UpdateBookAsync(long id, Book book);
         Task<long> DeleteBookAsync(long id);
-        Task<(List<Book> Books, int TotalRecords)> GetBooksByTextAsync(string searchText, int page, int pagesize);
-        Task<(List<Book> Books, int TotalRecords)> GetBooksByObjectAsync(Book searchBook, int page, int pageSize);
+        Task<(List<Book> Books, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize);
     }
 }

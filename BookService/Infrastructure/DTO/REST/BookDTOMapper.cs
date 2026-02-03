@@ -45,17 +45,21 @@ namespace Library.BookService.Infrastructure.DTO.REST
                 Title = request.Title,
                 Isbn = request.Isbn,
                 CoverReference = coverReference,
-                Editor = new Library.BookService.Core.Domain.Models.Editor
-                {
-                    Id = request.Editor.Id,
-                    Name = request.Editor.Name
-                },
-                Authors = request.Authors.Select(a => new Library.BookService.Core.Domain.Models.Author
-                {
-                    Id = a.Id,
-                    Name = a.Name,
-                    Surname = a.Surname
-                }).ToHashSet()
+                Editor = request.Editor != null
+                    ? new Library.BookService.Core.Domain.Models.Editor
+                    {
+                        Id = request.Editor.Id,
+                        Name = request.Editor.Name
+                    }
+                    : null,
+                Authors = request.Authors != null
+                    ? request.Authors.Select(a => new Library.BookService.Core.Domain.Models.Author
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Surname = a.Surname
+                    }).ToHashSet()
+                    : new HashSet<Library.BookService.Core.Domain.Models.Author>()
             };
         }
     }

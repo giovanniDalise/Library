@@ -16,11 +16,6 @@ namespace Library.BookService.Core.Domain.Services
             _bookRepositoryPort = bookRepositoryPort ?? throw new ArgumentNullException(nameof(bookRepositoryPort));
         }
 
-        public async Task<(List<Book> Books, int TotalRecords)> GetAllBooksAsync(int page, int pageSize)
-        {
-            return await _bookRepositoryPort.ReadAsync(page, pageSize);
-        }
-
         public async Task<Book> GetBookByIdAsync(long id)
         {
             return await _bookRepositoryPort.GetByIdAsync(id);
@@ -41,14 +36,9 @@ namespace Library.BookService.Core.Domain.Services
             return await _bookRepositoryPort.DeleteAsync(id);
         }
 
-        public async Task<(List<Book> Books, int TotalRecords)> GetBooksByTextAsync(string searchText, int page, int pageSize)
+        public async Task<(List<Book> Books, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize)
         {
-            return await _bookRepositoryPort.FindByTextAsync(searchText, page, pageSize);
-        }
-
-        public async Task<(List<Book> Books, int TotalRecords)> GetBooksByObjectAsync(Book searchBook, int page, int pageSize)
-        {
-            return await _bookRepositoryPort.FindByObjectAsync(searchBook, page, pageSize);
+            return await _bookRepositoryPort.ReadAsync(searchBook, page, pageSize);
         }
     }
 }

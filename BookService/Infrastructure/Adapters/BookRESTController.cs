@@ -26,47 +26,6 @@ namespace Library.BookService.Infrastructure.Adapters
             _logger = logger;
         }
 
-        // GET /library
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<PagedBookResponse<BookResponse>>> GetBooks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
-        {
-            _logger.Info("Chiamata a GetBooks()");
-
-            if (page < 1)
-            {
-                _logger.Warn($"Tentativo di accesso con Page non valido: {page}");
-                return BadRequest(new { error = "Page deve essere >=1" });
-            }
-
-            if (pageSize < 1 || pageSize > 100)
-            {
-                _logger.Warn($"Tentativo di accesso con PageSize non valido: {pageSize}");
-                return BadRequest(new { error = "PageSize deve essere tra 1 e 100" });
-            }
-
-
-            try
-            {
-                var (books, totalRecords) = await _bookService.GetAllBooksAsync(page, pageSize);
-
-                var response = new PagedBookResponse<BookResponse>
-                {
-                    BookResponse = BookDTOMapper.ToResponseList(books),
-                    Page = page,
-                    PageSize = pageSize,
-                    TotalRecords = totalRecords
-                };
-
-                _logger.Info($"Restituiti {response.BookResponse.Count()} libri su {response.TotalRecords} totali");
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Errore durante il recupero di tutti i libri");
-                return StatusCode(500, "Errore interno del server");
-            }
-        }
 
         // GET /library/{id}
         [HttpGet("{id}")]
@@ -182,57 +141,16 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        // GET /library/findByString?param=...
-        [HttpGet("findByString")]
+        // POST /library/GetBooks
+        [HttpPost("GetBooks")]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedBookResponse<BookResponse>>> FindBooksByString([FromQuery] string param, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
-        {
-            _logger.Info($"Chiamata a FindBooksByString() con parametro: {param}");
-
-            if(page<1)
-            {
-                _logger.Warn($"Tentativo di accesso con Page non valido: {page}");
-                return BadRequest(new { error = "Page deve essere >=1" });
-            }
-
-            if (pageSize < 1 || pageSize > 10)
-            {
-                _logger.Warn($"Tentativo di accesso con PageSize non valido: {pageSize}");
-                return BadRequest(new { error = "Pagesize deve essere tra 1 e 100" });
-            }
-
-            try
-            {
-                var (books, totalRecords) = await _bookService.GetBooksByTextAsync(param, page, pageSize);
-
-                var response = new PagedBookResponse<BookResponse>
-                {
-                    BookResponse = BookDTOMapper.ToResponseList(books),
-                    Page = page,
-                    PageSize = pageSize,
-                    TotalRecords = totalRecords,
-                };
-
-                _logger.Info($"Trovati {response.TotalRecords} libri per parametro: {param}");
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Errore durante la ricerca libri con parametro '{param}'", ex);
-                return StatusCode(500, "Errore interno del server");
-            }
-        }
-
-        // POST /library/findByBook
-        [HttpPost("findByBook")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<List<BookResponse>>> FindBooksByBook(
+        public async Task<ActionResult<PagedBookResponse<BookResponse>>> GetBooks(
             [FromBody] BookRequest request,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10
             )
         {
-            _logger.Info($"Chiamata a FindbooksByBook per libro con titolo: {request.Title}");
+            _logger.Info($"Chiamata a GetBooks per libro con titolo: {request.Title}");
 
             if (page < 1)
             {
@@ -248,7 +166,7 @@ namespace Library.BookService.Infrastructure.Adapters
             try
             {
                 var bookDomain = BookDTOMapper.ToDomain(request);
-                var (books, totalRecords) = await _bookService.GetBooksByObjectAsync(bookDomain, page, pageSize);
+                var (books, totalRecords) = await _bookService.GetBooksAsync(bookDomain, page, pageSize);
                 var response = new PagedBookResponse<BookResponse>
                 {
                     BookResponse = BookDTOMapper.ToResponseList(books),

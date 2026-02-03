@@ -86,42 +86,6 @@ namespace Library.BookService.Infrastructure.Adapters
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
-        public async Task<int> CountAsync()
-        {
-            return await _context.Books.CountAsync();
-        }
-
-
-
-        public async Task<(List<Book> Items, int TotalRecords)> ReadAsync(int page, int pageSize)
-        {
-            _logger.Info("[Repository] Lettura di tutti i libri");
-            try
-            {
-                // Totale libri
-                int totalRecords = await _context.Books.CountAsync();
-
-                // Calcolo offset per la paginazione
-                int offset = (page - 1) * pageSize;
-
-                var bookEntities = await _context.Books
-                                                  .Include(b => b.Editor)
-                                                  .Include(b => b.Authors)
-                                                  .OrderBy(b => b.BookId)
-                                                  .Skip(offset)
-                                                  .Take(pageSize)
-                                                  .ToListAsync();
-
-                _logger.Info($"Trovati {bookEntities.Count} libri");
-                return (_bookMapper.ToDomainList(bookEntities), totalRecords);
-            }
-            catch (Exception e)
-            {
-                _logger.Error("Errore durante ReadAsync", e);
-                throw new BookRepositoryEFException("Error reading books: " + e.Message);
-            }
-        }
-
         public async Task<long> DeleteAsync(long id)
         {
             _logger.Info($"[Repository] Eliminazione libro ID {id}");
@@ -240,44 +204,9 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        public async Task<(List<Book> Items, int TotalRecords)> FindByTextAsync(string searchText, int page, int pageSize)
+        public async Task<(List<Book> Items, int TotalRecords)> ReadAsync(Book searchBook, int page, int pageSize)
         {
-            _logger.Info($"FindByTextAsync - Start | SearchText='{searchText}'");
-            try
-            {
-                int offset = (page - 1) * pageSize;
-
-                var baseQuery = _context.Books
-                    .Include(b => b.Editor)
-                    .Include(b => b.Authors)
-                    .Where(b =>
-                        b.Title.Contains(searchText) ||
-                        b.Isbn.Contains(searchText) ||
-                        b.Editor.Name.Contains(searchText) ||
-                        b.Authors.Any(a => a.Name.Contains(searchText) || a.Surname.Contains(searchText)));
-
-                int total = await baseQuery.CountAsync();
-
-                var items = await baseQuery
-                    .OrderBy(b => b.BookId)
-                    .Skip(offset)
-                    .Take(pageSize)
-                    .ToListAsync();
-
-                _logger.Info($"FindByTextAsync - Completed | SearchText='{searchText}' | Results={total}");
-                return (_bookMapper.ToDomainList(items), total);
-
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"FindByTextAsync - Error | SearchText='{searchText}'", e);
-                throw new BookRepositoryEFException("Error finding books by text: " + e.Message);
-            }
-        }
-
-        public async Task<(List<Book> Items, int TotalRecords)> FindByObjectAsync(Book searchBook, int page, int pageSize)
-        {
-            _logger.Info($"FindByObjectAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
+            _logger.Info($"ReadAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
 
             try
             {
@@ -325,13 +254,13 @@ namespace Library.BookService.Infrastructure.Adapters
                     .Take(pageSize)
                     .ToListAsync();
 
-                _logger.Info($"FindByObjectAsync - Completed | Results={bookEntities.Count}");
+                _logger.Info($"ReadAsync - Completed | Results={bookEntities.Count}");
 
                 return (_bookMapper.ToDomainList(bookEntities), total);
             }
             catch (Exception e)
             {
-                _logger.Error("FindByObjectAsync - Error", e);
+                _logger.Error("ReadAsync - Error", e);
 
                 throw new BookRepositoryEFException("Error finding books by object: " + e.Message);
             }
