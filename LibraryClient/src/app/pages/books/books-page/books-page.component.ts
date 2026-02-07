@@ -109,7 +109,7 @@ export class BooksPageComponent implements OnInit {
         error: error => {
           console.error('Errore nella ricerca:', error);
           this.books = [];
-          this.totalRecords = 0;sda
+          this.totalRecords = 0;
         }
       });
   }
