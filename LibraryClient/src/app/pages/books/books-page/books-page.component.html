@@ -1,0 +1,22 @@
+<div class="container py-5">
+  <a routerLink="/home" class="home-btn mb-3">
+    <i class="bi bi-house-door"></i> Home Page
+  </a>
+
+  <h1 class="display-4 fw-bold">Books</h1>
+  <app-books-filters 
+    [isAdmin]="isAdmin"
+    (search)="searchBook($event)">
+  </app-books-filters>
+
+  <app-books-grid
+    [books]="books"
+    [isAdmin]="isAdmin"
+    [isAuthenticated]="isAuthenticated"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (delete)="deleteBook($event)"
+    (nextPage)="nextPage()"
+    (prevPage)="prevPage()">
+  </app-books-grid>
+</div>

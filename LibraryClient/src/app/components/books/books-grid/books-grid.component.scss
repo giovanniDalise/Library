@@ -1,0 +1,143 @@
+
+.book-table th {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* 🔹 Arrotondamenti per l'intestazione */
+.book-table thead tr:first-child th:first-child {
+  border-top-left-radius: 1rem;
+}
+.book-table thead tr:first-child th:last-child {
+  border-top-right-radius: 1rem;
+}
+
+/* 🔹 Arrotondamenti per l'ultima riga */
+.book-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+.book-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
+}
+
+/* Assicura che il bordo inferiore resti coerente */
+.book-table td,
+.book-table th {
+  border: none;
+}
+
+/* ✅ Forza un colore coerente di sfondo per l’intera riga */
+.book-table tr {
+  background-color: rgba(49, 56, 63, 0.85);
+}
+
+
+/* Bottone uniforme per azioni Edit/Delete */
+.action-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.action-btn:hover {
+  background-color: #fff;
+  color: #111;
+  text-decoration: none;
+}
+
+.edit-btn {
+  background-color: #555;
+  border-color: #4b525e;
+}
+
+.edit-btn:hover {
+  background-color: #fff;
+  color: #111;
+}
+
+.delete-btn {
+  background-color: #805055; /* rosso più soft */
+  border-color: #000000;
+}
+
+.delete-btn:hover {
+  background-color: #fff;
+  color: #111;
+}
+
+.book-cover {
+  width: 100px;   // aumenta da 60px a 100px per ingrandire la copertina
+  height: auto;   // mantiene proporzioni originali
+  object-fit: cover; 
+  display: block;
+  margin: 0 auto; // centra l'immagine nella cella
+}
+
+
+/* Contenitore paginazione */
+.pagination-container {
+  display: flex;
+  justify-content: center; /* centrato orizzontalmente */
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Bottone paginazione simile ad action-btn */
+.pagination-container button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.pagination-container button:hover:not(:disabled) {
+  background-color: #fff;
+  color: #111;
+}
+
+.pagination-container button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Testo centrale della pagina */
+.pagination-container span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.books-counter {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff !important; 
+  margin-bottom: 1rem;
+}
+
+

@@ -1,0 +1,41 @@
+<div class="container py-5 position-relative">
+  <!-- TOP RIGHT AUTH -->
+  <div class="auth-top-right">
+    <ng-container *ngIf="!isAuthenticated; else logged">
+      <a class="btn btn-custom-outline auth-btn" routerLink="/login" data-tooltip="Login">
+        <i class="bi bi-person-circle"></i>
+      </a>
+    </ng-container>
+
+    <ng-template #logged>
+      <button class="btn btn-custom-outline auth-btn" (click)="logout()" data-tooltip="Logout">
+        <i class="bi bi-person-circle"></i>
+      </button>
+    </ng-template>
+  </div>
+
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Library MKNW</h1>
+    <p class="lead text-muted">Welcome to your digital library</p>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-12">
+      <div class="card shadow rounded p-4">
+        <div class="d-flex flex-column gap-3">
+
+          <a class="btn btn-custom-outline w-100" routerLink="/books">
+            <i class="bi bi-journal-bookmark"></i> Books
+          </a>
+
+          <ng-container *ngIf="isAdmin">
+            <a class="btn btn-custom-outline w-100" [routerLink]="['/book-form', 'create']">
+              <i class="bi bi-plus-lg me-2"></i> Add New Book
+            </a>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

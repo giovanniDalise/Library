@@ -1,0 +1,54 @@
+/* Stile specifico per il titolo */
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fffafa; // oppure #cccccc, #e0e0e0
+  text-shadow:
+    1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Link "Home Page" uniforme con stile View All Books */
+.home-link {
+  color: #f0f0f0; /* colore chiaro */
+  text-decoration: none; /* niente sottolineatura */
+  display: inline-flex; 
+  align-items: center;
+  gap: 0.5rem; /* spazio tra icona e testo */
+  font-weight: 600;
+  font-size: 1.1rem; /* leggermente più grande del normale */
+  transition: color 0.3s;
+}
+
+.home-link:hover {
+  color: #0d6efd; /* blu chiaro al passaggio */
+}
+
+/* Bottone Home Page più piccolo, testo centrato, spigoli dritti */
+.home-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff !important;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.2rem;
+
+  width: auto !important;
+  min-width: 150px;
+
+  border-radius: 0.75rem; /* angoli arrotondati */
+  text-decoration: none;  /* 🔹 niente sottolineatura */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #fff;
+  color: #111 !important;
+  text-decoration: none; /* assicurati che resti senza underline */
+}

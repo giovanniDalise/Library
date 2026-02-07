@@ -1,0 +1,25 @@
+<div class="books-filters">
+  <form [formGroup]="filterForm" class="filters-grid">
+
+    <div class="filter-item" *ngIf="isAdmin">
+      <input type="number" class="form-control" formControlName="bookId" placeholder="Book ID" />
+    </div>
+        
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="title" placeholder="Book Title" />
+    </div>
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN Code" />
+    </div>
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="author" placeholder="Author" />
+    </div>
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="editor" placeholder="Editor" />
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="btn btn-primary" (click)="onSearch()">Search</button>
+    </div>
+  </form>
+</div>

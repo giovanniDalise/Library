@@ -1,0 +1,39 @@
+<div class="background">
+    <div class="typewriter justify-content-center">
+      <h1 class="typewriter">Library MKNW</h1>
+  
+      <div class="form-container d-flex justify-content-center align-items-center">
+        <form (submit)="login()" class="w-100" style="max-width: 400px;">
+          <h4 class="mb-4 text-center">Effettua l'accesso</h4>
+  
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" required>
+          </div>
+  
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" required>
+          </div>
+  
+          <div class="mb-3 text-end">
+            <a routerLink="/reset-password">Password dimenticata?</a>
+          </div>
+  
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Accedi</button>
+          </div>
+  
+          <div class="text-center mb-3">
+            <a routerLink="/signup">Non sei registrato? Registrati.</a>
+          </div>
+  
+          <!--Pulsante Torna alla Home -->
+          <div class="d-grid">
+            <a routerLink="/" class="btn btn-outline-secondary">Torna alla Home</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

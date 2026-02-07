@@ -1,0 +1,57 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+  
+  body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(145, 145, 145, 0.4)), url("assets/img/libraryBackground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Fissa lo sfondo durante lo scroll */
+
+  }
+
+  /* Contenitore principale */
+  .container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    /* ===== POSIZIONE CENTRALE ===== */
+    .mat-mdc-snack-bar-container {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+
+      margin: 0 !important;
+      padding: 0 !important;
+
+      min-width: 420px;
+      max-width: 600px;
+      min-height: 44px;
+
+      border-radius: 10px !important; /* striscia, NON pillola */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+
+      overflow: hidden;
+    }
+
+    /* TESTO ARCADE */
+    .mat-mdc-snack-bar-label {
+      background-color: #524242;  /* sfondo bianco */
+      color: #fffdfd;             /* testo nero */
+      padding: 16px 20px;
+      text-align: center;
+
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+

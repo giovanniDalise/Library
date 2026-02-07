@@ -1,0 +1,90 @@
+<div class="container py-5">
+
+  <div *ngIf="books.length > 0; else noBooks">
+    <div class="table-responsive">
+
+      <table class="table book-table align-middle">
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Authors</th>
+            <th>Editor</th>
+            <th *ngIf="isAdmin">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let book of books">
+            <td class="preview-cell">
+              <img
+                *ngIf="book.coverReference; else noCover"
+                [src]="book.coverReference"
+                alt="Book cover"
+                class="book-cover"
+              />
+              <ng-template #noCover>
+                <span class="text-muted">No cover</span>
+              </ng-template>
+            </td>
+
+            <td>{{ book.title }}</td>
+            <td>{{ book.isbn }}</td>
+
+            <td>
+              <div *ngFor="let author of book.authors">
+                {{ author.name }} {{ author.surname }}
+              </div>
+            </td>
+
+            <td>{{ book.editor.name }}</td>
+
+            <td *ngIf="isAdmin">
+              <a
+                [routerLink]="['/book-form', book.bookId, 'update']"
+                class="action-btn edit-btn me-2"
+              >
+                <i class="bi bi-pencil"> Edit</i>
+              </a>
+
+              <button
+                class="action-btn delete-btn"
+                (click)="onDelete(book.bookId)"
+              >
+                <i class="bi bi-trash"> Delete</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- PAGINAZIONE -->
+      <div class="pagination-container">
+        <button
+          class="btn btn-primary"
+          [disabled]="currentPage === 1"
+          (click)="onPrevPage()"
+        >
+          Previous
+        </button>
+
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+        <button
+          class="btn btn-primary"
+          [disabled]="currentPage >= totalPages"
+          (click)="onNextPage()"
+        >
+          Next
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-template #noBooks>
+    <p>Nessun libro trovato.</p>
+  </ng-template>
+
+</div>

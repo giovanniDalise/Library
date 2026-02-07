@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fffafa; // oppure #cccccc, #e0e0e0
+  text-shadow:
+    1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+
+li {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  transition: transform 0.2s ease;
+}
+
+li:hover {
+  transform: scale(1.05);
+}
+
+p.lead.text-muted {
+  color: #fffafa !important; /* Forza il colore */
+  text-shadow: 0 0 6px rgb(163, 140, 140); /* Ombra morbida */
+  line-height: 1.6; /* Migliora leggibilità */
+  font-weight: 400; /* Peso del testo */
+  font-size: 1.5rem; /* Aumenta leggermente la dimensione del testo */
+}
+
+
+/* Stili personalizzati per i bottoni */
+.btn-custom-primary {
+  background-color: #444;
+  color: #f1f1f1;
+  border: 1px solid #666;
+}
+
+.btn-custom-primary:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.btn-custom-success {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #34495e;
+}
+
+.btn-custom-success:hover {
+  background-color: #34495e;
+  color: #fff;
+}
+
+.btn-custom-outline {
+  background-color: rgba(255, 255, 255, 0.15); // un po' più visibile
+  border: 1px solid #999;
+  color: #f0f0f0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom-outline:hover {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
+}
+
+.card {
+  background-color: rgba(49, 56, 63, 0.85); // dark semi-trasparente
+  color: #f8f9fa; // testo chiaro
+  border: none;
+}
+
+.input-group .form-control {
+  border-color: #f8f9fa;
+  background-color: rgba(255, 255, 255, 0.15);  /* Imposta lo sfondo trasparente */
+  color: #f0f0f0;  /* Colore del testo chiaro per la visibilità */
+  box-shadow: none;  /* Rimuove eventuali ombre */
+}
+
+.input-group .form-control:focus {
+  border-color: #f0f0f0;
+  box-shadow: none;  /* Rimuove l'ombra durante il focus */
+}
+
+.input-group .btn {
+  background-color: #444;  /* Colore di sfondo simile a quello del resto dei bottoni */
+  color: #f1f1f1;  /* Colore del testo chiaro */
+  border-color: #f8f9fa;  /* Bordi personalizzati */
+}
+
+.input-group .btn:hover {
+  background-color: #555;  /* Colore di sfondo durante l'hover */
+  color: #fff;  /* Colore del testo durante l'hover */
+}
+
+.list-group-item {
+  background-color: transparent !important;
+  border: none;
+}
+
+::placeholder {
+  color: #f0f0f0;  /* Colore chiaro, simile al testo dei bottoni */
+opacity: 1;  /* Assicurati che il testo del placeholder sia visibile al 100% */
+}
+
+/* Contenitore login/logout in alto a destra */
+.auth-top-right {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000; /* più alto per essere sopra altri elementi */
+}
+
+/* Bottone omino */
+.auth-btn {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* necessario per il tooltip */
+}
+
+/* Icona più grande */
+.auth-btn i {
+  font-size: 1.8rem;
+}
+
+.auth-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 60px; /* sotto il pulsante invece che sopra */
+  right: 50%;
+  transform: translateX(50%);
+  background-color: rgba(66, 40, 40, 0.85);
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.auth-btn[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  top: 52px; /* posizione della freccetta sotto il pulsante */
+  right: 50%;
+  transform: translateX(50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.85) transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1002;
+}
+
+.auth-btn[data-tooltip]:hover::after,
+.auth-btn[data-tooltip]:hover::before {
+  opacity: 1;
+  transform: translateX(50%) translateY(-4px);
+}

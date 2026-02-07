@@ -1,0 +1,130 @@
+<div class="container py-5">
+  <!-- Home -->
+  <a routerLink="/home" class="home-btn mb-4">
+    <i class="bi bi-house-door"></i> Home Page
+  </a>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10 col-xxl-9">
+      <div class="card shadow rounded p-4">
+        <h2 class="text-center text-light mb-4">
+          {{ pageTitle }}
+        </h2>
+        <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-4">
+
+          <!-- TITLE -->
+          <div class="input-group">
+            <span class="input-group-text">Title</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="title"
+              placeholder="Book title"
+            />
+          </div>
+
+          <!-- ISBN -->
+          <div class="input-group">
+            <span class="input-group-text">ISBN</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="isbn"
+              placeholder="ISBN code"
+            />
+          </div>
+
+          <!-- AUTHORS -->
+          <div formArrayName="authors" class="d-flex flex-column gap-3">
+
+            <h5 class="text-start text-light">Authors</h5>
+
+            <div
+              *ngFor="let author of authors.controls; let i = index"
+              [formGroupName]="i"
+              class="border rounded p-3"
+            >
+
+              <div class="input-group mb-2">
+                <span class="input-group-text">Name</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="Author name"
+                />
+              </div>
+
+              <div class="input-group mb-2">
+                <span class="input-group-text">Surname</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="surname"
+                  placeholder="Author surname"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-custom-outline btn-sm"
+                (click)="removeAuthor(i)"
+              >
+                <i class="bi bi-trash"></i> Remove Author
+              </button>
+
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-custom-outline align-self-start"
+              (click)="addAuthor()"
+            >
+              <i class="bi bi-plus-circle"></i> Add Author
+            </button>
+
+          </div>
+
+          <!-- EDITOR -->
+          <div formGroupName="editor" class="d-flex flex-column gap-3">
+
+            <h5 class="text-start text-light">Editor</h5>
+
+            <div class="input-group">
+              <span class="input-group-text">Name</span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="Editor name"
+              />
+            </div>>
+
+            <div class="input-group">
+              <span class="input-group-text">Cover</span>
+              <input 
+                type="file" 
+                class="form-control"
+                (change)="onCoverSelected($event)"
+                accept="image/*"
+              />
+            </div>
+
+
+          </div>
+
+          <!-- SUBMIT -->
+          <button
+            type="submit"
+            class="btn btn-custom-outline w-100"
+            [disabled]="!bookForm.valid"
+          >
+            <i class="bi bi-check-circle"></i> {{ submitLabel }}
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

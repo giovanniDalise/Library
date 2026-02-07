@@ -1,0 +1,77 @@
+.books-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+
+  background-color: rgba(49, 56, 63, 0.85);
+  border-radius: 1rem;
+
+  flex-wrap: wrap; // 🔹 va a capo su schermi piccoli
+}
+
+.filter-item {
+  flex: 1 1 200px; // minimo 200px, poi si adatta
+}
+
+.filter-item input {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.filter-item input::placeholder {
+  color: #cfcfcf;
+}
+
+.filter-item input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #fff;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonne */
+  gap: 12px; /* spazio tra i campi */
+  align-items: center;
+}
+
+.filter-actions button {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff !important;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.2rem;
+
+  border-radius: 0.75rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.filter-actions button:hover {
+  background-color: #fff;
+  color: #111 !important;
+}
+
+
+.filter-actions button:focus {
+  box-shadow: none;
+}
+
+/* Rimuove le freccette (Chrome, Edge, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;      /* standard */
+  -moz-appearance: textfield; /* firefox */
+}
+

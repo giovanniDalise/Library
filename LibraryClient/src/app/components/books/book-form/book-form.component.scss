@@ -1,0 +1,108 @@
+.btn-custom-success {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #34495e;
+}
+
+.btn-custom-success:hover {
+  background-color: #34495e;
+  color: #fff;
+}
+
+.btn-custom-outline {
+  background-color: rgba(255, 255, 255, 0.15); // un po' più visibile
+  border: 1px solid #999;
+  color: #f0f0f0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom-outline:hover {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
+}
+
+.card {
+  background-color: rgba(49, 56, 63, 0.85); // dark semi-trasparente
+  color: #f8f9fa; // testo chiaro
+  border: none;
+}
+
+.input-group .form-control {
+  border-color: #f8f9fa;
+  background-color: rgba(255, 255, 255, 0.15);  /* Imposta lo sfondo trasparente */
+  color: #f0f0f0;  /* Colore del testo chiaro per la visibilità */
+  box-shadow: none;  /* Rimuove eventuali ombre */
+}
+
+.input-group .form-control:focus {
+  border-color: #f0f0f0;
+  box-shadow: none;  /* Rimuove l'ombra durante il focus */
+}
+
+.input-group .btn {
+  background-color: #444;  /* Colore di sfondo simile a quello del resto dei bottoni */
+  color: #f1f1f1;  /* Colore del testo chiaro */
+  border-color: #f8f9fa;  /* Bordi personalizzati */
+}
+
+.input-group .btn:hover {
+  background-color: #555;  /* Colore di sfondo durante l'hover */
+  color: #fff;  /* Colore del testo durante l'hover */
+}
+
+.list-group-item {
+  background-color: transparent !important;
+  border: none;
+}
+
+::placeholder {
+  color: #f0f0f0;  /* Colore chiaro, simile al testo dei bottoni */
+opacity: 1;  /* Assicurati che il testo del placeholder sia visibile al 100% */
+}
+
+/* Link "Home Page" uniforme con stile View All Books */
+.home-link {
+  color: #f0f0f0; /* colore chiaro */
+  text-decoration: none; /* niente sottolineatura */
+  display: inline-flex; 
+  align-items: center;
+  gap: 0.5rem; /* spazio tra icona e testo */
+  font-weight: 600;
+  font-size: 1.1rem; /* leggermente più grande del normale */
+  transition: color 0.3s;
+}
+
+.home-link:hover {
+  color: #0d6efd; /* blu chiaro al passaggio */
+}
+
+/* Bottone Home Page più piccolo, testo centrato, spigoli dritti */
+.home-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff !important;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.2rem;
+
+  width: auto !important;
+  min-width: 150px;
+
+  border-radius: 0.75rem; /* angoli arrotondati */
+  text-decoration: none;  /* 🔹 niente sottolineatura */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #fff;
+  color: #111 !important;
+  text-decoration: none; /* assicurati che resti senza underline */
+}
