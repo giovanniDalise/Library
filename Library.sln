@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.BookService", "BookService\Library.BookService.csproj", "{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}"
 EndProject
@@ -12,6 +12,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Logging.NLog", "Library.Logging.NLog\Library.Logging.NLog.csproj", "{7BA84953-507C-422E-9D02-F1CAC5249EB4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Logging.Abstractions", "Library.Logging.Abstractions\Library.Logging.Abstractions.csproj", "{EE045B25-C7B6-4785-BD5A-113F07A0D054}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibraryClient", "LibraryClient", "{FFFD65EC-D773-4C5C-B955-36C8CC0919AE}"
+	ProjectSection(SolutionItems) = preProject
+		LibraryClient\.editorconfig = LibraryClient\.editorconfig
+		LibraryClient\.gitignore = LibraryClient\.gitignore
+		LibraryClient\angular.json = LibraryClient\angular.json
+		LibraryClient\dockerfile = LibraryClient\dockerfile
+		LibraryClient\nginx.conf = LibraryClient\nginx.conf
+		LibraryClient\package-lock.json = LibraryClient\package-lock.json
+		LibraryClient\package.json = LibraryClient\package.json
+		LibraryClient\README.md = LibraryClient\README.md
+		LibraryClient\server.ts = LibraryClient\server.ts
+		LibraryClient\tsconfig.app.json = LibraryClient\tsconfig.app.json
+		LibraryClient\tsconfig.json = LibraryClient\tsconfig.json
+		LibraryClient\tsconfig.spec.json = LibraryClient\tsconfig.spec.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
