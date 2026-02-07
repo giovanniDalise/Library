@@ -26,33 +26,6 @@ namespace Library.BookService.Infrastructure.Adapters
             _logger = logger;
         }
 
-
-        // GET /library/{id}
-        [HttpGet("{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<BookResponse>> GetBookById(long id)
-        {
-            _logger.Info($"Chiamata a GetBookById() con ID {id}");
-
-            try
-            {
-                var book = await _bookService.GetBookByIdAsync(id);
-                if (book == null)
-                {
-                    _logger.Warn($"Libro non trovato per ID {id}");
-                    return NotFound();
-                }
-
-                var response = BookDTOMapper.ToResponse(book);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Errore durante il recupero del libro ID {id}", ex);
-                return StatusCode(500, "Errore interno del server");
-            }
-        }
-
         // POST /library
         [HttpPost]
         [Authorize(Roles = "admin")]

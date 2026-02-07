@@ -16,11 +16,6 @@ namespace Library.BookService.Core.Domain.Services
             _bookRepositoryPort = bookRepositoryPort ?? throw new ArgumentNullException(nameof(bookRepositoryPort));
         }
 
-        public async Task<Book> GetBookByIdAsync(long id)
-        {
-            return await _bookRepositoryPort.GetByIdAsync(id);
-        }
-
         public async Task<Book> CreateBookAsync(Book book)
         {
             return await _bookRepositoryPort.CreateAsync(book);

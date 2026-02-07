@@ -186,24 +186,6 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        public async Task<Book> GetByIdAsync(long id)
-        {
-            _logger.Info($"[Repository] Recupero libro ID {id}");
-            try
-            {
-                var bookEntity = await _context.Books
-                                                .Include(b => b.Editor)
-                                                .Include(b => b.Authors)
-                                                .FirstOrDefaultAsync(b => b.BookId == id);
-                return bookEntity != null ? _bookMapper.ToDomain(bookEntity) : null;
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"Errore GetByIdAsync ID {id}", e);
-                throw new BookRepositoryEFException("Error getting book by id: " + e.Message);
-            }
-        }
-
         public async Task<(List<Book> Items, int TotalRecords)> ReadAsync(Book searchBook, int page, int pageSize)
         {
             _logger.Info($"ReadAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
@@ -216,6 +198,11 @@ namespace Library.BookService.Infrastructure.Adapters
                                     .Include(b => b.Editor)
                                     .Include(b => b.Authors)
                                     .AsQueryable();
+
+                if (searchBook.BookId > 0)
+                {
+                    query = query.Where(b => b.BookId == searchBook.BookId);
+                }
 
                 if (!string.IsNullOrEmpty(searchBook.Title))
                 {

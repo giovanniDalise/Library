@@ -5,7 +5,6 @@ namespace Library.BookService.Core.Ports
 {
     public interface BookRepositoryPort
     {
-        Task<Book> GetByIdAsync(long id);
         Task<Book> CreateAsync(Book book);
         Task<long> UpdateAsync(long id, Book book);
         Task<long> DeleteAsync(long id);
