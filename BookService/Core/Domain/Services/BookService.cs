@@ -11,6 +11,11 @@ namespace Library.BookService.Core.Domain.Services
     {
         private readonly BookRepositoryPort _bookRepositoryPort;
 
+        public async Task<Book> GetBookByIdAsync(long id)
+        {
+            return await _bookRepositoryPort.GetByIdAsync(id);
+        }
+
         public BookService(BookRepositoryPort bookRepositoryPort)
         {
             _bookRepositoryPort = bookRepositoryPort ?? throw new ArgumentNullException(nameof(bookRepositoryPort));

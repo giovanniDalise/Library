@@ -99,18 +99,43 @@ namespace Library.BookService.Infrastructure.Adapters
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> DeleteBook(long id)
         {
-            _logger.Info($"Tentativo di eliminare libro ID {id}");
-
+            _logger.Info($"Called DeleteBook with ID {id}");
             try
             {
+                var book = await _bookService.GetBookByIdAsync(id);
+                if (book == null)
+                {
+                    _logger.Info($"Book not found with id: {id}");
+                    return NotFound();
+                }
+
                 var deletedId = await _bookService.DeleteBookAsync(id);
-                _logger.Info($"Libro eliminato ID {deletedId}");
+
+                if (deletedId <= 0)
+                {
+                    _logger.Warn($"Database delete failed for book ID: {id}");
+                    return StatusCode(500, "Errore durante eliminazione dal database");
+                }
+
+                if (!string.IsNullOrWhiteSpace(book.CoverReference))
+                {
+                    try
+                    {
+                        await _mediaStorage.DeleteAsync(book.CoverReference);
+                        _logger.Info($"Cover deleted from filesystem for book ID: {id}");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"Cover NOT deleted from filesystem for book ID: {id}", ex);
+                    }
+                }
+
                 return Ok(deletedId);
             }
             catch (Exception ex)
             {
-                _logger.Error($"Errore durante l'eliminazione del libro ID {id}", ex);
-                return StatusCode(500, "Errore interno del server");
+                _logger.Error($"Error while deleting book with ID {id}", ex);
+                return StatusCode(500, "Internal server error");
             }
         }
 

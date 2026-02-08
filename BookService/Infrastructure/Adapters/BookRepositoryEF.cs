@@ -27,6 +27,24 @@ namespace Library.BookService.Infrastructure.Adapters
             _context = context;
             _logger = logger;
         }
+
+        public async Task<Book> GetByIdAsync(long id)
+        {
+            _logger.Info($"[Repository] Recupero libro ID {id}");
+            try
+            {
+                var bookEntity = await _context.Books
+                                                .Include(b => b.Editor)
+                                                .Include(b => b.Authors)
+                                                .FirstOrDefaultAsync(b => b.BookId == id);
+                return bookEntity != null ? _bookMapper.ToDomain(bookEntity) : null;
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"Errore GetByIdAsync ID {id}", e);
+                throw new BookRepositoryEFException("Error getting book by id: " + e.Message);
+            }
+        }
         public async Task<Book> CreateAsync(Book book)
         {
             _logger.Info($"[Repository] Creazione libro: {book.Title}");
