@@ -51,8 +51,6 @@ namespace Library.BookService.Infrastructure.Adapters
                         stream,
                         request.Cover.FileName,
                         request.Cover.ContentType,
-                        createdBook.Editor.Id,
-                        createdBook.Authors.Select(a => a.Id),
                         createdBook.BookId!.Value
                     );
 

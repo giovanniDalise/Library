@@ -75,27 +75,27 @@ INSERT INTO editor (name) VALUES ('HarperCollins');
 INSERT INTO editor (name) VALUES ('Bloomsbury Publishing');
 
 INSERT INTO book (title, ISBN, editor, front_cover_path) 
-VALUES ('The Great Gatsby', '9780743273565', 1, 'http://localhost:5282/images/1/3/1/917TF-0LAwL._SL1500_.jpg');
+VALUES ('The Great Gatsby', '9780743273565', 1, 'http://localhost:5282/images/1/917TF-0LAwL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path) 
-VALUES ('To Kill a Mockingbird', '9780061120084', 2, 'http://localhost:5282/images/2/4/2/9788807892790_0_0_536_0_75.jpg');
+VALUES ('To Kill a Mockingbird', '9780061120084', 2, 'http://localhost:5282/images/2/9788807892790_0_0_536_0_75.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path) 
-VALUES ('1984', '9780451524935', 3, 'http://localhost:5282/images/3/2/3/71uGFEVcEkL._SL1500_.jpg');
+VALUES ('1984', '9780451524935', 3, 'http://localhost:5282/images/3/71uGFEVcEkL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path) 
-VALUES ('Pride and Prejudice', '9780141439518', 4, 'http://localhost:5282/images/4/1/4/71o0INZqSsL._SL1422_.jpg');
+VALUES ('Pride and Prejudice', '9780141439518', 4, 'http://localhost:5282/images/4/71o0INZqSsL._SL1422_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path) 
-VALUES ('Harry Potter and the Sorcerer''s Stone', '9780590353427', 5, 'http://localhost:5282/images/5/5/5/81q77Q39nEL._SL1500_.jpg');
+VALUES ('Harry Potter and the Sorcerer''s Stone', '9780590353427', 5, 'http://localhost:5282/images/5/81q77Q39nEL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('The Hobbit', '9780547928227', 8, 'http://localhost:5282/images/8/6/6/81hylMcxa3L._SL1500_.jpg');
+VALUES ('The Hobbit', '9780547928227', 8, 'http://localhost:5282/images/6/81hylMcxa3L._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('The Lord of the Rings', '9780618640157', 8, 'http://localhost:5282/images/8/6/7/913sMwNHsBL._SY425_.jpg');
+VALUES ('The Lord of the Rings', '9780618640157', 8, 'http://localhost:5282/images/7/913sMwNHsBL._SY425_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('The Alchemist', '9780062315007', 7, 'http://localhost:5282/images/7/7/8/71HNLzGQgjL._SL1500_.jpg');
+VALUES ('The Alchemist', '9780062315007', 7, 'http://localhost:5282/images/8/71HNLzGQgjL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('The Da Vinci Code', '9780307474278', 6, 'http://localhost:5282/images/6/8/9/71y4X5150dL._SL1500_.jpg');
+VALUES ('The Da Vinci Code', '9780307474278', 6, 'http://localhost:5282/images/9/71y4X5150dL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('Animal Farm', '9780451526342', 3, 'http://localhost:5282/images/3/2/10/71JUJ6pGoIL._SL1500_.jpg');
+VALUES ('Animal Farm', '9780451526342', 3, 'http://localhost:5282/images/10/71JUJ6pGoIL._SL1500_.jpg');
 INSERT INTO book (title, ISBN, editor, front_cover_path)
-VALUES ('Sense and Sensibility', '9780141439662', 4, 'http://localhost:5282/images/4/1/11/818mKxj9pAL._SL1500_.jpg');
+VALUES ('Sense and Sensibility', '9780141439662', 4, 'http://localhost:5282/images/11/818mKxj9pAL._SL1500_.jpg');
 
 
 INSERT INTO author (name, surname) VALUES ('Jane', 'Austen');

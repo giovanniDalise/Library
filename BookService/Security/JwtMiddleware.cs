@@ -7,8 +7,6 @@ using System.Text;
 namespace Library.BookService.Security
 {
 
-
-
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;

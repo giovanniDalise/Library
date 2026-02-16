@@ -23,15 +23,14 @@ namespace Library.BookService.Infrastructure.Adapters
                 ?? throw new ArgumentNullException("Media:BaseUrl not configured");
         }
 
-        public async Task<string> SaveAsync(Stream content, string fileName, string contentType, long editorId, IEnumerable<long> authorIds, long? bookId)
+        public async Task<string> SaveAsync(Stream content, string fileName, string contentType, long? bookId)
         {
-            _logger.Info($"SaveAsync - Start | File={fileName} | EditorId={editorId} | BookId={bookId}");
+            _logger.Info($"SaveAsync - Start | File={fileName} | BookId={bookId}");
 
             try
             {
-                var authorsFolder = authorIds.Count() == 1 ? authorIds.First().ToString() : string.Join("-", authorIds);
 
-                var dirPath = Path.Combine(_basePath, editorId.ToString(), authorsFolder, bookId.ToString());
+                var dirPath = Path.Combine(_basePath, bookId.ToString());
                 _logger.Debug($"SaveAsync - Creating directory | Path={dirPath}");
                 Directory.CreateDirectory(dirPath);
 
@@ -43,7 +42,7 @@ namespace Library.BookService.Infrastructure.Adapters
                 await content.CopyToAsync(fs);
 
                 // Genera path relativo pubblico
-                var relativePath = $"/images/{editorId}/{authorsFolder}/{bookId}/{fileName}";
+                var relativePath = $"/images/{bookId}/{fileName}";
                 var publicUrl = $"{_baseUrl.TrimEnd('/')}{relativePath}";
 
                 _logger.Info($"SaveAsync - Completed | Url={publicUrl}");
@@ -52,7 +51,7 @@ namespace Library.BookService.Infrastructure.Adapters
             }
             catch (Exception ex)
             {
-                _logger.Error($"SaveAsync - Error | File={fileName} | EditorId={editorId} | BookId={bookId}", ex);
+                _logger.Error($"SaveAsync - Error | File={fileName}  | BookId={bookId}", ex);
                 throw;
             }
         }
@@ -79,7 +78,7 @@ namespace Library.BookService.Infrastructure.Adapters
                 }
                 // Estrae la parte del path relativa a /images/  e converte / in \ su Windows es. images\1\3\1\file.jpg
                 var relativePath = uri.AbsolutePath.Substring(imagesIndex + 1).Replace('/', Path.DirectorySeparatorChar);
-                
+
                 // Combina _basePath(cartella base fisica sul disco) con il path relativo del file e rimuove images\
                 var fullPath = Path.Combine(_basePath, relativePath.Substring("images".Length + 1));
 
