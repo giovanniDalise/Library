@@ -1,4 +1,5 @@
-﻿using Library.BookService.Core.Domain.Models;
+﻿using Library.BookService.Core.Application;
+using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Book;
@@ -13,16 +14,13 @@ namespace Library.BookService.Infrastructure.Adapters
     [ApiController]
     public class BookRESTController : ControllerBase
     {
-        private readonly BookServicePort _bookService;
-        private readonly MediaStoragePort _mediaStorage;
+        private readonly BookAppServicePort _bookAppService;
         private readonly ILoggerPort _logger;
         public BookRESTController(
-            BookServicePort bookService,
-            MediaStoragePort mediaStorage,
+            BookAppServicePort bookAppService,
             ILoggerPort logger)
         {
-            _bookService = bookService;
-            _mediaStorage = mediaStorage;
+            _bookAppService = bookAppService;
             _logger = logger;
         }
 
@@ -38,28 +36,13 @@ namespace Library.BookService.Infrastructure.Adapters
             {
                 // Creazione libro senza cover
                 var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
-                var createdBook = await _bookService.CreateBookAsync(bookDomain);
+                string? coverFileName = request.Cover?.FileName;
+                Stream? coverStream = request.Cover?.OpenReadStream();
 
-                string? coverUrl = null;
-
-                if (request.Cover is not null)
-                {
-                    _logger.Info($"Salvataggio cover per il libro ID {createdBook.BookId}");
-
-                    using var stream = request.Cover.OpenReadStream();
-                    coverUrl = await _mediaStorage.SaveAsync(
-                        stream,
-                        request.Cover.FileName,
-                        request.Cover.ContentType,
-                        createdBook.BookId!.Value
-                    );
-
-                    // Aggiornamento libro con cover
-                    createdBook.CoverReference = coverUrl;
-                    await _bookService.UpdateBookAsync(createdBook.BookId.Value, createdBook);
-
-                    _logger.Info($"Cover salvata all'URL: {coverUrl}");
-                }
+                var createdBook = await _bookAppService.CreateBookAsync(
+                    bookDomain, coverStream, coverFileName
+                );
+                _logger.Info($"Libro aggiunto con id: {createdBook.BookId}");
 
                 return Ok(createdBook.BookId);
             }
@@ -80,7 +63,7 @@ namespace Library.BookService.Infrastructure.Adapters
             try
             {
                 var bookDomain = BookDTOMapper.ToDomain(request);
-                var updatedId = await _bookService.UpdateBookAsync(id, bookDomain);
+                var updatedId = await _bookAppService.UpdateBookAsync(id, bookDomain);
 
                 _logger.Info($"Libro aggiornato ID {updatedId}");
                 return Ok(updatedId);
@@ -100,14 +83,15 @@ namespace Library.BookService.Infrastructure.Adapters
             _logger.Info($"Called DeleteBook with ID {id}");
             try
             {
-                var book = await _bookService.GetBookByIdAsync(id);
+                var book = await _bookAppService.GetBookByIdAsync(id);
                 if (book == null)
                 {
                     _logger.Info($"Book not found with id: {id}");
                     return NotFound();
                 }
 
-                var deletedId = await _bookService.DeleteBookAsync(id);
+                // L'AppService si occupa di cancellare dal DB e dallo storage
+                var deletedId = await _bookAppService.DeleteBookAsync(id);
 
                 if (deletedId <= 0)
                 {
@@ -115,19 +99,7 @@ namespace Library.BookService.Infrastructure.Adapters
                     return StatusCode(500, "Errore durante eliminazione dal database");
                 }
 
-                if (!string.IsNullOrWhiteSpace(book.CoverReference))
-                {
-                    try
-                    {
-                        await _mediaStorage.DeleteAsync(book.CoverReference);
-                        _logger.Info($"Cover deleted from filesystem for book ID: {id}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Error($"Cover NOT deleted from filesystem for book ID: {id}", ex);
-                    }
-                }
-
+                _logger.Info($"Book deleted successfully with ID {id}");
                 return Ok(deletedId);
             }
             catch (Exception ex)
@@ -136,6 +108,7 @@ namespace Library.BookService.Infrastructure.Adapters
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         // POST /library/GetBooks
         [HttpPost("GetBooks")]
@@ -162,7 +135,7 @@ namespace Library.BookService.Infrastructure.Adapters
             try
             {
                 var bookDomain = BookDTOMapper.ToDomain(request);
-                var (books, totalRecords) = await _bookService.GetBooksAsync(bookDomain, page, pageSize);
+                var (books, totalRecords) = await _bookAppService.GetBooksAsync(bookDomain, page, pageSize);
                 var response = new PagedBookResponse<BookResponse>
                 {
                     BookResponse = BookDTOMapper.ToResponseList(books),
