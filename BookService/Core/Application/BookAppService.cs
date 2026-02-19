@@ -42,7 +42,7 @@ namespace Library.BookService.Core.Application
         {
             if (newCoverStream != null && newCoverFileName != null && !string.IsNullOrWhiteSpace(book.CoverReference))
             {
-                await _mediaStorage.DeleteAsync(book.CoverReference);
+                await _mediaStorage.DeleteAsync(id);
                 var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", book.BookId);
                 book.CoverReference = coverUrl;
             }
@@ -55,13 +55,11 @@ namespace Library.BookService.Core.Application
             var book = await _bookDomainService.GetBookByIdAsync(bookId);
             if (book == null) return -1;
 
-            if (!string.IsNullOrWhiteSpace(book.CoverReference))
-            {
-                await _mediaStorage.DeleteAsync(book.CoverReference);
-            }
+            await _mediaStorage.DeleteAsync(bookId);
 
             return await _bookDomainService.DeleteBookAsync(bookId);
         }
+
 
         public async Task<(List<Book> Books, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize)
         {

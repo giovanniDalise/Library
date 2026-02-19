@@ -3,7 +3,7 @@
     public interface MediaStoragePort
     {
         Task<string> SaveAsync(Stream content, string fileName, string contentType, long? bookId);
-        Task<bool> DeleteAsync(string streamPath);
+        Task<bool> DeleteAsync(long bookId);
 
     }
 }

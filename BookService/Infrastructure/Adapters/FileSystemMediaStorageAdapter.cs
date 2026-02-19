@@ -56,50 +56,28 @@ namespace Library.BookService.Infrastructure.Adapters
             }
         }
 
-        public async Task<bool> DeleteAsync(string streamPath)
+        public Task<bool> DeleteAsync(long bookId)
         {
-            _logger.Info($"DeleteAsync {streamPath}");
             try
             {
-                if (string.IsNullOrWhiteSpace(streamPath))
+                var bookDirectory = Path.Combine(_basePath, bookId.ToString());
+
+                if (!Directory.Exists(bookDirectory))
                 {
-                    _logger.Warn("DeleteAsync - StreamPath is null or empty");
-                    return false;
+                    _logger.Warn($"Directory not found: {bookDirectory}");
+                    return Task.FromResult(false);
                 }
 
-                // Trova la parte dopo /images/ nell'URL, per capire da dove comincia la parte “relativa” del file sul disco.
-                var uri = new Uri(streamPath);
-                var imagesIndex = uri.AbsolutePath.IndexOf("/images/", StringComparison.OrdinalIgnoreCase);
+                Directory.Delete(bookDirectory, true);
 
-                if(imagesIndex < 0)
-                {
-                    _logger.Warn($"DeleteAsync - invalid URL, cannot find /images/ in {streamPath}");
-                    return false;
-                }
-                // Estrae la parte del path relativa a /images/  e converte / in \ su Windows es. images\1\3\1\file.jpg
-                var relativePath = uri.AbsolutePath.Substring(imagesIndex + 1).Replace('/', Path.DirectorySeparatorChar);
+                _logger.Info($"Directory Deleted {bookDirectory}");
 
-                // Combina _basePath(cartella base fisica sul disco) con il path relativo del file e rimuove images\
-                var fullPath = Path.Combine(_basePath, relativePath.Substring("images".Length + 1));
-
-                _logger.Debug($"DeleteAsync - fullPath = {fullPath}");
-
-                if (File.Exists(fullPath))
-                {
-                    File.Delete(fullPath);
-                    _logger.Info($"DeleteAsync - File Deleted {fullPath}");
-                }
-                else
-                {
-                    _logger.Warn($"DeleteAsync - File not found: {fullPath}");
-                }
-
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {
-                _logger.Error($"DeleteAsync - Error deleting file: {streamPath}", ex);
-                throw;
+                _logger.Error($"Error deleting directory for book {bookId}", ex);
+                throw; 
             }
         }
 

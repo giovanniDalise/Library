@@ -1,3 +1,4 @@
+using Library.BookService.Core.Application;
 using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports;
 using Library.BookService.Infrastructure.Adapters;
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("BookService"));
 
 // Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();  // Registrazione dell'interfaccia e dell'implementazione
+builder.Services.AddScoped<BookAppServicePort, BookAppService>();
 builder.Services.AddScoped<BookServicePort, BookService>();  // Registrazione del BookService
 builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>();
 
