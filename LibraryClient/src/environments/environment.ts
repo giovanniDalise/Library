@@ -9,6 +9,7 @@ export const environment = {
   // In locale punti direttamente ai microservizi
   apiUrls: {
     books: 'http://localhost:5282/library',
+    editors: 'http://localhost:5282/editors',
     users: 'http://localhost:5022/users',
     auth: 'http://localhost:5073/auth'
   },
@@ -21,6 +22,9 @@ export const environment = {
       update: '/{id}',
       delete: '/{id}'
     },
+    editors: {
+      getEditors: '/getEditors'
+    },    
     auth: {
       login: '/login'
     }    

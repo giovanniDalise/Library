@@ -1,5 +1,4 @@
-﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Infrastructure.DTO.REST.Author;
+﻿using Library.BookService.Infrastructure.DTO.REST.Author;
 using Library.BookService.Infrastructure.DTO.REST.Editor;
 
 namespace Library.BookService.Infrastructure.DTO.REST.Book

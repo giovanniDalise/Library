@@ -1,7 +1,6 @@
 ﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Infrastructure.DTO.REST.Book;
 
-namespace Library.BookService.Core.Ports
+namespace Library.BookService.Core.Ports.Books
 {
     public interface BookRepositoryPort
     {

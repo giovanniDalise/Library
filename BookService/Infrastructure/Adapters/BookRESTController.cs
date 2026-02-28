@@ -1,6 +1,6 @@
 ﻿using Library.BookService.Core.Application;
 using Library.BookService.Core.Domain.Models;
-using Library.BookService.Core.Ports;
+using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.Logging.Abstractions;

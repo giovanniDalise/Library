@@ -1,0 +1,19 @@
+<div class="container py-5">
+    <div *ngIf="editors.length > 0; else noEditors">
+        <div class="table-responsive">
+            <table class="table editor-table align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th *ngIf="isAdmin">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <ng-template #noEditors>
+        <p>No editors found</p>    
+    </ng-template>
+</div>
+

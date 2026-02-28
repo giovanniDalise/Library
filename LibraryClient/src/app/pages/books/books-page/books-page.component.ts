@@ -34,10 +34,7 @@ export class BooksPageComponent implements OnInit {
 
   constructor(
     private booksService: BooksService,
-    private router: Router,
-    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private authService: AuthenticationService,
     private userRoleService: UserRoleService
   ) {}
 

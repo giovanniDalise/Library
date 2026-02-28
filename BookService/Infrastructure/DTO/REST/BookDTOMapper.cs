@@ -1,7 +1,6 @@
 ﻿using Library.BookService.Infrastructure.DTO.REST.Author;
 using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.BookService.Infrastructure.DTO.REST.Editor;
-using Library.BookService.Core.Domain.Models;
 
 
 namespace Library.BookService.Infrastructure.DTO.REST
@@ -9,7 +8,7 @@ namespace Library.BookService.Infrastructure.DTO.REST
     public static class BookDTOMapper
     {
         // Domain → DTO Response
-        public static BookResponse ToResponse(Library.BookService.Core.Domain.Models.Book book)
+        public static BookResponse ToResponse(Core.Domain.Models.Book book)
         {
             return new BookResponse
             {
@@ -31,13 +30,13 @@ namespace Library.BookService.Infrastructure.DTO.REST
             };
         }
 
-        public static List<BookResponse> ToResponseList(IEnumerable<Library.BookService.Core.Domain.Models.Book> books)
+        public static List<BookResponse> ToResponseList(IEnumerable<Core.Domain.Models.Book> books)
         {
             return books.Select(ToResponse).ToList();
         }
 
         // DTO Request → Domain
-        public static Library.BookService.Core.Domain.Models.Book ToDomain(BookRequest request, string? coverReference = null)
+        public static Core.Domain.Models.Book ToDomain(BookRequest request, string? coverReference = null)
         {
             return new Library.BookService.Core.Domain.Models.Book
             {
@@ -59,7 +58,7 @@ namespace Library.BookService.Infrastructure.DTO.REST
                         Name = a.Name,
                         Surname = a.Surname
                     }).ToHashSet()
-                    : new HashSet<Library.BookService.Core.Domain.Models.Author>()
+                    : new HashSet<Core.Domain.Models.Author>()
             };
         }
     }

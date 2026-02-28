@@ -1,6 +1,6 @@
 ﻿using Library.BookService.Core.Domain.Models;
 
-namespace Library.BookService.Core.Ports
+namespace Library.BookService.Core.Ports.Books
 {
     public interface BookAppServicePort
     {

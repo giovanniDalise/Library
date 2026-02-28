@@ -1,5 +1,5 @@
 ﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Core.Ports;
+using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.BookService.Infrastructure.exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;

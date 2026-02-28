@@ -1,14 +1,7 @@
 import { Book } from "./book/book";
 
-export class Editor {
+export interface Editor {
     editorId:number;
     name:string;
     books:Book[];
-    
-    constructor(editorId:number, name:string, books:Book[]){
-        this.editorId = editorId;
-        this.name = name;
-        this.books = books;
-
-    }
 }

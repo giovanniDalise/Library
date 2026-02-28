@@ -1,6 +1,7 @@
 using Library.BookService.Core.Application;
 using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports;
+using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.Adapters;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;

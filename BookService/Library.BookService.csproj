@@ -22,4 +22,8 @@
     <CopyToPublishDirectory>Always</CopyToPublishDirectory>	</None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Editor\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,4 @@
-﻿using Library.BookService.Core.Domain.Models;
-
-namespace Library.BookService.Core.Domain.Models
+﻿namespace Library.BookService.Core.Domain.Models
 {
     public class Book
     {

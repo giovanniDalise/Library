@@ -1,57 +1,101 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
-  
-  body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(145, 145, 145, 0.4)), url("assets/img/libraryBackground.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* Fissa lo sfondo durante lo scroll */
 
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(145, 145, 145, 0.4)), url("assets/img/libraryBackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fissa lo sfondo durante lo scroll */
+
+}
+
+/* Contenitore principale */
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+  /* ===== POSIZIONE CENTRALE ===== */
+  .mat-mdc-snack-bar-container {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    min-width: 420px;
+    max-width: 600px;
+    min-height: 44px;
+
+    border-radius: 10px !important; /* striscia, NON pillola */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+
+    overflow: hidden;
   }
 
-  /* Contenitore principale */
-  .container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 3rem 1rem;
-      text-align: center;
-    }
-    /* ===== POSIZIONE CENTRALE ===== */
-    .mat-mdc-snack-bar-container {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
+  /* TESTO ARCADE */
+  .mat-mdc-snack-bar-label {
+    background-color: #524242;  /* sfondo bianco */
+    color: #fffdfd;             /* testo nero */
+    padding: 16px 20px;
+    text-align: center;
 
-      margin: 0 !important;
-      padding: 0 !important;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    line-height: 1.6;
 
-      min-width: 420px;
-      max-width: 600px;
-      min-height: 44px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+/* Link "Home Page" uniforme con stile View All Books */
+.home-link {
+  color: #f0f0f0; /* colore chiaro */
+  text-decoration: none; /* niente sottolineatura */
+  display: inline-flex; 
+  align-items: center;
+  gap: 0.5rem; /* spazio tra icona e testo */
+  font-weight: 600;
+  font-size: 1.1rem; /* leggermente più grande del normale */
+  transition: color 0.3s;
+}
 
-      border-radius: 10px !important; /* striscia, NON pillola */
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+.home-link:hover {
+  color: #0d6efd; /* blu chiaro al passaggio */
+}
 
-      overflow: hidden;
-    }
+/* Bottone Home Page più piccolo, testo centrato, spigoli dritti */
+.home-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff !important;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.2rem;
 
-    /* TESTO ARCADE */
-    .mat-mdc-snack-bar-label {
-      background-color: #524242;  /* sfondo bianco */
-      color: #fffdfd;             /* testo nero */
-      padding: 16px 20px;
-      text-align: center;
+  width: auto !important;
+  min-width: 150px;
 
-      font-family: 'Press Start 2P', monospace;
-      font-size: 12px;
-      line-height: 1.6;
+  border-radius: 0.75rem; /* angoli arrotondati */
+  text-decoration: none;  /* 🔹 niente sottolineatura */
+  transition: background-color 0.3s, color 0.3s;
+}
 
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+.home-btn:hover {
+  background-color: #fff;
+  color: #111 !important;
+  text-decoration: none; /* assicurati che resti senza underline */
+}
+
+
 

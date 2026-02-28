@@ -3,7 +3,7 @@ using Library.BookService.Infrastructure.DTO.REST.Book;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Library.BookService.Core.Ports
+namespace Library.BookService.Core.Ports.Books
 {
     public interface BookServicePort
     {

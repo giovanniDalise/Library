@@ -28,6 +28,10 @@
             <i class="bi bi-journal-bookmark"></i> Books
           </a>
 
+          <a class="btn btn-custom-outline w-100" routerLink="/editors">
+            <i class="bi bi-building"></i> Editors           
+          </a>
+
           <ng-container *ngIf="isAdmin">
             <a class="btn btn-custom-outline w-100" [routerLink]="['/book-form', 'create']">
               <i class="bi bi-plus-lg me-2"></i> Add New Book
