@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI.Common;
 
-namespace Library.BookService.Infrastructure.Adapters
+namespace Library.BookService.Infrastructure.Adapters.Books
 {
     public class BookRepositoryEF : BookRepositoryPort
     {

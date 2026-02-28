@@ -4,12 +4,9 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BooksGridComponent } from '../../../components/books/books-grid/books-grid.component';
 import { BooksService } from '../../../services/books.service';
-import { AuthenticationService } from '../../../services/authentication.service';
 import { UserRoleService } from '../../../services/user-role.service';
 import { Book } from '../../../models/book/book';
 import { BooksFiltersComponent } from '../../../components/books/books-filters/books-filters.component';
-import { HttpHeaders } from '@angular/common/http';
-import { Author } from '../../../models/author';
 
 @Component({
   selector: 'app-books-page',
@@ -100,7 +97,7 @@ export class BooksPageComponent implements OnInit {
       .getBooks(searchCriteria, this.currentPage, this.pageSize)
       .subscribe({
         next: results => {
-          this.books = results.bookResponse;
+          this.books = results.items;
           this.totalRecords = results.totalRecords;
         },
         error: error => {

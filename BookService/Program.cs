@@ -2,7 +2,10 @@ using Library.BookService.Core.Application;
 using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports;
 using Library.BookService.Core.Ports.Books;
+using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.Adapters;
+using Library.BookService.Infrastructure.Adapters.Books;
+using Library.BookService.Infrastructure.Adapters.Editors;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.BookService.Security;
@@ -19,10 +22,15 @@ builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("BookService"));
 
 
 // Registrazione dei servizi necessari per il BookService
-builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();  // Registrazione dell'interfaccia e dell'implementazione
+builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();
 builder.Services.AddScoped<BookAppServicePort, BookAppService>();
-builder.Services.AddScoped<BookServicePort, BookService>();  // Registrazione del BookService
+builder.Services.AddScoped<BookServicePort, BookService>();
+
 builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>();
+
+builder.Services.AddScoped<EditorRepositoryPort, EditorRepositoryEF>();
+builder.Services.AddScoped<EditorAppServicePort, EditorAppService>();
+builder.Services.AddScoped<EditorServicePort, EditorService>();
 
 // Aggiungi DbContext per la connessione a MySQL
 var connectionString = builder.Configuration.GetConnectionString("BookDbConnection");
@@ -31,6 +39,7 @@ builder.Services.AddDbContext<BookDBContext>(options =>
 
 // Registrazione del BookMapper
 builder.Services.AddScoped<BookMapper>();  // Registrazione di BookMapper nel DI
+builder.Services.AddScoped<EditorMapper>();  // Registrazione di EditorMapper nel DI
 
 
 // Aggiungi i servizi per i controller

@@ -3,7 +3,7 @@ using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.BookService.Infrastructure.DTO.REST.Editor;
 
 
-namespace Library.BookService.Infrastructure.DTO.REST
+namespace Library.BookService.Infrastructure.DTO.REST.Mappers
 {
     public static class BookDTOMapper
     {
@@ -38,21 +38,21 @@ namespace Library.BookService.Infrastructure.DTO.REST
         // DTO Request → Domain
         public static Core.Domain.Models.Book ToDomain(BookRequest request, string? coverReference = null)
         {
-            return new Library.BookService.Core.Domain.Models.Book
+            return new Core.Domain.Models.Book
             {
                 BookId = request.BookId,
                 Title = request.Title,
                 Isbn = request.Isbn,
                 CoverReference = coverReference,
                 Editor = request.Editor != null
-                    ? new Library.BookService.Core.Domain.Models.Editor
+                    ? new Core.Domain.Models.Editor
                     {
                         Id = request.Editor.Id,
                         Name = request.Editor.Name
                     }
                     : null,
                 Authors = request.Authors != null
-                    ? request.Authors.Select(a => new Library.BookService.Core.Domain.Models.Author
+                    ? request.Authors.Select(a => new Core.Domain.Models.Author
                     {
                         Id = a.Id,
                         Name = a.Name,

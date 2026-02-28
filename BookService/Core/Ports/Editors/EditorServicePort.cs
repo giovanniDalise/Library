@@ -4,6 +4,6 @@ namespace Library.BookService.Core.Ports.Editors
 {
     public interface EditorServicePort
     {
-        Task<(List<Editor> Editors, int TotaleRecords)> GetEditorsAsync(Editor searchEditor, int page, int pagesize);
+        Task<(List<Editor> Editors, int TotalRecords)> GetEditorsAsync(Editor searchEditor, int page, int pagesize);
     }
 }

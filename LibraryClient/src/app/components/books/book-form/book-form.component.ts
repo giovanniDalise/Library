@@ -80,7 +80,7 @@ export class BookFormComponent {
         if (!isNaN(bookIdNumber)) {
           this.booksService.getBooks({ bookId: bookIdNumber }, 1, 10)
             .subscribe(response => {
-              const book = response.bookResponse?.[0];
+              const book = response.items?.[0];
 
               if (book) {
                 this.bookData = book;

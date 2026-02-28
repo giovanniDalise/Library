@@ -3,20 +3,21 @@ using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Book;
+using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Ocsp;
 
-namespace Library.BookService.Infrastructure.Adapters
+namespace Library.BookService.Infrastructure.Adapters.Books
 {
     [Route("library")]
     [ApiController]
-    public class BookRESTController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly BookAppServicePort _bookAppService;
         private readonly ILoggerPort _logger;
-        public BookRESTController(
+        public BookController(
             BookAppServicePort bookAppService,
             ILoggerPort logger)
         {
@@ -113,44 +114,44 @@ namespace Library.BookService.Infrastructure.Adapters
         // POST /library/GetBooks
         [HttpPost("GetBooks")]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedBookResponse<BookResponse>>> GetBooks(
+        public async Task<ActionResult<PagedResponse<BookResponse>>> GetBooks(
             [FromBody] BookRequest request,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10
             )
         {
-            _logger.Info($"Chiamata a GetBooks per libro con titolo: {request.Title}");
+            _logger.Info($"Call to GetBooks");
 
             if (page < 1)
             {
-                _logger.Warn($"Tentativo non valido con Page: {page}");
-                return BadRequest(new { error = "Page deve essere >=1" });
+                _logger.Warn($"Invalid attempt with Page: {page}");
+                return BadRequest(new { error = "Page must be greater than or equal to 1." });
             }
             if (pageSize < 1 || pageSize > 10)
             {
-                _logger.Warn($"Tentativo non valido con PageSize: {pageSize}");
-                return BadRequest(new { error = "Pagesize deve essere tra 1 e 100" });
+                _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
+                return BadRequest(new { error = "PageSize must be between 1 and 100." });
             }
 
             try
             {
                 var bookDomain = BookDTOMapper.ToDomain(request);
                 var (books, totalRecords) = await _bookAppService.GetBooksAsync(bookDomain, page, pageSize);
-                var response = new PagedBookResponse<BookResponse>
+                var response = new PagedResponse<BookResponse>
                 {
-                    BookResponse = BookDTOMapper.ToResponseList(books),
+                    Items = BookDTOMapper.ToResponseList(books),
                     Page = page,
                     PageSize = pageSize,
                     TotalRecords = totalRecords
                 };
 
-                _logger.Info($"Trovati {response.TotalRecords} libri per oggetto BookRequest: {request.Title}");
+                _logger.Info($"Founded {response.TotalRecords} books");
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.Error($"Errore durante la ricerca libri per oggetto BookRequest: {request.Title}", ex);
-                return StatusCode(500, "Errore interno del server");
+                _logger.Error("Error while retrieving books.", ex);
+                return StatusCode(500, "Internal server error.");
             }
         }
     }

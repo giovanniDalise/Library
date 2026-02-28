@@ -1,4 +1,4 @@
-Nel BookService (rispetto agli altri microservizi) ho delle entities separate dai modela del core per via dell'EF,
+Nel BookService (rispetto agli altri microservizi) ho delle entities separate dai model del core per via dell'EF,
 un po come faccio nei dto (request e resoponse per disaccoppiare i modelli del fe 
 da quelli del core).
 

@@ -7,6 +7,8 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
     public class BookMapper : IMapper<BookEntity, Book>
     {
+        private readonly EditorMapper _editorMapper = new EditorMapper();
+
         public Book ToDomain(BookEntity entity)
         {
             return new Book
@@ -14,25 +16,23 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 BookId = entity.BookId,
                 Title = entity.Title,
                 Isbn = entity.Isbn,
-                Editor = EditorMapper.ToDomain(entity.Editor),
+                Editor = _editorMapper.ToDomain(entity.Editor),
                 Authors = AuthorMapper.ToDomainSet(entity.Authors),
                 CoverReference = entity.CoverReference
             };
         }
 
-
         public BookEntity ToEntity(Book book)
         {
-            var entity = new BookEntity
+            return new BookEntity
             {
                 BookId = book.BookId ?? 0,
                 Title = book.Title,
                 Isbn = book.Isbn,
-                Editor = EditorMapper.ToEntity(book.Editor),
+                Editor = _editorMapper.ToEntity(book.Editor),
                 Authors = AuthorMapper.ToEntitySet(book.Authors),
                 CoverReference = book.CoverReference ?? null
             };
-            return entity;
         }
 
         public List<Book> ToDomainList(List<BookEntity> entities)
