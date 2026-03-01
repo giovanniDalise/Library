@@ -31,7 +31,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger.Info($"ReadAsync - Start | Title: {searchEditor.Name ?? "null"}");
             try
             {
-                int offset = page - 1 * pageSize;
+                int offset = (page - 1) * pageSize;
                 IQueryable<EditorEntity> query = _context.Editors.Include(e => e.Books);
 
                 if (searchEditor.Id > 0)
@@ -52,7 +52,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Take(pageSize)
                     .ToListAsync();
 
-                _logger.Info($"ReadAsync - Completed | Results={editorEntities.Count}");
+                _logger.Info($"ReadAsync - Completed | Results = {editorEntities.Count}");
 
                 return (_editorMapper.ToDomainList(editorEntities), total);
             }
