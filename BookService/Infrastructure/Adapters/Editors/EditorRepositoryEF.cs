@@ -2,6 +2,7 @@
 using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.Exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
+using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
@@ -31,11 +32,11 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
             try
             {
-                int offset = (page -1) * pageSize;
+                int offset = (page - 1) * pageSize;
 
-                var query = _context.Editors
-                                    .Include(e => e.Books)
-                                    .AsQueryable();
+                //IQueryable rispetto IEnumerable permette di non caricare subito i dati in 
+                //memoria e lavorare sulla query che viene eseguita solo quando serve con il ToListAsync()
+                IQueryable<EditorEntity> query = _context.Editors.Include(e => e.Books);
 
                 if (searchEditor.Id > 0)
                 {
@@ -66,6 +67,5 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 throw new EditorRepositoryEFException("Error finding books by object: " + e.Message);
             }
         }
-
     }
 }
