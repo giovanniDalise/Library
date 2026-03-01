@@ -61,21 +61,13 @@
 
       <!-- PAGINAZIONE -->
       <div class="pagination-container">
-        <button
-          class="btn btn-primary"
-          [disabled]="currentPage === 1"
-          (click)="onPrevPage()"
-        >
+        <button [disabled]="currentPage === 1" (click)="onPrevPage()">
           Previous
         </button>
 
         <span>Page {{ currentPage }} of {{ totalPages }}</span>
 
-        <button
-          class="btn btn-primary"
-          [disabled]="currentPage >= totalPages"
-          (click)="onNextPage()"
-        >
+        <button [disabled]="currentPage >= totalPages" (click)="onNextPage()">
           Next
         </button>
       </div>
