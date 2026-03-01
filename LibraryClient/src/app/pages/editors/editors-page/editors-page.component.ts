@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoleService } from '../../../services/user-role.service';
 import { EditorsService } from '../../../services/editors.service';
+import { Editor } from '../../../models/editor';
 
 @Component({
   selector: 'app-editors-page',
@@ -15,8 +16,16 @@ import { EditorsService } from '../../../services/editors.service';
 })
 export class EditorsPageComponent implements OnInit {
 
+  editors: Editor[] = [];
   isAdmin = false;
   isAuthenticated = false;
+
+  pageSize = 10;
+  currentPage = 1;
+  totalRecords = 0;
+
+  editorId?: number;
+  private lastCriteria: Partial<Editor> = {};
 
   constructor(
     private editorsService: EditorsService,
@@ -31,7 +40,47 @@ export class EditorsPageComponent implements OnInit {
     this.searchEditors();
   }  
 
-  searchEditors():void{
-    
+  searchEditors(criteria: Partial<Editor> = this.lastCriteria): void {
+
+    this.lastCriteria = criteria;
+
+    const searchCriteria: any = {
+      Id: criteria.editorId || 0,
+      Name: criteria.name?.trim() || null
+    };
+
+    this.editorsService
+      .getEditors(searchCriteria, this.currentPage, this.pageSize)
+      .subscribe({
+        next: results => {
+          this.editors = results.items;
+          this.totalRecords = results.totalRecords;
+        },
+        error: error => {
+          console.error('Errore nella ricerca:', error);
+          this.editors = [];
+          this.totalRecords = 0;
+        }
+      });
   }
+
+  /* ===================== PAGINATION ===================== */
+
+  get totalPages(): number {
+    return Math.ceil(this.totalRecords / this.pageSize);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.searchEditors(this.lastCriteria);
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.searchEditors(this.lastCriteria);; 
+    }
+  }  
 }

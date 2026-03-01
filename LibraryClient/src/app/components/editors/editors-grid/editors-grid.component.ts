@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Editor } from '../../../models/editor';
 
 @Component({
@@ -10,13 +10,21 @@ import { Editor } from '../../../models/editor';
   styleUrl: './editors-grid.component.scss'
 })
 export class EditorsGridComponent {
-  editors: Editor[] = [
-    {
-      editorId: 1,
-      name: "TestCasaEdi",
-      books: []
-    }
-  ];
   
   @Input() isAdmin = false;
+  @Input() editors: Editor[] = [];
+  @Input() isAuthenticated = false;
+  @Input() currentPage = 1;
+  @Input() totalPages = 0;  
+
+  @Output() nextPage = new EventEmitter<void>();
+  @Output() prevPage = new EventEmitter<void>();
+
+  onNextPage(): void {
+    this.nextPage.emit();
+  }
+
+  onPrevPage(): void {
+    this.prevPage.emit();
+  }  
 }
