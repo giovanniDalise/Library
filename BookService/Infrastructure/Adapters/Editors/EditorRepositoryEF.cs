@@ -28,14 +28,10 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
         public async Task<(List<Editor> Items, int TotalRecords)> ReadAsync(Editor searchEditor, int page, int pageSize)
         {
-            _logger.Info($"ReadAsync - Start | Title={searchEditor.Name ?? "null"}");
-
+            _logger.Info($"ReadAsync - Start | Title: {searchEditor.Name ?? "null"}");
             try
             {
-                int offset = (page - 1) * pageSize;
-
-                //IQueryable rispetto IEnumerable permette di non caricare subito i dati in 
-                //memoria e lavorare sulla query che viene eseguita solo quando serve con il ToListAsync()
+                int offset = page - 1 * pageSize;
                 IQueryable<EditorEntity> query = _context.Editors.Include(e => e.Books);
 
                 if (searchEditor.Id > 0)
@@ -63,8 +59,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             catch (Exception e)
             {
                 _logger.Error("ReadAsync - Error", e);
-
-                throw new EditorRepositoryEFException("Error finding books by object: " + e.Message);
+                throw new EditorRepositoryEFException("Error finding Editor", e);
             }
         }
     }
