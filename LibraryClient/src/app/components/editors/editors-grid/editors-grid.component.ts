@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Editor } from '../../../models/editor';
+import { Editor } from '../../../models/editor/editor';
 
 @Component({
   selector: 'app-editors-grid',

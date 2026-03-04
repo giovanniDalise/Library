@@ -5,7 +5,8 @@ import { RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoleService } from '../../../services/user-role.service';
 import { EditorsService } from '../../../services/editors.service';
-import { Editor } from '../../../models/editor';
+import { Editor } from '../../../models/editor/editor';
+import { EditorRequest } from '../../../models/editor/editor-request';
 
 @Component({
   selector: 'app-editors-page',
@@ -25,7 +26,7 @@ export class EditorsPageComponent implements OnInit {
   totalRecords = 0;
 
   editorId?: number;
-  private lastCriteria: Partial<Editor> = {};
+  private lastCriteria: EditorRequest = {};
 
   constructor(
     private editorsService: EditorsService,
@@ -40,14 +41,14 @@ export class EditorsPageComponent implements OnInit {
     this.searchEditors();
   }  
 
-  searchEditors(criteria: Partial<Editor> = this.lastCriteria): void {
+  searchEditors(criteria: EditorRequest  = this.lastCriteria): void {
 
     this.lastCriteria = criteria;
 
-    const searchCriteria: any = {
-      Id: criteria.editorId || 0,
-      Name: criteria.name?.trim() || null
-    };
+  const searchCriteria: EditorRequest = {
+    id: criteria.id ?? undefined,
+    name: criteria.name?.trim() || undefined
+  };
 
     this.editorsService
       .getEditors(searchCriteria, this.currentPage, this.pageSize)

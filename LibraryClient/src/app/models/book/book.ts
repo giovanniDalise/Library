@@ -1,6 +1,5 @@
-import { fromEvent } from "rxjs";
 import { Author } from "../author";
-import { Editor } from "../editor";
+import { Editor } from "../editor/editor";
 
 export interface Book {
     bookId: number;
