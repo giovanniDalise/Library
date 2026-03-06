@@ -1,13 +1,11 @@
-﻿using Library.BookService.Core.Application;
-using Library.BookService.Core.Domain.Models;
+﻿
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
-using Library.BookService.Infrastructure.DTO.REST.Book;
+using Library.BookService.Infrastructure.DTO.REST.Books;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace Library.BookService.Infrastructure.Adapters.Books
 {
@@ -130,7 +128,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             if (pageSize < 1 || pageSize > 10)
             {
                 _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
-                return BadRequest(new { error = "PageSize must be between 1 and 100." });
+                return BadRequest(new { error = "PageSize must be between 1 and 10." });
             }
 
             try

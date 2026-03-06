@@ -1,14 +1,11 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports.Books;
-using Library.BookService.Infrastructure.DTO.REST.Book;
 using Library.BookService.Infrastructure.exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI.Common;
 
 namespace Library.BookService.Infrastructure.Adapters.Books
 {

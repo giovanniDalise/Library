@@ -1,6 +1,6 @@
 ﻿using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.DTO.REST;
-using Library.BookService.Infrastructure.DTO.REST.Editor;
+using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -37,7 +37,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             if (pageSize < 1 || pageSize > 10)
             {
                 _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
-                return BadRequest(new { error = "PageSize must be between 1 and 100." });
+                return BadRequest(new { error = "PageSize must be between 1 and 10." });
             }
 
             try

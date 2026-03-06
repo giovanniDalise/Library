@@ -1,6 +1,6 @@
-﻿using Library.BookService.Infrastructure.DTO.REST.Book;
+﻿using Library.BookService.Infrastructure.DTO.REST.Books;
 
-namespace Library.BookService.Infrastructure.DTO.REST.Editor
+namespace Library.BookService.Infrastructure.DTO.REST.Editors
 {
     public class EditorRequest
     {

@@ -6,6 +6,7 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using NLog.Filters;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
@@ -26,12 +27,12 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger = logger;
         }
 
-    public async Task<(List<Editor> Items, int TotalRecords)> ReadAsync (Editor searchEditor, int page, int pageSize)
+        public async Task<(List<Editor> Items, int TotalRecords)> ReadAsync(Editor searchEditor, int page, int pageSize)
         {
-            _logger.Info($"ReadAsync - Start | Title: {searchEditor.Name ?? "null"}");
+            _logger.Info($"Read Async - Started | Title: {searchEditor.Name ?? "null"}");
             try
             {
-                int offset = (page - 1) * pageSize;
+                int offset = (page -1) * pageSize;
 
                 IQueryable<EditorEntity> query = _context.Editors.Include(e => e.Books);
 
@@ -40,9 +41,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     query = query.Where(e => e.Id == searchEditor.Id);
                 }
 
-                if(!string.IsNullOrEmpty(searchEditor.Name))
+                if (string.IsNullOrEmpty(searchEditor.Name))
                 {
-                    query.Where(b => b.Name.Contains(searchEditor.Name));
+                    query = query.Where(e => e.Name.Contains(searchEditor.Name));
                 }
 
                 int total = await query.CountAsync();
@@ -53,14 +54,15 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Take(pageSize)
                     .ToListAsync();
 
-                _logger.Info($"ReadAsync - Completed | Results = {editorEntities.Count}");
+                _logger.Info($"ReadAsync - Completed | {editorEntities.Count} items");
+
                 return (_editorMapper.ToDomainList(editorEntities), total);
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                _logger.Error($"ReadAsync - Error", e);
-                    throw new EditorRepositoryEFException("Error finding editor", e);
+                _logger.Error($"ReadAsynch - Error", e);
+                throw new EditorRepositoryEFException("Error retrieving editors", e);
             }
         }
     }

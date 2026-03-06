@@ -1,6 +1,5 @@
-﻿using Library.BookService.Infrastructure.DTO.REST.Book;
-
-namespace Library.BookService.Infrastructure.DTO.REST.Author
+﻿
+namespace Library.BookService.Infrastructure.DTO.REST.Authors
 {
     public class AuthorResponse
     {

@@ -1,14 +1,15 @@
-﻿using Library.BookService.Infrastructure.DTO.REST.Author;
-using Library.BookService.Infrastructure.DTO.REST.Book;
-using Library.BookService.Infrastructure.DTO.REST.Editor;
-
+﻿
+using Library.BookService.Core.Domain.Models;
+using Library.BookService.Infrastructure.DTO.REST.Authors;
+using Library.BookService.Infrastructure.DTO.REST.Books;
+using Library.BookService.Infrastructure.DTO.REST.Editors;
 
 namespace Library.BookService.Infrastructure.DTO.REST.Mappers
 {
     public static class BookDTOMapper
     {
         // Domain → DTO Response
-        public static BookResponse ToResponse(Core.Domain.Models.Book book)
+        public static BookResponse ToResponse(Book book)
         {
             return new BookResponse
             {
@@ -30,35 +31,35 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
             };
         }
 
-        public static List<BookResponse> ToResponseList(IEnumerable<Core.Domain.Models.Book> books)
+        public static List<BookResponse> ToResponseList(IEnumerable<Book> books)
         {
             return books.Select(ToResponse).ToList();
         }
 
         // DTO Request → Domain
-        public static Core.Domain.Models.Book ToDomain(BookRequest request, string? coverReference = null)
+        public static Book ToDomain(BookRequest request, string? coverReference = null)
         {
-            return new Core.Domain.Models.Book
+            return new Book
             {
                 BookId = request.BookId,
                 Title = request.Title,
                 Isbn = request.Isbn,
                 CoverReference = coverReference,
                 Editor = request.Editor != null
-                    ? new Core.Domain.Models.Editor
+                    ? new Editor
                     {
                         Id = request.Editor.Id,
                         Name = request.Editor.Name
                     }
                     : null,
                 Authors = request.Authors != null
-                    ? request.Authors.Select(a => new Core.Domain.Models.Author
+                    ? request.Authors.Select(a => new Author
                     {
                         Id = a.Id,
                         Name = a.Name,
                         Surname = a.Surname
                     }).ToHashSet()
-                    : new HashSet<Core.Domain.Models.Author>()
+                    : new HashSet<Author>()
             };
         }
     }
