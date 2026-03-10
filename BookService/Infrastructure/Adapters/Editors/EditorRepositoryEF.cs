@@ -41,7 +41,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     query = query.Where(e => e.Id == searchEditor.Id);
                 }
 
-                if (string.IsNullOrEmpty(searchEditor.Name))
+                if (!string.IsNullOrEmpty(searchEditor.Name))
                 {
                     query = query.Where(e => e.Name.Contains(searchEditor.Name));
                 }
