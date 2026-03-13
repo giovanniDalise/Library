@@ -7,6 +7,7 @@ import { BooksService } from '../../../services/books.service';
 import { UserRoleService } from '../../../services/user-role.service';
 import { Book } from '../../../models/book/book';
 import { BooksFiltersComponent } from '../../../components/books/books-filters/books-filters.component';
+import { BookRequest } from '../../../models/book/book-request';
 
 @Component({
   selector: 'app-books-page',
@@ -27,7 +28,7 @@ export class BooksPageComponent implements OnInit {
   totalRecords = 0;
 
   bookId?: number;
-  private lastCriteria: Partial<Book> = {};
+  private lastCriteria: BookRequest = {};
 
   constructor(
     private booksService: BooksService,
@@ -75,22 +76,27 @@ export class BooksPageComponent implements OnInit {
     }
   }
 
-  searchBook(criteria: Partial<Book> = this.lastCriteria): void {
-    this.lastCriteria = criteria; 
-    const searchCriteria: any = {
-      BookId: criteria.bookId || 0,
-      Title: criteria.title?.trim() || null,
-      Isbn: criteria.isbn?.trim() || null,
-      Authors: criteria.authors?.length
+  searchBook(criteria: BookRequest = this.lastCriteria): void {
+
+    this.lastCriteria = criteria;
+
+    const searchCriteria: BookRequest = {
+      bookId: criteria.bookId ?? undefined,
+      title: criteria.title?.trim() || undefined,
+      isbn: criteria.isbn?.trim() || undefined,
+      editor: criteria.editor
+        ? {
+            editorId: criteria.editor.editorId ?? undefined,
+            name: criteria.editor.name?.trim() || undefined
+          }
+        : undefined,
+      authors: criteria.authors?.length
         ? criteria.authors.map(a => ({
-            AuthorId: a.authorId || 0,
-            Name: a.name || null,
-            Surname: a.surname || null
+            authorId: a.authorId ?? undefined,
+            name: a.name?.trim() || undefined,
+            surname: a.surname?.trim() || undefined
           }))
-        : [],
-      Editor: criteria.editor
-        ? { EditorId: criteria.editor.editorId || 0, Name: criteria.editor.name || null }
-        : null
+        : undefined
     };
 
     this.booksService

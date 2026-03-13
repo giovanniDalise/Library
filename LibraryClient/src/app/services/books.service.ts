@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Book } from '../models/book/book';
 import { environment } from '../../environments/environment';
 import { PagedResponse } from '../models/paged-response';
+import { BookRequest } from '../models/book/book-request';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class BooksService {
     return this.http.post<Book>(this.baseUrl + this.endpoints.create, formData);
   }
 
-  updateBook(book: Book): Observable<Book> {
+  updateBook(book: Book): Observable<BookRequest> {
     return this.http.put<Book>(this.baseUrl + this.endpoints.update.replace('{id}', book.bookId.toString()), book)
   }
 
-  getBooks(criteria: Partial<Book>, page: number, pageSize: number): Observable<PagedResponse<Book>> {
+  getBooks(criteria: BookRequest, page: number, pageSize: number): Observable<PagedResponse<Book>> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());  
