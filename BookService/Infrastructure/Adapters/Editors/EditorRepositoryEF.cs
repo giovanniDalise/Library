@@ -29,7 +29,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
         public async Task<(List<Editor> Items, int TotalRecords)> ReadAsync(Editor searchEditor, int page, int pageSize)
         {
-            _logger.Info($"Read Async - Started | Title: {searchEditor.Name ?? "null"}");
+            _logger.Info($"Read Async - Started | Editor name: {searchEditor.Name ?? "null"}");
             try
             {
                 int offset = (page -1) * pageSize;
