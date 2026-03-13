@@ -29,11 +29,13 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             )
         {
             _logger.Info($"Call to GetEditors");
+
             if (page < 1)
             {
                 _logger.Warn($"Invalid attempt with Page: {page}");
                 return BadRequest(new { error = "Page must be greater than or equal to 1." });
             }
+
             if (pageSize < 1 || pageSize > 10)
             {
                 _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
@@ -52,9 +54,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     Page = page,
                     PageSize = pageSize,
                     TotalRecords = totalRecords
-                }
-                ;
-
+                };
                 _logger.Info($"Founded {response.TotalRecords} editors");
                 return Ok(response);
             }
@@ -62,7 +62,6 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 _logger.Error("Error while retrieving editors.", ex);
                 return StatusCode(500, "Internal server error.");
-
             }
         }
     }

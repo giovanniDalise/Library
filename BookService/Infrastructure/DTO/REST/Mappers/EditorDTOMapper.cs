@@ -14,18 +14,19 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
                 Name = editor.Name
             };
         }
+
+        public static Editor ToDomain(EditorRequest request)
+        {
+            return new Editor
+            {
+                Id = request.Id,
+                Name = request.Name
+            };  
+        }
+
         public static List<EditorResponse> ToResponseList(IEnumerable<Editor> editors)
         {
             return editors.Select(ToResponse).ToList();
-        }
-        public static Editor ToDomain(EditorRequest request)
-        {
-            var editor = new Editor();
-
-            editor.SetId(request.Id);
-            editor.SetName(request.Name);
-
-            return editor;
         }
     }
 }
