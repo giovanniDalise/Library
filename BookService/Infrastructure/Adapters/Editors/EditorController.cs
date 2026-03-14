@@ -51,8 +51,6 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 var response = new PagedResponse<EditorResponse>
                 {
                     Items = EditorDTOMapper.ToResponseList(editors),
-                    Page = page,
-                    PageSize = pageSize,
                     TotalRecords = totalRecords
                 };
                 _logger.Info($"Founded {response.TotalRecords} editors");

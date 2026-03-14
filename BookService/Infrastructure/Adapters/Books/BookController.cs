@@ -138,8 +138,6 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 var response = new PagedResponse<BookResponse>
                 {
                     Items = BookDTOMapper.ToResponseList(books),
-                    Page = page,
-                    PageSize = pageSize,
                     TotalRecords = totalRecords
                 };
 
