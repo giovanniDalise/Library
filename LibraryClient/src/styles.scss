@@ -97,47 +97,5 @@ body {
   text-decoration: none; /* assicurati che resti senza underline */
 }
 
-/* ========================= */
-/*      PAGINATION GLOBAL    */
-/* ========================= */
 
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.pagination-container button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #fff;
-  background-color: #555;
-  border: 1px solid #fff;
-  padding: 0.4rem 1rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
-}
-
-.pagination-container button:hover:not(:disabled) {
-  background-color: #fff;
-  color: #111;
-}
-
-.pagination-container button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.pagination-container span {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #f0f0f0;
-}
 

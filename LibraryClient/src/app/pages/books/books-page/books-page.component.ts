@@ -8,6 +8,7 @@ import { UserRoleService } from '../../../services/user-role.service';
 import { Book } from '../../../models/book/book';
 import { BooksFiltersComponent } from '../../../components/books/books-filters/books-filters.component';
 import { BookRequest } from '../../../models/book/book-request';
+import { PaginationState } from '../../../models/pagination/pagination-state';
 
 @Component({
   selector: 'app-books-page',
@@ -23,9 +24,8 @@ export class BooksPageComponent implements OnInit {
   isAdmin = false;
   isAuthenticated = false;
 
-  pageSize = 10;
-  currentPage = 1;
-  totalRecords = 0;
+  pagination = new PaginationState();
+
 
   bookId?: number;
   private lastCriteria: BookRequest = {};
@@ -40,7 +40,7 @@ export class BooksPageComponent implements OnInit {
     this.isAuthenticated = this.userRoleService.isAuthenticated();
     this.isAdmin = this.userRoleService.isAdmin();
 
-    this.searchBook(); // carica tutti i libri all’avvio
+    this.searchBook(); 
   }
 
   /* ===================== ACTIONS ===================== */
@@ -58,23 +58,15 @@ export class BooksPageComponent implements OnInit {
 
   /* ===================== PAGINATION ===================== */
 
-  get totalPages(): number {
-    return Math.ceil(this.totalRecords / this.pageSize);
-  }
-
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.searchBook(this.lastCriteria);
-    }
+    this.pagination.next();
+    this.searchBook(this.lastCriteria);
   }
 
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.searchBook(this.lastCriteria);; 
-    }
-  }
+    this.pagination.prev();
+    this.searchBook(this.lastCriteria);
+  } 
 
   searchBook(criteria: BookRequest = this.lastCriteria): void {
 
@@ -100,16 +92,16 @@ export class BooksPageComponent implements OnInit {
     };
 
     this.booksService
-      .getBooks(searchCriteria, this.currentPage, this.pageSize)
+      .getBooks(searchCriteria, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
           this.books = results.items;
-          this.totalRecords = results.totalRecords;
+          this.pagination.totalRecords = results.totalRecords;
         },
         error: error => {
           console.error('Errore nella ricerca:', error);
           this.books = [];
-          this.totalRecords = 0;
+          this.pagination.totalRecords = 0;
         }
       });
   }

@@ -7,6 +7,7 @@ import { UserRoleService } from '../../../services/user-role.service';
 import { EditorsService } from '../../../services/editors.service';
 import { Editor } from '../../../models/editor/editor';
 import { EditorRequest } from '../../../models/editor/editor-request';
+import { PaginationState } from '../../../models/pagination/pagination-state';
 
 @Component({
   selector: 'app-editors-page',
@@ -21,9 +22,7 @@ export class EditorsPageComponent implements OnInit {
   isAdmin = false;
   isAuthenticated = false;
 
-  pageSize = 10;
-  currentPage = 1;
-  totalRecords = 0;
+  pagination = new PaginationState();
 
   editorId?: number;
   private lastCriteria: EditorRequest = {};
@@ -45,43 +44,35 @@ export class EditorsPageComponent implements OnInit {
 
     this.lastCriteria = criteria;
 
-  const searchCriteria: EditorRequest = {
-    id: criteria.id ?? undefined,
-    name: criteria.name?.trim() || undefined
-  };
+    const searchCriteria: EditorRequest = {
+      id: criteria.id ?? undefined,
+      name: criteria.name?.trim() || undefined
+    };
 
     this.editorsService
-      .getEditors(searchCriteria, this.currentPage, this.pageSize)
+      .getEditors(searchCriteria, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
           this.editors = results.items;
-          this.totalRecords = results.totalRecords;
+          this.pagination.totalRecords = results.totalRecords;
         },
         error: error => {
           console.error('Errore nella ricerca:', error);
           this.editors = [];
-          this.totalRecords = 0;
+          this.pagination.totalRecords = 0;
         }
       });
   }
 
   /* ===================== PAGINATION ===================== */
 
-  get totalPages(): number {
-    return Math.ceil(this.totalRecords / this.pageSize);
-  }
-
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.searchEditors(this.lastCriteria);
-    }
+    this.pagination.next();
+    this.searchEditors(this.lastCriteria);
   }
 
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.searchEditors(this.lastCriteria);; 
-    }
-  }  
+    this.pagination.prev();
+    this.searchEditors(this.lastCriteria);
+  } 
 }

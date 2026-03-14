@@ -13,8 +13,8 @@
     [books]="books"
     [isAdmin]="isAdmin"
     [isAuthenticated]="isAuthenticated"
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
+    [currentPage]="pagination.currentPage"
+    [totalPages]="pagination.totalPages"
     (delete)="deleteBook($event)"
     (nextPage)="nextPage()"
     (prevPage)="prevPage()">

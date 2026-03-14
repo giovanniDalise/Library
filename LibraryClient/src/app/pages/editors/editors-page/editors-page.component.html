@@ -9,12 +9,12 @@
     </app-editors-filters>
 
     <app-editors-grid
-        [editors] = "editors"
+        [editors]="editors"
         [isAdmin]="isAdmin"
         [isAuthenticated]="isAuthenticated"
-        [currentPage]="currentPage"
-        [totalPages]="totalPages"
+        [currentPage]="pagination.currentPage"
+        [totalPages]="pagination.totalPages"
         (nextPage)="nextPage()"
-        (prevPage)="prevPage()">      
+        (prevPage)="prevPage()">
     </app-editors-grid>
 </div>

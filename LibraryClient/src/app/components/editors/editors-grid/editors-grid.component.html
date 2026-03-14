@@ -17,18 +17,13 @@
                 </tbody>
             </table>
 
-            <!-- PAGINAZIONE -->
-            <div class="pagination-container">
-                <button [disabled]="currentPage === 1" (click)="onPrevPage()">
-                    Previous
-                </button>
-
-                <span>Page {{ currentPage }} of {{ totalPages }}</span>
-
-                <button [disabled]="currentPage >= totalPages" (click)="onNextPage()">
-                    Next
-                </button>
-            </div>            
+            <app-pagination
+                [currentPage]="currentPage"
+                [totalPages]="totalPages"
+                (next)="onNextPage()"
+                (prev)="onPrevPage()">
+            </app-pagination>      
+               
         </div>
     </div>
 
