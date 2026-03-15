@@ -6,6 +6,6 @@ namespace Library.BookService.Infrastructure.DTO.REST.Editors
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public List<string> BookTitles { get; set; }
+        public PagedResponse<string> Books { get; set; } 
     }
 }

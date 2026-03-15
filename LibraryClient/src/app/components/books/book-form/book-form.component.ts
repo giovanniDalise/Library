@@ -4,8 +4,6 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } f
 import { BooksService } from '../../../services/books.service';
 import { ActivatedRoute, Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../../models/author';
-import { HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Aggiungi l'import per MatSnackBar
 
 @Component({

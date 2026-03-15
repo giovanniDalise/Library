@@ -66,23 +66,38 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             }
         }
 
-        public async Task<Editor> GetByIdAsync(long id)
+        public async Task<(Editor Editor, int TotalBooks)> GetByIdAsync(long id, int page, int pageSize)
         {
             _logger.Info($"GetByIdAsync - Started | Id: {id}");
             try
             {
                 var editorEntity = await _context.Editors
-                    .Include(e => e.Books)
                     .FirstOrDefaultAsync(e => e.Id == id);
 
                 if (editorEntity == null)
                 {
                     _logger.Warn($"GetByIdAsync - Editor not found | Id: {id}");
-                    return null;
+                    return (null, 0);
                 }
 
-                _logger.Info($"GetByIdAsync - Completed | Editor: {editorEntity.Name}");
-                return _editorMapper.ToDomain(editorEntity);
+                // Paginazione sui libri
+                int totalBooks = await _context.Books
+                    .Where(b => b.EditorId == id)
+                    .CountAsync();
+
+                int offset = (page - 1) * pageSize;
+
+                var books = await _context.Books
+                    .Where(b => b.EditorId == id)
+                    .OrderBy(b => b.BookId)
+                    .Skip(offset)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                editorEntity.Books = books.ToHashSet();
+
+                _logger.Info($"GetByIdAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
+                return (_editorMapper.ToDomain(editorEntity), totalBooks);
             }
             catch (Exception e)
             {

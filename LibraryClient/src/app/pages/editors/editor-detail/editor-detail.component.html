@@ -25,17 +25,25 @@
         </div>
       </div>
 
-      <!-- Card libri associati — lista semplice di titoli -->
+      <!-- Card libri associati con paginazione -->
       <div class="card shadow rounded p-4">
         <h5 class="text-light mb-3">
           <i class="bi bi-book"></i> Associated Books
+          <span class="total-badge">{{ pagination.totalRecords }}</span>
         </h5>
 
-        <ul *ngIf="editor.bookTitles.length > 0; else noBooks" class="book-list">
-          <li *ngFor="let title of editor.bookTitles" class="book-list-item">
+        <ul *ngIf="editor.books.items.length > 0; else noBooks" class="book-list">
+          <li *ngFor="let title of editor.books.items" class="book-list-item">
             <i class="bi bi-bookmark"></i> {{ title }}
           </li>
         </ul>
+
+        <app-pagination
+          [currentPage]="pagination.currentPage"
+          [totalPages]="pagination.totalPages"
+          (next)="nextPage()"
+          (prev)="prevPage()">
+        </app-pagination>
 
         <ng-template #noBooks>
           <p class="text-light">No books associated with this editor.</p>

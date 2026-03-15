@@ -1,5 +1,7 @@
+import { PagedResponse } from "../../pagination/paged-response";
+
 export interface EditorDetail {
     id: number;
     name: string;
-    bookTitles: string[];
+    books: PagedResponse<string>;
 }

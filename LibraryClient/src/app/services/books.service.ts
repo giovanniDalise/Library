@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Book } from '../models/book/book';
 import { environment } from '../../environments/environment';
-import { PagedResponse } from '../models/paged-response';
 import { BookRequest } from '../models/book/book-request';
+import { PagedResponse } from '../models/pagination/paged-response';
 
 @Injectable({
   providedIn: 'root'

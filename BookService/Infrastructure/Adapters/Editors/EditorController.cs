@@ -5,6 +5,7 @@ using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -65,7 +66,10 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<EditorDetailResponse>> GetEditorById(long id)
+        public async Task<ActionResult<PagedResponse<EditorDetailResponse>>> GetEditorById(
+            long id,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
             _logger.Info($"Call to GetEditorById | Id: {id}");
 
@@ -77,7 +81,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
             try
             {
-                var editor = await _editorAppService.GetEditorByIdAsync(id);
+                var (editor, totalBooks) = await _editorAppService.GetEditorByIdAsync(id, page, pageSize);
 
                 if (editor == null)
                 {
@@ -85,7 +89,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     return NotFound(new { error = $"Editor with id {id} not found." });
                 }
 
-                return Ok(EditorDTOMapper.ToDetailResponse(editor));
+                return Ok(EditorDTOMapper.ToDetailResponse(editor, totalBooks));
             }
             catch (Exception ex)
             {
