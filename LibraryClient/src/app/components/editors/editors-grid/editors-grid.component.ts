@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Editor } from '../../../models/editor/editor';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { Editor } from '../../../models/editor/editor/editor';
 
 @Component({
   selector: 'app-editors-grid',
@@ -20,6 +20,8 @@ export class EditorsGridComponent {
 
   @Output() nextPage = new EventEmitter<void>();
   @Output() prevPage = new EventEmitter<void>();
+  @Output() viewDetail = new EventEmitter<number>();
+
 
   onNextPage(): void {
     this.nextPage.emit();
@@ -28,4 +30,7 @@ export class EditorsGridComponent {
   onPrevPage(): void {
     this.prevPage.emit();
   }  
+
+  onViewDetail(editorId: number): void { this.viewDetail.emit(editorId); } 
+
 }

@@ -23,7 +23,8 @@ export const environment = {
       delete: '/{id}'
     },
     editors: {
-      getEditors: '/getEditors'
+      getEditors: '/getEditors',
+      getById: '/{id}'  
     },    
     auth: {
       login: '/login'

@@ -1,0 +1,47 @@
+<div class="container py-5">
+
+  <a class="home-btn mb-4" (click)="onBack()">
+    <i class="bi bi-arrow-left"></i> Back to Editors
+  </a>
+
+  <div *ngIf="isLoading" class="text-center text-light mt-5">
+    <div class="spinner-border" role="status"></div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-4">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && editor" class="row justify-content-center">
+    <div class="col-12 col-xl-10 col-xxl-9">
+
+      <!-- Card dettaglio editor -->
+      <div class="card shadow rounded p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="text-light mb-0">{{ editor.name }}</h2>
+          <button class="btn btn-edit" (click)="onEdit()">
+            <i class="bi bi-pencil"></i> Edit
+          </button>
+        </div>
+      </div>
+
+      <!-- Card libri associati — lista semplice di titoli -->
+      <div class="card shadow rounded p-4">
+        <h5 class="text-light mb-3">
+          <i class="bi bi-book"></i> Associated Books
+        </h5>
+
+        <ul *ngIf="editor.bookTitles.length > 0; else noBooks" class="book-list">
+          <li *ngFor="let title of editor.bookTitles" class="book-list-item">
+            <i class="bi bi-bookmark"></i> {{ title }}
+          </li>
+        </ul>
+
+        <ng-template #noBooks>
+          <p class="text-light">No books associated with this editor.</p>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+</div>

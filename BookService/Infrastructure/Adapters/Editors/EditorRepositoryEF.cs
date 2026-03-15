@@ -34,7 +34,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 int offset = (page -1) * pageSize;
 
-                IQueryable<EditorEntity> query = _context.Editors.Include(e => e.Books);
+                IQueryable<EditorEntity> query = _context.Editors;
 
                 if (searchEditor.Id > 0)
                 {
@@ -63,6 +63,31 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 _logger.Error($"ReadAsynch - Error", e);
                 throw new EditorRepositoryEFException("Error retrieving editors", e);
+            }
+        }
+
+        public async Task<Editor> GetByIdAsync(long id)
+        {
+            _logger.Info($"GetByIdAsync - Started | Id: {id}");
+            try
+            {
+                var editorEntity = await _context.Editors
+                    .Include(e => e.Books)
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (editorEntity == null)
+                {
+                    _logger.Warn($"GetByIdAsync - Editor not found | Id: {id}");
+                    return null;
+                }
+
+                _logger.Info($"GetByIdAsync - Completed | Editor: {editorEntity.Name}");
+                return _editorMapper.ToDomain(editorEntity);
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"GetByIdAsync - Error", e);
+                throw new EditorRepositoryEFException("Error retrieving editor by id", e);
             }
         }
     }

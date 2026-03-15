@@ -62,5 +62,36 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 return StatusCode(500, "Internal server error.");
             }
         }
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<EditorDetailResponse>> GetEditorById(long id)
+        {
+            _logger.Info($"Call to GetEditorById | Id: {id}");
+
+            if (id <= 0)
+            {
+                _logger.Warn($"Invalid attempt with Id: {id}");
+                return BadRequest(new { error = "Id must be greater than 0." });
+            }
+
+            try
+            {
+                var editor = await _editorAppService.GetEditorByIdAsync(id);
+
+                if (editor == null)
+                {
+                    _logger.Warn($"Editor not found | Id: {id}");
+                    return NotFound(new { error = $"Editor with id {id} not found." });
+                }
+
+                return Ok(EditorDTOMapper.ToDetailResponse(editor));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error while retrieving editor by id.", ex);
+                return StatusCode(500, "Internal server error.");
+            }
+        }
     }
 }

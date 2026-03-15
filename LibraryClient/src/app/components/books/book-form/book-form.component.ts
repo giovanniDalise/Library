@@ -111,8 +111,8 @@ export class BookFormComponent {
     formData.append('isbn', book.isbn);
 
     // Editor: se editorId esiste lo inviamo, altrimenti lasciamo che il backend lo generi
-    if (book.editor?.editorId) {
-      formData.append('editor.id', book.editor.editorId.toString());
+    if (book.editor?.id) {
+      formData.append('editor.id', book.editor.id.toString());
     }
     formData.append('editor.name', book.editor?.name ?? '');
 

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorsGridComponent } from '../../../components/editors/editors-grid/editors-grid.component';
 import { EditorsFiltersComponent } from '../../../components/editors/editors-filters/editors-filters.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoleService } from '../../../services/user-role.service';
 import { EditorsService } from '../../../services/editors.service';
-import { Editor } from '../../../models/editor/editor';
-import { EditorRequest } from '../../../models/editor/editor-request';
 import { PaginationState } from '../../../models/pagination/pagination-state';
+import { EditorRequest } from '../../../models/editor/editor/editor-request';
+import { Editor } from '../../../models/editor/editor/editor';
 
 @Component({
   selector: 'app-editors-page',
@@ -30,7 +30,8 @@ export class EditorsPageComponent implements OnInit {
   constructor(
     private editorsService: EditorsService,
     private snackBar: MatSnackBar,
-    private userRoleService: UserRoleService
+    private userRoleService: UserRoleService,
+    private router: Router 
   ){}
 
   ngOnInit(): void {
@@ -64,6 +65,10 @@ export class EditorsPageComponent implements OnInit {
       });
   }
 
+  onViewDetail(editorId: number): void {
+    this.router.navigate(['/editors', editorId]);
+  }
+
   /* ===================== PAGINATION ===================== */
 
   nextPage(): void {
@@ -75,4 +80,7 @@ export class EditorsPageComponent implements OnInit {
     this.pagination.prev();
     this.searchEditors(this.lastCriteria);
   } 
+
+
 }
+

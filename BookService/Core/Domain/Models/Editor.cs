@@ -15,6 +15,10 @@
         {
             Name = name;
         }
+        public void SetBooks(IEnumerable<Book> books)
+        {
+            Books = new HashSet<Book>(books);
+        }
 
         public override bool Equals(object obj)
         {

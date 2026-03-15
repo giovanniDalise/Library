@@ -24,6 +24,18 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
             };  
         }
 
+        public static EditorDetailResponse ToDetailResponse(Editor editor)
+        {
+            return new EditorDetailResponse
+            {
+                Id = editor.Id,
+                Name = editor.Name,
+                BookTitles = editor.Books?
+                    .Select(b => b.Title)
+                    .ToList() ?? new List<string>()
+            };
+        }
+
         public static List<EditorResponse> ToResponseList(IEnumerable<Editor> editors)
         {
             return editors.Select(ToResponse).ToList();

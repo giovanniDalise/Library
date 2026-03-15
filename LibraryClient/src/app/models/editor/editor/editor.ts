@@ -1,7 +1,7 @@
-import { Book } from "../book/book";
+import { Book } from "../../book/book";
 
 export interface Editor {
-    editorId:number;
+    id:number;
     name:string;
     books:Book[];
 }

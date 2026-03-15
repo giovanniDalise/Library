@@ -15,6 +15,7 @@
         [currentPage]="pagination.currentPage"
         [totalPages]="pagination.totalPages"
         (nextPage)="nextPage()"
-        (prevPage)="prevPage()">
+        (prevPage)="prevPage()"
+        (viewDetail)="onViewDetail($event)"> >
     </app-editors-grid>
 </div>

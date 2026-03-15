@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { BooksPageComponent } from './pages/books/books-page/books-page.component';
 import { BooksGridComponent } from './components/books/books-grid/books-grid.component';
 import { EditorsPageComponent } from './pages/editors/editors-page/editors-page.component';
+import { EditorDetailComponent } from './pages/editors/editor-detail/editor-detail.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'books-grid/:bookId', component: BooksGridComponent, canActivate: [AuthGuard] },
     { path: 'book-form/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
     { path: 'book-form/:bookId/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
-    { path: 'editors', component: EditorsPageComponent },    
+    { path: 'editors', component: EditorsPageComponent },
+    { path: 'editors/:id', component: EditorDetailComponent}
 ];

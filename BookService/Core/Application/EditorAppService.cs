@@ -24,5 +24,9 @@ namespace Library.BookService.Core.Application
             return await _editorDomainService.GetEditorsAsync(searchEditor, page, pageSize);
 
         }
+        public async Task<Editor> GetEditorByIdAsync(long id)
+        {
+            return await _editorDomainService.GetEditorByIdAsync(id);
+        }
     }
 }
