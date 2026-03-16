@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class EditorMapper : IMapper<EditorEntity, Editor>
+    public class EditorEntityMapper : IMapper<EditorEntity, Editor>
     {
 
         public Editor ToDomain(EditorEntity entity)

@@ -38,8 +38,8 @@ builder.Services.AddDbContext<BookDBContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Registrazione del BookMapper
-builder.Services.AddScoped<BookMapper>();  // Registrazione di BookMapper nel DI
-builder.Services.AddScoped<EditorMapper>();  // Registrazione di EditorMapper nel DI
+builder.Services.AddScoped<BookEntityMapper>();  // Registrazione di BookMapper nel DI
+builder.Services.AddScoped<EditorEntityMapper>();  // Registrazione di EditorMapper nel DI
 
 
 // Aggiungi i servizi per i controller

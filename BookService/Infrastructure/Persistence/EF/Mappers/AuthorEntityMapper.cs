@@ -3,7 +3,7 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 
 namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class AuthorMapper
+    public class AuthorEntityMapper
     {
         public static Author ToDomain(AuthorEntity entity)
         {
@@ -39,7 +39,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         {
             if (entities == null) return null;
 
-            return entities.Select(AuthorMapper.ToDomain)
+            return entities.Select(AuthorEntityMapper.ToDomain)
                            .ToHashSet();
         }
 
@@ -47,7 +47,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         {
             if (authors == null) return null;
 
-            return authors.Select(AuthorMapper.ToEntity)
+            return authors.Select(AuthorEntityMapper.ToEntity)
                           .ToHashSet();
         }
     }

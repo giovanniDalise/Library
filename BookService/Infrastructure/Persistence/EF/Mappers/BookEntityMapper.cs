@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class BookMapper : IMapper<BookEntity, Book>
+    public class BookEntityMapper : IMapper<BookEntity, Book>
     {
-        private readonly EditorMapper _editorMapper = new EditorMapper();
+        private readonly EditorEntityMapper _editorMapper = new EditorEntityMapper();
 
         public Book ToDomain(BookEntity entity)
         {
@@ -17,7 +17,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 Title = entity.Title,
                 Isbn = entity.Isbn,
                 Editor = _editorMapper.ToDomain(entity.Editor),
-                Authors = AuthorMapper.ToDomainSet(entity.Authors),
+                Authors = AuthorEntityMapper.ToDomainSet(entity.Authors),
                 CoverReference = entity.CoverReference
             };
         }
@@ -30,7 +30,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 Title = book.Title,
                 Isbn = book.Isbn,
                 Editor = _editorMapper.ToEntity(book.Editor),
-                Authors = AuthorMapper.ToEntitySet(book.Authors),
+                Authors = AuthorEntityMapper.ToEntitySet(book.Authors),
                 CoverReference = book.CoverReference ?? null
             };
         }
@@ -42,7 +42,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 
         public List<BookEntity> ToEntityList(List<Book> books)
         {
-            var bookMapper = new BookMapper(); // Crea un'istanza di BookMapper
+            var bookMapper = new BookEntityMapper(); // Crea un'istanza di BookMapper
             return books.Select(book => bookMapper.ToEntity(book)).ToList();
         }
 

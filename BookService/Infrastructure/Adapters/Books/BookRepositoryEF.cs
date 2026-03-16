@@ -11,12 +11,12 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 {
     public class BookRepositoryEF : BookRepositoryPort
     {
-        private readonly BookMapper _bookMapper;
+        private readonly BookEntityMapper _bookMapper;
         private readonly BookDBContext _context;
         private readonly ILoggerPort _logger;
 
         public BookRepositoryEF(
-            BookMapper bookMapper,
+            BookEntityMapper bookMapper,
             BookDBContext context,
             ILoggerPort logger)
         {

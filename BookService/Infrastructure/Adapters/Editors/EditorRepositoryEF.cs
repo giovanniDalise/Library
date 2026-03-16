@@ -13,12 +13,12 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 {
     public class EditorRepositoryEF : EditorRepositoryPort
     {
-        private readonly EditorMapper _editorMapper;
+        private readonly EditorEntityMapper _editorMapper;
         private readonly BookDBContext _context;
         private readonly ILoggerPort _logger;
 
         public EditorRepositoryEF(
-            EditorMapper editorMapper,
+            EditorEntityMapper editorMapper,
             BookDBContext context,
             ILoggerPort logger)
         {
