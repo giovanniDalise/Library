@@ -41,3 +41,10 @@
   font-weight: 500;
   color: #f0f0f0;
 }
+
+.total-records {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 0.5rem; // ← piccolo distacco dal bottone Next
+}

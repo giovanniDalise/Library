@@ -6,7 +6,6 @@
   font-size: 0.9rem;
 }
 
-/* 🔹 Arrotondamenti per l'intestazione */
 .editor-table thead tr:first-child th:first-child {
   border-top-left-radius: 1rem;
 }
@@ -14,7 +13,7 @@
   border-top-right-radius: 1rem;
 }
 
-/* 🔹 Arrotondamenti per l'ultima riga */
+/* Arrotondamenti per l'ultima riga */
 .editor-table tbody tr:last-child td:first-child {
   border-bottom-left-radius: 1rem;
 }
@@ -22,14 +21,25 @@
   border-bottom-right-radius: 1rem;
 }
 
-/* Assicura che il bordo inferiore resti coerente */
 .editor-table td,
 .editor-table th {
   border: none;
 }
 
-/* ✅ Forza un colore coerente di sfondo per l’intera riga */
 .editor-table tr {
   background-color: rgba(49, 56, 63, 0.85);
 }
 
+.editor-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(49, 56, 63, 0.85); // stesso sfondo, non cambia
+  }
+
+  &:hover td {
+    color: #926262;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  }
+}

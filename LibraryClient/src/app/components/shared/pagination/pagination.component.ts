@@ -13,6 +13,8 @@ export class PaginationComponent {
 
   @Input() currentPage = 1;
   @Input() totalPages = 0;
+  @Input() totalRecords = 0;
+
 
   @Output() next = new EventEmitter<void>();
   @Output() prev = new EventEmitter<void>();

@@ -17,7 +17,8 @@ export class EditorsGridComponent {
   @Input() isAuthenticated = false;
   @Input() currentPage = 1;
   @Input() totalPages = 0;  
-
+  @Input() totalRecords = 0;
+  
   @Output() nextPage = new EventEmitter<void>();
   @Output() prevPage = new EventEmitter<void>();
   @Output() viewDetail = new EventEmitter<number>();

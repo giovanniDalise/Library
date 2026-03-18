@@ -28,8 +28,7 @@
       <!-- Card libri associati con paginazione -->
       <div class="card shadow rounded p-4">
         <h5 class="text-light mb-3">
-          <i class="bi bi-book"></i> Associated Books
-          <span class="total-badge">{{ pagination.totalRecords }}</span>
+          <i class="bi bi-book"></i> Books
         </h5>
 
         <ul *ngIf="editor.books.items.length > 0; else noBooks" class="book-list">
@@ -41,6 +40,7 @@
         <app-pagination
           [currentPage]="pagination.currentPage"
           [totalPages]="pagination.totalPages"
+          [totalRecords]="pagination.totalRecords"
           (next)="nextPage()"
           (prev)="prevPage()">
         </app-pagination>

@@ -3,31 +3,29 @@
         <div class="table-responsive">
             <table class="table editor-table align-middle">
 
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Detail</th>
-                        <th *ngIf="isAdmin">Actions</th>
-                    </tr>
-                </thead>
-
                 <tbody>
                     <tr *ngFor="let editor of editors">
-                        <td>{{ editor.name }}</td>
-                        <td>
-                            <button 
-                                class="btn btn-detail btn-sm"
-                                (click)="onViewDetail(editor.id)">
-                                <i class="bi bi-eye"></i> Detail
-                            </button>
+                        <td class="editor-name" (click)="onViewDetail(editor.id)">
+                            {{ editor.name }}
+                        </td>
+                        <td *ngIf="isAdmin">
+                            <!-- actions admin -->
                         </td>
                     </tr>
                 </tbody>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th *ngIf="isAdmin">Actions</th>
+                    </tr>
+                </thead>
             </table>
 
             <app-pagination
                 [currentPage]="currentPage"
                 [totalPages]="totalPages"
+                [totalRecords]="totalRecords"
                 (next)="onNextPage()"
                 (prev)="onPrevPage()">
             </app-pagination>      

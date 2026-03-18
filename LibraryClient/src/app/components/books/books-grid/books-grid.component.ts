@@ -18,6 +18,7 @@ export class BooksGridComponent {
   @Input() isAuthenticated = false;
   @Input() currentPage = 1;
   @Input() totalPages = 0;
+  @Input() totalRecords = 0;  
 
   @Output() delete = new EventEmitter<number>();
   @Output() nextPage = new EventEmitter<void>();
