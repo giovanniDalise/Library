@@ -35,20 +35,20 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
             return entity;
         }
 
-        public static HashSet<Author> ToDomainSet(ICollection<AuthorEntity> entities)
+        public static List<Author> ToDomainSet(ICollection<AuthorEntity> entities)
         {
             if (entities == null) return null;
 
             return entities.Select(AuthorEntityMapper.ToDomain)
-                           .ToHashSet();
+                           .ToList();
         }
 
-        public static HashSet<AuthorEntity> ToEntitySet(HashSet<Author> authors)
+        public static List<AuthorEntity> ToEntitySet(List<Author> authors)
         {
             if (authors == null) return null;
 
             return authors.Select(AuthorEntityMapper.ToEntity)
-                          .ToHashSet();
+                          .ToList();
         }
     }
 }

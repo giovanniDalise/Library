@@ -6,6 +6,6 @@ namespace Library.BookService.Infrastructure.DTO.REST.Editors
     {
         public long Id { get; set; }
         public string? Name { get; set; }
-        public HashSet<BookRequest> Books { get; private set; } = new();
+        public List<BookRequest> Books { get; private set; } = new();
     }
 }

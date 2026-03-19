@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Isbn { get; set; }
         public Editor Editor { get; set; }
-        public HashSet<Author> Authors { get; set; } = new HashSet<Author>();
+        public List<Author> Authors { get; set; } = new List<Author>();
         public string? CoverReference { get; set; }
 
     }

@@ -27,7 +27,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
                     Id = a.Id,
                     Name = a.Name,
                     Surname = a.Surname
-                }).ToHashSet()
+                }).ToList()
             };
         }
 
@@ -58,8 +58,8 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
                         Id = a.Id,
                         Name = a.Name,
                         Surname = a.Surname
-                    }).ToHashSet()
-                    : new HashSet<Author>()
+                    }).ToList()
+                    : new List<Author>()
             };
         }
     }

@@ -9,7 +9,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Books
         public string Title { get; set; }
         public string Isbn { get; set; }
         public EditorResponse Editor { get; set; }
-        public HashSet<AuthorResponse> Authors { get; set; } = new HashSet<AuthorResponse>();
+        public List<AuthorResponse> Authors { get; set; } = new List<AuthorResponse>();
         public string? CoverReference { get; set; }
     }
 }

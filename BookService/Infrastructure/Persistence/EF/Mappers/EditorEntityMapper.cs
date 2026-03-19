@@ -22,7 +22,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 {
                     BookId = b.BookId,
                     Title = b.Title
-                }).ToHashSet() ?? new HashSet<Book>()
+                }).ToList() ?? new List<Book>()
             };
         }
         public EditorEntity ToEntity(Editor domain)

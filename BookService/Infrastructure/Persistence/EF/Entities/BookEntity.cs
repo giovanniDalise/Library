@@ -26,27 +26,8 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Entities
         public virtual EditorEntity Editor { get; set; }
 
         // Relazione Many-to-Many con AuthorEntity
-        public virtual ICollection<AuthorEntity> Authors { get; set; } = new HashSet<AuthorEntity>();
+        public virtual ICollection<AuthorEntity> Authors { get; set; } = new List<AuthorEntity>();
 
         public BookEntity() { }
-
-        public override bool Equals(object obj)
-        {
-            if (this == obj) return true;
-            if (obj == null || GetType() != obj.GetType()) return false;
-
-            var book = (BookEntity)obj;
-            return BookId == book.BookId;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(BookId);
-        }
-
-        public override string ToString()
-        {
-            return $"{Title}, {Isbn}, {Editor}, {string.Join(", ", Authors)}";
-        }
     }
 }

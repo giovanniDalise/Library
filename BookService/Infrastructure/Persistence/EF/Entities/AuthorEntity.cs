@@ -18,30 +18,13 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Entities
 
         public AuthorEntity()
         {
-            Books = new HashSet<BookEntity>();
+            Books = new List<BookEntity>();
         }
 
         public AuthorEntity(string name, string surname) : this()
         {
             Name = name;
             Surname = surname;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (this == obj) return true;
-            if (obj is not AuthorEntity other) return false;
-            return Name == other.Name && Surname == other.Surname;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Name);
-        }
-
-        public override string ToString()
-        {
-            return $"{Name} {Surname}";
         }
     }
 }
