@@ -14,16 +14,16 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var editor = new Editor();
-            editor.SetId(entity.Id);
-            editor.SetName(entity.Name);
-            editor.SetBooks(entity.Books?.Select(b => new Book
+            return new Editor
             {
-                BookId = b.BookId,
-                Title = b.Title
-            }) ?? Enumerable.Empty<Book>());
-
-            return editor;
+                Id = entity.Id,
+                Name = entity.Name,
+                Books = entity.Books?.Select(b => new Book
+                {
+                    BookId = b.BookId,
+                    Title = b.Title
+                }).ToHashSet() ?? new HashSet<Book>()
+            };
         }
         public EditorEntity ToEntity(Editor domain)
         {

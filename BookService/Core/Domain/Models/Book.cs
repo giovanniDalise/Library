@@ -8,23 +8,6 @@
         public Editor Editor { get; set; }
         public HashSet<Author> Authors { get; set; } = new HashSet<Author>();
         public string? CoverReference { get; set; }
-        public override bool Equals(object obj)
-        {
-            if (obj is Book book)
-            {
-                return BookId == book.BookId;
-            }
-            return false;
-        }
 
-        public override int GetHashCode()
-        {
-            return BookId.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return $"Book{{ Title='{Title}', ISBN='{Isbn}', Editor={Editor}, Authors={string.Join(", ", Authors)} }}";
-        }
     }
 }

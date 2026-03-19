@@ -66,7 +66,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             }
         }
 
-        public async Task<(Editor Editor, int TotalBooks)> GetByIdAsync(long id, int page, int pageSize)
+        public async Task<(Editor Editor, int TotalBooks)> ReadByIdAsync(long id, int page, int pageSize)
         {
             _logger.Info($"GetByIdAsync - Started | Id: {id}");
             try
