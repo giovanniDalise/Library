@@ -38,7 +38,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
             };
         }
 
-        public static List<EditorResponse> ToResponseList(IEnumerable<Editor> editors)
+        public static List<EditorResponse> ToResponseList(List<Editor> editors)
         {
             return editors.Select(ToResponse).ToList();
         }
