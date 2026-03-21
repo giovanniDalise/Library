@@ -5,7 +5,7 @@ using Library.Logging.Abstractions;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
-    public class AuthorRepositoryEF:AuthorRepositoryPort
+    public class AuthorRepositoryEF:IAuthorRepositoryPort
     {
         private readonly AuthorEntityMapper _authorMapper;
         private readonly BookDBContext _context;

@@ -3,12 +3,12 @@ using Library.UserService.Core.Ports;
 
 namespace Library.UserService.Core.Domain.Services
 {
-    public class UserService:UserServicePort
+    public class UserService:IUserServicePort
     {
-        private readonly UserRepositoryPort _userRepositoryPort;
+        private readonly IUserRepositoryPort _userRepositoryPort;
         private readonly IPasswordHasherPort _passwordHasherPort;
 
-        public UserService(UserRepositoryPort userRepositoryPort, IPasswordHasherPort passwordHasherPort)
+        public UserService(IUserRepositoryPort userRepositoryPort, IPasswordHasherPort passwordHasherPort)
         {
             _userRepositoryPort = userRepositoryPort ?? throw new ArgumentNullException(nameof(userRepositoryPort));
             _passwordHasherPort = passwordHasherPort ?? throw new ArgumentNullException(nameof(passwordHasherPort));

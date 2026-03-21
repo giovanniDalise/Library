@@ -21,14 +21,14 @@ var configuration = builder.Configuration;
 
 // Registrazione dei servizi
 builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
-builder.Services.AddScoped<AuthenticationRepositoryPort, AuthRepositoryAdapter>();
-builder.Services.AddScoped<JwtPort>(provider =>
+builder.Services.AddScoped<IAuthenticationRepositoryPort, AuthRepositoryAdapter>();
+builder.Services.AddScoped<IJwtPort>(provider =>
 {
     var jwtExpirationMs = configuration.GetValue<double>("JwtSettings:ExpirationMilliseconds");
     var logger = provider.GetRequiredService<ILoggerPort>(); // recupero il logger dal DI
     return new JwtAdapter(configuration, jwtExpirationMs, logger);
 });
-builder.Services.AddScoped<AuthenticationServicePort, AuthenticationService>();
+builder.Services.AddScoped<IAuthenticationServicePort, AuthenticationService>();
 
 // Configurazione CORS per permettere tutte le richieste (debug)
 builder.Services.AddCors(options =>

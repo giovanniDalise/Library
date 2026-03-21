@@ -11,10 +11,10 @@ namespace Library.UserService.Infrastructure.Adapters
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserServicePort _userService;
+        private readonly IUserServicePort _userService;
         private readonly ILoggerPort _logger;
 
-        public UserController(UserServicePort userService, ILoggerPort logger)
+        public UserController(IUserServicePort userService, ILoggerPort logger)
         {
             _userService = userService;
             _logger = logger;

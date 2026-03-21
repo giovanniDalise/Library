@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Library.BookService.Infrastructure.Adapters
 {
-    public class FileSystemMediaStorageAdapter : MediaStoragePort
+    public class FileSystemMediaStorageAdapter : IMediaStoragePort
     {
         private readonly string _basePath;
         private readonly string _baseUrl;

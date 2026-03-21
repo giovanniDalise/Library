@@ -2,7 +2,7 @@
 
 namespace Library.BookService.Core.Ports.Books
 {
-    public interface BookAppServicePort
+    public interface IBookAppServicePort
     {
         Task<Book> CreateBookAsync(Book book, Stream? coverStream = null, string? coverFileName = null);
         Task<long> UpdateBookAsync(long id, Book book, Stream? newCoverStream = null, string? newCoverFileName = null);

@@ -5,15 +5,15 @@ using Library.Logging.Abstractions;
 
 namespace Library.BookService.Core.Application
 {
-    public class BookAppService : BookAppServicePort
+    public class BookAppService : IBookAppServicePort
     {
-        private readonly BookServicePort _bookDomainService;
-        private readonly MediaStoragePort _mediaStorage;
+        private readonly IBookServicePort _bookDomainService;
+        private readonly IMediaStoragePort _mediaStorage;
         private readonly ILoggerPort _logger;
 
         public BookAppService(
-            BookServicePort bookDomainService,
-            MediaStoragePort mediaStorage,
+            IBookServicePort bookDomainService,
+            IMediaStoragePort mediaStorage,
             ILoggerPort logger)
         {
             _bookDomainService = bookDomainService;

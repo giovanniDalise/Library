@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace Library.AuthenticationService.Infrastructure.Adapters.Repository
 {
-    public class AuthRepositoryAdapter : AuthenticationRepositoryPort
+    public class AuthRepositoryAdapter : IAuthenticationRepositoryPort
     {
         private readonly string _connectionString;
         private readonly IPasswordVerifierPort _passwordVerifier;

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.BookService.Infrastructure.Adapters.Books
 {
-    public class BookRepositoryEF : BookRepositoryPort
+    public class BookRepositoryEF : IBookRepositoryPort
     {
         private readonly BookEntityMapper _bookMapper;
         private readonly BookDBContext _context;

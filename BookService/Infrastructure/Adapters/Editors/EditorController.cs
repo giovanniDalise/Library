@@ -13,9 +13,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
     [ApiController]
     public class EditorController : ControllerBase
     {
-        private readonly EditorAppServicePort _editorAppService;
+        private readonly IEditorAppServicePort _editorAppService;
         private readonly ILoggerPort _logger;
-        public EditorController(EditorAppServicePort editorAppService, ILoggerPort logger)
+        public EditorController(IEditorAppServicePort editorAppService, ILoggerPort logger)
         {
             _editorAppService = editorAppService;
             _logger = logger;

@@ -4,11 +4,11 @@ using Library.BookService.Core.Ports.Books;
 
 namespace Library.BookService.Core.Domain.Services
 {
-    public class BookService : BookServicePort
+    public class BookService : IBookServicePort
     {
-        private readonly BookRepositoryPort _bookRepositoryPort;
+        private readonly IBookRepositoryPort _bookRepositoryPort;
 
-        public BookService(BookRepositoryPort bookRepositoryPort)
+        public BookService(IBookRepositoryPort bookRepositoryPort)
         {
             _bookRepositoryPort = bookRepositoryPort ?? throw new ArgumentNullException(nameof(bookRepositoryPort));
         }

@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Library.AuthenticationService.Infrastructure.Adapters.Jwt
 {
-    public class JwtAdapter : JwtPort
+    public class JwtAdapter : IJwtPort
     {
         private readonly string _jwtSecret;
         private readonly double _jwtExpirationMs;

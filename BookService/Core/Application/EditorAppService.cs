@@ -6,13 +6,13 @@ using Library.Logging.Abstractions;
 
 namespace Library.BookService.Core.Application
 {
-    public class EditorAppService: EditorAppServicePort
+    public class EditorAppService: IEditorAppServicePort
     {
-        private readonly EditorServicePort _editorDomainService;
+        private readonly IEditorServicePort _editorDomainService;
         private readonly ILoggerPort _logger;
 
         public EditorAppService(
-            EditorServicePort editorDomainService,
+            IEditorServicePort editorDomainService,
             ILoggerPort logger)
         {
             _editorDomainService = editorDomainService;

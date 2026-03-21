@@ -13,10 +13,10 @@ namespace Library.BookService.Infrastructure.Adapters.Books
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly BookAppServicePort _bookAppService;
+        private readonly IBookAppServicePort _bookAppService;
         private readonly ILoggerPort _logger;
         public BookController(
-            BookAppServicePort bookAppService,
+            IBookAppServicePort bookAppService,
             ILoggerPort logger)
         {
             _bookAppService = bookAppService;

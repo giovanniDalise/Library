@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("UserService"));
 
 // Registrazione dei servizi necessari per il BookService
-builder.Services.AddScoped<UserRepositoryPort, UserRepositoryAdapter>();  // Registrazione dell'interfaccia e dell'implementazione
-builder.Services.AddScoped<UserServicePort, UserService>();  // Registrazione del BookService
+builder.Services.AddScoped<IUserRepositoryPort, UserRepositoryAdapter>();  // Registrazione dell'interfaccia e dell'implementazione
+builder.Services.AddScoped<IUserServicePort, UserService>();  // Registrazione del BookService
 builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>(); // Assicurati di avere questa implementazione disponibile
 
 

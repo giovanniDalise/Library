@@ -4,12 +4,12 @@ using Library.BookService.Core.Ports;
 
 namespace Library.AuthenticationService.Core.Domain.Services
 {
-    public class AuthenticationService: AuthenticationServicePort
+    public class AuthenticationService: IAuthenticationServicePort
     {
-        private readonly JwtPort _jwtPort;
-        private readonly AuthenticationRepositoryPort _repositoryPort;
+        private readonly IJwtPort _jwtPort;
+        private readonly IAuthenticationRepositoryPort _repositoryPort;
 
-        public AuthenticationService(JwtPort jwtPort, AuthenticationRepositoryPort authenticationRepositoryPort)
+        public AuthenticationService(IJwtPort jwtPort, IAuthenticationRepositoryPort authenticationRepositoryPort)
         {
             _jwtPort = jwtPort;
             _repositoryPort = authenticationRepositoryPort;

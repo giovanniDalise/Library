@@ -15,14 +15,14 @@ namespace Library.AuthenticationService.Infrastructure.Adapters.Controller
     [Produces("application/json")]
     public class AuthController : ControllerBase
     {
-        private readonly AuthenticationServicePort _authenticationService;
-        private readonly JwtPort _jwtPort;
+        private readonly IAuthenticationServicePort _authenticationService;
+        private readonly IJwtPort _jwtPort;
         private readonly ILoggerPort _logger;
 
         // Inject dependencies via the constructor
         public AuthController(
-            AuthenticationServicePort authenticationService,
-            JwtPort jwtPort,
+            IAuthenticationServicePort authenticationService,
+            IJwtPort jwtPort,
             ILoggerPort logger)
         {
             _authenticationService = authenticationService;

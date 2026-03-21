@@ -4,11 +4,11 @@ using Library.BookService.Core.Ports.Editors;
 
 namespace Library.BookService.Core.Domain.Services
 {
-    public class EditorService: EditorServicePort
+    public class EditorService: IEditorServicePort
     {
-        private readonly EditorRepositoryPort _editorRepositoryPort;
+        private readonly IEditorRepositoryPort _editorRepositoryPort;
 
-        public EditorService(EditorRepositoryPort editorRepositoryPort)
+        public EditorService(IEditorRepositoryPort editorRepositoryPort)
         {
             _editorRepositoryPort = editorRepositoryPort ?? throw new ArgumentNullException(nameof(editorRepositoryPort));
         }

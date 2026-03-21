@@ -11,7 +11,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
-    public class EditorRepositoryEF : EditorRepositoryPort
+    public class EditorRepositoryEF : IEditorRepositoryPort
     {
         private readonly EditorEntityMapper _editorMapper;
         private readonly BookDBContext _context;

@@ -2,7 +2,7 @@
 
 namespace Library.BookService.Core.Ports.Books
 {
-    public interface BookServicePort
+    public interface IBookServicePort
     {
         Task<Book> GetBookByIdAsync(long id);
         Task<Book> CreateBookAsync(Book book);

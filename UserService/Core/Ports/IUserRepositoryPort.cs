@@ -2,7 +2,7 @@
 
 namespace Library.UserService.Core.Ports
 {
-    public interface UserRepositoryPort
+    public interface IUserRepositoryPort
     {
         Task<List<User>> ReadAsync();
         Task<User> GetByIdAsync(long id);

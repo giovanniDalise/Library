@@ -9,7 +9,7 @@ using System.Resources;
 
 namespace Library.UserService.Infrastructure.Adapters
 {
-    public class UserRepositoryAdapter : UserRepositoryPort
+    public class UserRepositoryAdapter : IUserRepositoryPort
     {
         private readonly string _connectionString;
         private readonly ILoggerPort _logger;

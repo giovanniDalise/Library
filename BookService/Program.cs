@@ -22,15 +22,15 @@ builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("BookService"));
 
 
 // Registrazione dei servizi necessari per il BookService
-builder.Services.AddScoped<BookRepositoryPort, BookRepositoryEF>();
-builder.Services.AddScoped<BookAppServicePort, BookAppService>();
-builder.Services.AddScoped<BookServicePort, BookService>();
+builder.Services.AddScoped<IBookRepositoryPort, BookRepositoryEF>();
+builder.Services.AddScoped<IBookAppServicePort, BookAppService>();
+builder.Services.AddScoped<IBookServicePort, BookService>();
 
-builder.Services.AddScoped<MediaStoragePort, FileSystemMediaStorageAdapter>();
+builder.Services.AddScoped<IMediaStoragePort, FileSystemMediaStorageAdapter>();
 
-builder.Services.AddScoped<EditorRepositoryPort, EditorRepositoryEF>();
-builder.Services.AddScoped<EditorAppServicePort, EditorAppService>();
-builder.Services.AddScoped<EditorServicePort, EditorService>();
+builder.Services.AddScoped<IEditorRepositoryPort, EditorRepositoryEF>();
+builder.Services.AddScoped<IEditorAppServicePort, EditorAppService>();
+builder.Services.AddScoped<IEditorServicePort, EditorService>();
 
 // Aggiungi DbContext per la connessione a MySQL
 var connectionString = builder.Configuration.GetConnectionString("BookDbConnection");
