@@ -41,9 +41,9 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 var createdBook = await _bookAppService.CreateBookAsync(
                     bookDomain, coverStream, coverFileName
                 );
-                _logger.Info($"Libro aggiunto con id: {createdBook.BookId}");
+                _logger.Info($"Libro aggiunto con id: {createdBook.Id}");
 
-                return Ok(createdBook.BookId);
+                return Ok(createdBook.Id);
             }
             catch (Exception ex)
             {

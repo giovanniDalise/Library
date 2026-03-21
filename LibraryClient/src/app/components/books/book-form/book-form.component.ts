@@ -76,7 +76,7 @@ export class BookFormComponent {
         const bookIdNumber = Number(this.bookId);
 
         if (!isNaN(bookIdNumber)) {
-          this.booksService.getBooks({ bookId: bookIdNumber }, 1, 10)
+          this.booksService.getBooks({ id: bookIdNumber }, 1, 10)
             .subscribe(response => {
               const book = response.items?.[0];
 
@@ -116,8 +116,8 @@ export class BookFormComponent {
 
     // Autori
     book.authors.forEach((author, index) => {
-      if (author.authorId) {
-        formData.append(`authors[${index}].id`, author.authorId.toString());
+      if (author.id) {
+        formData.append(`authors[${index}].id`, author.id.toString());
       }
       formData.append(`authors[${index}].name`, author.name);
       formData.append(`authors[${index}].surname`, author.surname);

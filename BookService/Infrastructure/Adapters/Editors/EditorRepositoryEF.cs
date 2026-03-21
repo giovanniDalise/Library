@@ -89,7 +89,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
                 var books = await _context.Books
                     .Where(b => b.EditorId == id)
-                    .OrderBy(b => b.BookId)
+                    .OrderBy(b => b.Id)
                     .Skip(offset)
                     .Take(pageSize)
                     .ToListAsync();

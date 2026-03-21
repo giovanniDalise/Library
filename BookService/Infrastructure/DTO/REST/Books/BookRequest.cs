@@ -5,7 +5,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Books
 {
     public class BookRequest
     {
-        public long BookId { get; set; }
+        public long Id { get; set; }
         public string? Title { get; set; }
         public string? Isbn { get; set; }
         public EditorRequest? Editor { get; set; }

@@ -42,7 +42,7 @@
 
             <td *ngIf="isAdmin">
               <a
-                [routerLink]="['/book-form', book.bookId, 'update']"
+                [routerLink]="['/book-form', book.id, 'update']"
                 class="action-btn edit-btn me-2"
               >
                 <i class="bi bi-pencil"> Edit</i>
@@ -50,7 +50,7 @@
 
               <button
                 class="action-btn delete-btn"
-                (click)="onDelete(book.bookId)"
+                (click)="onDelete(book.id)"
               >
                 <i class="bi bi-trash"> Delete</i>
               </button>

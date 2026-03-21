@@ -1,5 +1,5 @@
 export interface BookRequest {
-  bookId?: number;
+  id?: number;
   title?: string;
   isbn?: string;
   editor?: {
@@ -7,7 +7,7 @@ export interface BookRequest {
     name?: string;
   };
   authors?: {
-    authorId?: number;
+    id?: number;
     name?: string;
     surname?: string;
   }[];

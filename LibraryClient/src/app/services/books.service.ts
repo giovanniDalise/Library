@@ -25,7 +25,7 @@ export class BooksService {
   }
 
   updateBook(book: Book): Observable<BookRequest> {
-    return this.http.put<Book>(this.baseUrl + this.endpoints.update.replace('{id}', book.bookId.toString()), book)
+    return this.http.put<Book>(this.baseUrl + this.endpoints.update.replace('{id}', book.id.toString()), book)
   }
 
   getBooks(criteria: BookRequest, page: number, pageSize: number): Observable<PagedResponse<Book>> {

@@ -20,7 +20,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 Name = entity.Name,
                 Books = entity.Books?.Select(b => new Book
                 {
-                    BookId = b.BookId,
+                    Id = b.Id,
                     Title = b.Title
                 }).ToList() ?? new List<Book>()
             };

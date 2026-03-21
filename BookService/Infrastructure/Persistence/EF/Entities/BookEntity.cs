@@ -9,7 +9,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("book_id")]
-        public long BookId { get; set; }
+        public long Id { get; set; }
 
         [Column("title")]
         public string Title { get; set; }

@@ -53,7 +53,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF
         /// </summary>
         public void RemoveBookWithRelationships(int bookId)
         {
-            var book = Books.Include(b => b.Authors).FirstOrDefault(b => b.BookId == bookId);
+            var book = Books.Include(b => b.Authors).FirstOrDefault(b => b.Id == bookId);
 
             if (book != null)
             {

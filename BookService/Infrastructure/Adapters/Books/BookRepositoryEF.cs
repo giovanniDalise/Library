@@ -33,7 +33,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 var bookEntity = await _context.Books
                                                 .Include(b => b.Editor)
                                                 .Include(b => b.Authors)
-                                                .FirstOrDefaultAsync(b => b.BookId == id);
+                                                .FirstOrDefaultAsync(b => b.Id == id);
                 return bookEntity != null ? _bookMapper.ToDomain(bookEntity) : null;
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 await _context.Books.AddAsync(bookEntity);
                 await _context.SaveChangesAsync();
 
-                _logger.Info($"Libro creato con ID {bookEntity.BookId}");
+                _logger.Info($"Libro creato con ID {bookEntity.Id}");
                 return _bookMapper.ToDomain(bookEntity);
             }
             catch (Exception e)
@@ -108,7 +108,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             {
                 var bookEntity = await _context.Books
                     .Include(b => b.Authors) // Includi gli autori per eliminare le relazioni Many-to-Many
-                    .FirstOrDefaultAsync(b => b.BookId == id);
+                    .FirstOrDefaultAsync(b => b.Id == id);
 
                 if (bookEntity == null)
                 {
@@ -136,17 +136,17 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
         public async Task<long> UpdateAsync(long id, Book book)
         {
-            _logger.Info($"UpdateAsync - Start | BookId={id}");
+            _logger.Info($"UpdateAsync - Start | Id={id}");
             try
             {
                 var existingEntity = await _context.Books
                     .Include(b => b.Authors)
                     .Include(b => b.Editor)
-                    .FirstOrDefaultAsync(b => b.BookId == id);
+                    .FirstOrDefaultAsync(b => b.Id == id);
 
                 if (existingEntity == null) 
                 {
-                    _logger.Warn($"UpdateAsync - Book not found | BookId={id}");
+                    _logger.Warn($"UpdateAsync - Book not found | Id={id}");
                     throw new BookRepositoryEFException("Book not found");
                 }
 
@@ -191,12 +191,12 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
                 await _context.SaveChangesAsync();
 
-                _logger.Info($"UpdateAsync - Completed | BookId={id}");
+                _logger.Info($"UpdateAsync - Completed | Id={id}");
                 return id;
             }
             catch (Exception e)
             {
-                _logger.Error($"UpdateAsync - Error | BookId={id}", e);
+                _logger.Error($"UpdateAsync - Error | Id={id}", e);
                 throw new BookRepositoryEFException("Error updating book: " + e.Message);
             }
         }
@@ -214,9 +214,9 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                                     .Include(b => b.Authors)
                                     .AsQueryable();
 
-                if (searchBook.BookId > 0)
+                if (searchBook.Id > 0)
                 {
-                    query = query.Where(b => b.BookId == searchBook.BookId);
+                    query = query.Where(b => b.Id == searchBook.Id);
                 }
 
                 if (!string.IsNullOrEmpty(searchBook.Title))
@@ -251,7 +251,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 int total = await query.CountAsync();
 
                 var bookEntities = await query
-                    .OrderBy(b =>b.BookId)
+                    .OrderBy(b =>b.Id)
                     .Skip(offset)
                     .Take(pageSize)
                     .ToListAsync();

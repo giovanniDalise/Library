@@ -47,7 +47,7 @@ export class BooksPageComponent implements OnInit {
 
   deleteBook(bookId: number): void {
     this.booksService.deleteBook(bookId).subscribe(() => {
-      this.books = this.books.filter(b => b.bookId !== bookId);
+      this.books = this.books.filter(b => b.id !== bookId);
       this.snackBar.open('Libro eliminato con successo!', 'Chiudi', {
         duration: 3000,
         verticalPosition: 'top',
@@ -73,7 +73,7 @@ export class BooksPageComponent implements OnInit {
     this.lastCriteria = criteria;
 
     const searchCriteria: BookRequest = {
-      bookId: criteria.bookId ?? undefined,
+      id: criteria.id ?? undefined,
       title: criteria.title?.trim() || undefined,
       isbn: criteria.isbn?.trim() || undefined,
       editor: criteria.editor
@@ -84,7 +84,7 @@ export class BooksPageComponent implements OnInit {
         : undefined,
       authors: criteria.authors?.length
         ? criteria.authors.map(a => ({
-            authorId: a.authorId ?? undefined,
+            authorId: a.id ?? undefined,
             name: a.name?.trim() || undefined,
             surname: a.surname?.trim() || undefined
           }))

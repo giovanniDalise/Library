@@ -13,7 +13,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
         {
             return new BookResponse
             {
-                BookId = book.BookId,
+                Id = book.Id,
                 Title = book.Title,
                 Isbn = book.Isbn,
                 CoverReference = book.CoverReference,
@@ -41,7 +41,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
         {
             return new Book
             {
-                BookId = request.BookId,
+                Id = request.Id,
                 Title = request.Title,
                 Isbn = request.Isbn,
                 CoverReference = coverReference,

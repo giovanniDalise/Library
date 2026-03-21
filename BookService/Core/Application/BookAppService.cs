@@ -30,10 +30,10 @@ namespace Library.BookService.Core.Application
 
             if (coverStream != null && coverFileName != null)
             {
-                var coverUrl = await _mediaStorage.SaveAsync(coverStream, coverFileName, "image/jpeg", createdBook.BookId);
+                var coverUrl = await _mediaStorage.SaveAsync(coverStream, coverFileName, "image/jpeg", createdBook.Id);
                 createdBook.CoverReference = coverUrl;
                 // aggiorno il libro tramite dominio
-                await _bookDomainService.UpdateBookAsync(createdBook.BookId.Value, createdBook);
+                await _bookDomainService.UpdateBookAsync(createdBook.Id.Value, createdBook);
             }
 
             return createdBook;
@@ -44,7 +44,7 @@ namespace Library.BookService.Core.Application
             if (newCoverStream != null && newCoverFileName != null && !string.IsNullOrWhiteSpace(book.CoverReference))
             {
                 await _mediaStorage.DeleteAsync(id);
-                var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", book.BookId);
+                var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", book.Id);
                 book.CoverReference = coverUrl;
             }
 

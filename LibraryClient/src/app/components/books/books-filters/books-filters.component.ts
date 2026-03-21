@@ -17,7 +17,7 @@ export class BooksFiltersComponent {
 @Output() search = new EventEmitter<Partial<Book>>();
 
   filterForm = new FormGroup({
-    bookId: new FormControl(''),
+    id: new FormControl(''),
     title: new FormControl(''),
     isbn: new FormControl(''),
     author: new FormControl(''),
@@ -27,7 +27,7 @@ export class BooksFiltersComponent {
 onSearch() {
   const formValue = this.filterForm.value;
   const criteria: Partial<Book> = {
-    bookId: this.isAdmin && formValue.bookId? Number(formValue.bookId): undefined,
+    id: this.isAdmin && formValue.id? Number(formValue.id): undefined,
     title: formValue.title?.trim() || undefined,
     isbn: formValue.isbn?.trim() || undefined,
     authors: formValue.author ? [{ name: formValue.author.trim(), surname: '' } as any] : [],

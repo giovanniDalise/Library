@@ -13,7 +13,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         {
             return new Book
             {
-                BookId = entity.BookId,
+                Id = entity.Id,
                 Title = entity.Title,
                 Isbn = entity.Isbn,
                 Editor = _editorMapper.ToDomain(entity.Editor),
@@ -26,7 +26,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         {
             return new BookEntity
             {
-                BookId = book.BookId ?? 0,
+                Id = book.Id ?? 0,
                 Title = book.Title,
                 Isbn = book.Isbn,
                 Editor = _editorMapper.ToEntity(book.Editor),

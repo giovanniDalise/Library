@@ -2,7 +2,7 @@
 {
     public class Book
     {
-        public long? BookId { get; set; }
+        public long? Id { get; set; }
         public string Title { get; set; }
         public string Isbn { get; set; }
         public Editor Editor { get; set; }
