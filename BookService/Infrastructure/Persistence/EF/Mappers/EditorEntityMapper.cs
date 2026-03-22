@@ -9,7 +9,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
     public class EditorEntityMapper : IMapper<EditorEntity, Editor>
     {
 
-        public Editor ToDomain(EditorEntity entity)
+        public Editor ToDomain (EditorEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -18,10 +18,10 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Books = entity.Books?.Select(b => new Book
+                Books = entity.Books.Select(e => new Book
                 {
-                    Id = b.Id,
-                    Title = b.Title
+                    Id = e.Id,
+                    Title = e.Title
                 }).ToList() ?? new List<Book>()
             };
         }
