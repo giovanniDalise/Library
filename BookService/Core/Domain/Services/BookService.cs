@@ -15,28 +15,28 @@ namespace Library.BookService.Core.Domain.Services
 
         public async Task<Book> GetBookByIdAsync(long id)
         {
-            return await _bookRepositoryPort.GetByIdAsync(id);
+            return await _bookRepositoryPort.GetBookByIdAsync(id);
         }
 
 
         public async Task<Book> CreateBookAsync(Book book)
         {
-            return await _bookRepositoryPort.CreateAsync(book);
+            return await _bookRepositoryPort.CreateBookAsync(book);
         }
 
         public async Task<long> UpdateBookAsync(long id, Book book)
         {
-            return await _bookRepositoryPort.UpdateAsync(id, book);
+            return await _bookRepositoryPort.UpdateBookAsync(id, book);
         }
 
         public async Task<long> DeleteBookAsync(long id)
         {
-            return await _bookRepositoryPort.DeleteAsync(id);
+            return await _bookRepositoryPort.DeleteBookAsync(id);
         }
 
         public async Task<(List<Book> Books, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize)
         {
-            return await _bookRepositoryPort.ReadAsync(searchBook, page, pageSize);
+            return await _bookRepositoryPort.GetBooksAsync(searchBook, page, pageSize);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             _logger = logger;
         }
 
-        public async Task<Book> GetByIdAsync(long id)
+        public async Task<Book> GetBookByIdAsync(long id)
         {
-            _logger.Info($"[Repository] Recupero libro ID {id}");
+            _logger.Info($"GetBookByIdAsync - Started | Retrieving book ID {id}");
             try
             {
                 var bookEntity = await _context.Books
@@ -38,13 +38,13 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
             catch (Exception e)
             {
-                _logger.Error($"Errore GetByIdAsync ID {id}", e);
+                _logger.Error($"Errore GetBookByIdAsync ID {id}", e);
                 throw new BookRepositoryEFException("Error getting book by id: " + e.Message);
             }
         }
-        public async Task<Book> CreateAsync(Book book)
+        public async Task<Book> CreateBookAsync(Book book)
         {
-            _logger.Info($"[Repository] Creazione libro: {book.Title}");
+            _logger.Info($"CreateBookAsync - Start | Craetion Book: {book.Title}");
             try
             {
                 // Controlla se l'editor esiste
@@ -92,18 +92,18 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 await _context.Books.AddAsync(bookEntity);
                 await _context.SaveChangesAsync();
 
-                _logger.Info($"Libro creato con ID {bookEntity.Id}");
+                _logger.Info($"Book ID {bookEntity.Id} created");
                 return _bookMapper.ToDomain(bookEntity);
             }
             catch (Exception e)
             {
-                _logger.Error($"Errore durante CreateAsync per libro {book.Title}", e);
+                _logger.Error($"Error CreateBookAsync for book {book.Title}", e);
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
-        public async Task<long> DeleteAsync(long id)
+        public async Task<long> DeleteBookAsync(long id)
         {
-            _logger.Info($"[Repository] Eliminazione libro ID {id}");
+            _logger.Info($"DeleteBookAsync - Start | Deleting Book ID {id}");
             try
             {
                 var bookEntity = await _context.Books
@@ -129,14 +129,14 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
             catch (Exception e)
             {
-                _logger.Error($"Errore DeleteAsync ID {id}", e);
+                _logger.Error($"Errore DeleteBookAsync ID {id}", e);
                 throw new BookRepositoryEFException($"Error deleting book: {e.Message}", e);
             }
         }
 
-        public async Task<long> UpdateAsync(long id, Book book)
+        public async Task<long> UpdateBookAsync(long id, Book book)
         {
-            _logger.Info($"UpdateAsync - Start | Id={id}");
+            _logger.Info($"UpdateBookAsync - Start | Id={id}");
             try
             {
                 var existingEntity = await _context.Books
@@ -146,7 +146,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
                 if (existingEntity == null) 
                 {
-                    _logger.Warn($"UpdateAsync - Book not found | Id={id}");
+                    _logger.Warn($"UpdateBookAsync - Book not found | Id={id}");
                     throw new BookRepositoryEFException("Book not found");
                 }
 
@@ -169,7 +169,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 }
                 existingEntity.Editor = editorEntity;
 
-                _logger.Info($"UpdateAsync - Updating authors | Count={book.Authors.Count}");
+                _logger.Info($"UpdateBookAsync - Updating authors | Count={book.Authors.Count}");
 
                 // Gestione autori
                 existingEntity.Authors.Clear(); // rimuove le associazioni esistenti
@@ -191,19 +191,19 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
                 await _context.SaveChangesAsync();
 
-                _logger.Info($"UpdateAsync - Completed | Id={id}");
+                _logger.Info($"UpdateBookAsync - Completed | Id={id}");
                 return id;
             }
             catch (Exception e)
             {
-                _logger.Error($"UpdateAsync - Error | Id={id}", e);
+                _logger.Error($"UpdateBookAsync - Error | Id={id}", e);
                 throw new BookRepositoryEFException("Error updating book: " + e.Message);
             }
         }
 
-        public async Task<(List<Book> Items, int TotalRecords)> ReadAsync(Book searchBook, int page, int pageSize)
+        public async Task<(List<Book> Items, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize)
         {
-            _logger.Info($"ReadAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
+            _logger.Info($"GetBooksAsync - Start | Title={searchBook.Title ?? "null"} | Isbn={searchBook.Isbn ?? "null"}");
 
             try
             {
@@ -256,13 +256,13 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                     .Take(pageSize)
                     .ToListAsync();
 
-                _logger.Info($"ReadAsync - Completed | Results={bookEntities.Count}");
+                _logger.Info($"GetBooksAsync - Completed | Results={bookEntities.Count}");
 
                 return (_bookMapper.ToDomainList(bookEntities), total);
             }
             catch (Exception e)
             {
-                _logger.Error("ReadAsync - Error", e);
+                _logger.Error("GetBooksAsync - Error", e);
 
                 throw new BookRepositoryEFException("Error finding books by object: " + e.Message);
             }

@@ -27,9 +27,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger = logger;
         }
 
-        public async Task<(List<Editor> Items, int TotalRecords)> ReadAsync(Editor searchEditor, int page, int pageSize)
+        public async Task<(List<Editor> Items, int TotalRecords)> GetEditorsAsync(Editor searchEditor, int page, int pageSize)
         {
-            _logger.Info($"Read Async - Started | Editor name: {searchEditor.Name ?? "null"}");
+            _logger.Info($"GetEditorsAsync - Started | Editor name: {searchEditor.Name ?? "null"}");
             try
             {
                 int offset = (page -1) * pageSize;
@@ -54,21 +54,21 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Take(pageSize)
                     .ToListAsync();
 
-                _logger.Info($"ReadAsync - Completed | {editorEntities.Count} items");
+                _logger.Info($"GetEditorsAsync - Completed | {editorEntities.Count} items");
 
                 return (_editorMapper.ToDomainList(editorEntities), total);
 
             }
             catch (Exception e)
             {
-                _logger.Error($"ReadAsynch - Error", e);
+                _logger.Error($"GetEditorsAsync - Error", e);
                 throw new EditorRepositoryEFException("Error retrieving editors", e);
             }
         }
 
-        public async Task<(Editor Editor, int TotalBooks)> ReadByIdAsync(long id, int page, int pageSize)
+        public async Task<(Editor Editor, int TotalBooks)> GetEditorByIdAsync(long id, int page, int pageSize)
         {
-            _logger.Info($"GetByIdAsync - Started | Id: {id}");
+            _logger.Info($"GetEditorByIdAsync - Started | Id: {id}");
             try
             {
                 var editorEntity = await _context.Editors
@@ -76,7 +76,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
                 if (editorEntity == null)
                 {
-                    _logger.Warn($"GetByIdAsync - Editor not found | Id: {id}");
+                    _logger.Warn($"GetEditorByIdAsync - Editor not found | Id: {id}");
                     return (null, 0);
                 }
 
@@ -96,12 +96,12 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
                 editorEntity.Books = books.ToHashSet();
 
-                _logger.Info($"GetByIdAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
+                _logger.Info($"GetEditorByIdAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
                 return (_editorMapper.ToDomain(editorEntity), totalBooks);
             }
             catch (Exception e)
             {
-                _logger.Error($"GetByIdAsync - Error", e);
+                _logger.Error($"GetEditorByIdAsync - Error", e);
                 throw new EditorRepositoryEFException("Error retrieving editor by id", e);
             }
         }

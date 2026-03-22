@@ -14,11 +14,11 @@ namespace Library.BookService.Core.Domain.Services
         }
         public async Task<(List<Editor> Editors, int TotalRecords)> GetEditorsAsync(Editor searchEditor, int page, int pageSize)
         {
-            return await _editorRepositoryPort.ReadAsync(searchEditor, page, pageSize);
+            return await _editorRepositoryPort.GetEditorsAsync(searchEditor, page, pageSize);
         }
         public async Task<(Editor Editor, int TotalBooks)> GetEditorByIdAsync(long id, int page, int pageSize)
         {
-            return await _editorRepositoryPort.ReadByIdAsync(id, page, pageSize);
+            return await _editorRepositoryPort.GetEditorByIdAsync(id, page, pageSize);
         }
     }
 }
