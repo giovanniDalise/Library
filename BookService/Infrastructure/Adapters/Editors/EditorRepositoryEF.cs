@@ -49,7 +49,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 int total = await query.CountAsync();
 
                 var editorEntities = await query
-                    .OrderBy(e => e.Id)
+                    .OrderBy(e => e.Name)
                     .Skip(offset)
                     .Take(pageSize)
                     .ToListAsync();

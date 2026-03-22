@@ -2,6 +2,7 @@
 using Library.BookService.Core.Ports.Authors;
 using Library.BookService.Infrastructure.Exceptions;
 using Library.BookService.Infrastructure.Persistence.EF;
+using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 
@@ -31,9 +32,17 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 int offset = (page - 1) * pageSize;
 
-                IQueryable query = _context.Authors;
+                IQueryable<AuthorEntity> query = _context.Authors;
 
+                if(searchAuthor.Id > 0)
+                {
+                    query = query.Where(a => a.Id = searchAuthor.Id);
+                }
 
+                if (!string.IsNullOrEmpty(searchAuthor.FullName))
+                {
+                    query = query.Where(a => a.FullName.Contains(searchAuthor.FullName);
+                }
             }
             catch (Exception ex)
             {
