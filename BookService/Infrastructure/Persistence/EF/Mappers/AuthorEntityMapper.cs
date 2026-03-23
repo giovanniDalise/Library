@@ -1,54 +1,52 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Infrastructure.Persistence.EF.Entities;
+using Library.BookService.Infrastructure.Persistence.Interfaces;
 
 namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
 {
-    public class AuthorEntityMapper
+    public class AuthorEntityMapper : IMapper<AuthorEntity, Author>
     {
-        public static Author ToDomain(AuthorEntity entity)
+        public  Author ToDomain(AuthorEntity entity)
         {
-            if (entity == null) return null;
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
 
-            var author = new Author
+            return new Author
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Surname = entity.Surname
-                // Books mapping can be added if necessary
+                Surname = entity.Surname,
+                Books = entity.Books?.Select(b => new Book
+                {
+                    Id = b.Id,
+                    Title = b.Title
+                }).ToList() ?? new List<Book>()
             };
-
-            return author;
         }
 
-        public static AuthorEntity ToEntity(Author author)
+        public AuthorEntity ToEntity(Author domain)
         {
-            if (author == null) return null;
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
 
-            var entity = new AuthorEntity
+            return new AuthorEntity
             {
-                Id = author.Id,
-                Name = author.Name,
-                Surname = author.Surname
+                Id = domain.Id,
+                Name = domain.Name,
+                Surname = domain.Surname
                 // Books mapping can be added if necessary
             };
 
-            return entity;
         }
 
-        public static List<Author> ToDomainSet(ICollection<AuthorEntity> entities)
+        public List<Author> ToDomainList(List<AuthorEntity> entities)
         {
-            if (entities == null) return null;
-
-            return entities.Select(AuthorEntityMapper.ToDomain)
-                           .ToList();
+            return entities.Select(ToDomain).ToList();
         }
 
-        public static List<AuthorEntity> ToEntitySet(List<Author> authors)
+        public List<AuthorEntity> ToEntityList(List<Author> authors)
         {
-            if (authors == null) return null;
-
-            return authors.Select(AuthorEntityMapper.ToEntity)
-                          .ToList();
+            return authors.Select(ToEntity).ToList();
         }
     }
 }

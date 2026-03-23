@@ -5,6 +5,8 @@ using Library.BookService.Infrastructure.Persistence.EF;
 using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
@@ -36,13 +38,25 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 
                 if(searchAuthor.Id > 0)
                 {
-                    query = query.Where(a => a.Id = searchAuthor.Id);
+                    query = query.Where(a => a.Id == searchAuthor.Id);
                 }
 
                 if (!string.IsNullOrEmpty(searchAuthor.FullName))
                 {
-                    query = query.Where(a => a.FullName.Contains(searchAuthor.FullName);
+                    query = query.Where(a => a.FullName.Contains(searchAuthor.FullName));
                 }
+
+                int total = await query.CountAsync();
+
+                var authorEntities = await query
+                    .OrderBy(a => a.Surname)
+                    .Skip(offset)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                _logger.Info($"GetAuthorsAsync - Completed | {authorEntities.Count} items");
+
+                return (_authorMapper.ToDomainList(authorEntities), total);
             }
             catch (Exception ex)
             {
