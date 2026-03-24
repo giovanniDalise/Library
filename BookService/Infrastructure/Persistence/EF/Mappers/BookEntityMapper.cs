@@ -18,7 +18,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 Title = entity.Title,
                 Isbn = entity.Isbn,
                 Editor = _editorMapper.ToDomain(entity.Editor),
-                Authors = _authorMapper.ToDomainList(entity.Authors),
+                Authors = _authorMapper.ToDomainList(entity.Authors.ToList()),
                 CoverReference = entity.CoverReference
             };
         }
