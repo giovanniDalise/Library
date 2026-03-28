@@ -11,9 +11,7 @@ namespace Library.BookService.Core.Application
         private readonly IEditorServicePort _editorDomainService;
         private readonly ILoggerPort _logger;
 
-        public EditorAppService(
-            IEditorServicePort editorDomainService,
-            ILoggerPort logger)
+        public EditorAppService(IEditorServicePort editorDomainService, ILoggerPort logger)
         {
             _editorDomainService = editorDomainService;
             _logger = logger;

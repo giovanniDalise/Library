@@ -5,7 +5,6 @@ using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
