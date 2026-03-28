@@ -8,7 +8,6 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
 {
     public static class BookDTOMapper
     {
-        // Domain → DTO Response
         public static BookResponse ToResponse(Book book)
         {
             return new BookResponse

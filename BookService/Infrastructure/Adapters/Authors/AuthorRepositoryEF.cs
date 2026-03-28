@@ -43,13 +43,15 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 
                 if (!string.IsNullOrEmpty(searchAuthor.FullName))
                 {
-                    query = query.Where(a => a.FullName.Contains(searchAuthor.FullName));
+                    query = query.Where(a =>
+                        (a.Name + " " + a.Surname).Contains(searchAuthor.FullName) ||
+                        (a.Surname + " " + a.Name).Contains(searchAuthor.FullName));
                 }
 
                 int total = await query.CountAsync();
 
                 var authorEntities = await query
-                    .OrderBy(a => a.Surname)
+                    .OrderBy(a => a.Surname).ThenBy(a => a.Name)
                     .Skip(offset)
                     .Take(pageSize)
                     .ToListAsync();

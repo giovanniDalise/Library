@@ -1,9 +1,11 @@
 using Library.BookService.Core.Application;
 using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports;
+using Library.BookService.Core.Ports.Authors;
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.Adapters;
+using Library.BookService.Infrastructure.Adapters.Authors;
 using Library.BookService.Infrastructure.Adapters.Books;
 using Library.BookService.Infrastructure.Adapters.Editors;
 using Library.BookService.Infrastructure.Persistence.EF;
@@ -32,6 +34,10 @@ builder.Services.AddScoped<IEditorRepositoryPort, EditorRepositoryEF>();
 builder.Services.AddScoped<IEditorAppServicePort, EditorAppService>();
 builder.Services.AddScoped<IEditorServicePort, EditorService>();
 
+builder.Services.AddScoped<IAuthorRepositoryPort, AuthorRepositoryEF>();
+builder.Services.AddScoped<IAuthorAppServicePort, AuthorAppService>();
+builder.Services.AddScoped<IAuthorServicePort, AuthorService>();
+
 // Aggiungi DbContext per la connessione a MySQL
 var connectionString = builder.Configuration.GetConnectionString("BookDbConnection");
 builder.Services.AddDbContext<BookDBContext>(options =>
@@ -40,6 +46,7 @@ builder.Services.AddDbContext<BookDBContext>(options =>
 // Registrazione del BookMapper
 builder.Services.AddScoped<BookEntityMapper>();  // Registrazione di BookMapper nel DI
 builder.Services.AddScoped<EditorEntityMapper>();  // Registrazione di EditorMapper nel DI
+builder.Services.AddScoped<AuthorEntityMapper>();  // Registrazione di AuthorMapper nel DI
 
 
 // Aggiungi i servizi per i controller
