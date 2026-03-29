@@ -10,6 +10,7 @@ export const environment = {
   apiUrls: {
     books: 'http://localhost:5282/library',
     editors: 'http://localhost:5282/editors',
+    authors: 'http://localhost:5282/authors',
     users: 'http://localhost:5022/users',
     auth: 'http://localhost:5073/auth'
   },
@@ -25,6 +26,9 @@ export const environment = {
     editors: {
       getEditors: '/getEditors',
       getById: '/{id}'  
+    },
+    authors:{
+      getAuthors: '/getAuthors'
     },    
     auth: {
       login: '/login'

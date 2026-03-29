@@ -3,6 +3,7 @@ export const environment = {
   apiUrls: {
     books: 'http://api-gateway/api/books',
     editors: 'http://api-gateway/api/editors',
+    authors: 'http://api-gateway/api/authors',    
     users: 'http://api-gateway/api/users',
     auth: 'http://api-gateway/api/auth'
   },
@@ -18,7 +19,10 @@ export const environment = {
     editors: {
       getEditors: '/getEditors',
       getById: '/{id}'  
-    },      
+    },
+    authors:{
+      getAuthors: '/getAuthors'
+    },            
     auth: {
       login: '/login'
     }    

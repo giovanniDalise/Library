@@ -7,6 +7,7 @@ import { BooksPageComponent } from './pages/books/books-page/books-page.componen
 import { BooksGridComponent } from './components/books/books-grid/books-grid.component';
 import { EditorsPageComponent } from './pages/editors/editors-page/editors-page.component';
 import { EditorDetailComponent } from './pages/editors/editor-detail/editor-detail.component';
+import { AuthorsPageComponent } from './pages/authors/authors-page/authors-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -17,5 +18,7 @@ export const routes: Routes = [
     { path: 'book-form/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
     { path: 'book-form/:bookId/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
     { path: 'editors', component: EditorsPageComponent },
-    { path: 'editors/:id', component: EditorDetailComponent}
+    { path: 'editors/:id', component: EditorDetailComponent},
+    { path: 'authors', component: AuthorsPageComponent },
+
 ];
