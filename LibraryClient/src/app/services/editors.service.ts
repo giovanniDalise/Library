@@ -18,16 +18,16 @@ export class EditorsService {
 
   getEditorDetail(id: number, page: number, pageSize: number): Observable<EditorDetail> {
       const params = new HttpParams()
-          .set('page', page.toString())
-          .set('pageSize', pageSize.toString());
+          .set('page', page)
+          .set('pageSize', pageSize)
       const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
       return this.http.get<EditorDetail>(url, { params });
   }
   
-  getEditors(searchFilter: EditorRequest, page:number, pageSize:number): Observable<PagedResponse<Editor>>{
+  getEditors(searchFilter:EditorRequest, page:number, pageSize: number): Observable<PagedResponse<Editor>>{
     const params = new HttpParams()
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString())
-    return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
+      .set("page", page)
+      .set("pageSize", pageSize)
+      return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
   }
 }
