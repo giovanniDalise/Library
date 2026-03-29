@@ -63,7 +63,7 @@ export class EditorsPageComponent implements OnInit {
       });
   }
 
-  onViewDetail(editorId: number): void {
+  viewDetail(editorId: number): void {
     this.router.navigate(['/editors', editorId]);
   }
 
