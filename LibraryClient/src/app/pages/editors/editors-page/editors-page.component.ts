@@ -24,6 +24,7 @@ export class EditorsPageComponent implements OnInit {
   pagination = new PaginationState();
 
   editorId?: number;
+  // ultimo filtro impostato utile per tenere in memoria il filtro e non perderlo con il cambio pagina
   private lastSearchFilter: EditorRequest = {};
 
   constructor(
@@ -45,7 +46,7 @@ export class EditorsPageComponent implements OnInit {
 
     const normalizedFilter: EditorRequest = {
       id: searchFilter.id ?? undefined,
-      name: searchFilter.name?.trim() || undefined
+      name: searchFilter.name?.trim() ?? undefined
     };
 
     this.editorsService
