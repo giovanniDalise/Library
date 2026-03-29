@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { EditorsGridComponent } from '../../../components/editors/editors-grid/editors-grid.component';
 import { EditorsFiltersComponent } from '../../../components/editors/editors-filters/editors-filters.component';
 import { Router, RouterLink } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoleService } from '../../../services/user-role.service';
 import { EditorsService } from '../../../services/editors.service';
 import { PaginationState } from '../../../models/pagination/pagination-state';
@@ -25,11 +24,10 @@ export class EditorsPageComponent implements OnInit {
   pagination = new PaginationState();
 
   editorId?: number;
-  private lastCriteria: EditorRequest = {};
+  private lastSearchFilter: EditorRequest = {};
 
   constructor(
     private editorsService: EditorsService,
-    private snackBar: MatSnackBar,
     private userRoleService: UserRoleService,
     private router: Router 
   ){}
@@ -41,17 +39,17 @@ export class EditorsPageComponent implements OnInit {
     this.searchEditors();
   }  
 
-  searchEditors(criteria: EditorRequest  = this.lastCriteria): void {
+  searchEditors(searchFilter: EditorRequest  = this.lastSearchFilter): void {
 
-    this.lastCriteria = criteria;
+    this.lastSearchFilter = searchFilter;
 
-    const searchCriteria: EditorRequest = {
-      id: criteria.id ?? undefined,
-      name: criteria.name?.trim() || undefined
+    const normalizedFilter: EditorRequest = {
+      id: searchFilter.id ?? undefined,
+      name: searchFilter.name?.trim() || undefined
     };
 
     this.editorsService
-      .getEditors(searchCriteria, this.pagination.currentPage, this.pagination.pageSize)
+      .getEditors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
           this.editors = results.items;
@@ -73,12 +71,12 @@ export class EditorsPageComponent implements OnInit {
 
   nextPage(): void {
     this.pagination.next();
-    this.searchEditors(this.lastCriteria);
+    this.searchEditors(this.lastSearchFilter);
   }
 
   prevPage(): void {
     this.pagination.prev();
-    this.searchEditors(this.lastCriteria);
+    this.searchEditors(this.lastSearchFilter);
   } 
 
 
