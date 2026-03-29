@@ -24,10 +24,10 @@ export class EditorsService {
       return this.http.get<EditorDetail>(url, { params });
   }
   
-  getEditors(searchFilter: EditorRequest, page:number, pagesize:number): Observable<PagedResponse<Editor>>{
+  getEditors(searchFilter: EditorRequest, page:number, pageSize:number): Observable<PagedResponse<Editor>>{
     const params = new HttpParams()
       .set('page', page.toString())
-      .set('pageSize', pagesize.toString())
+      .set('pageSize', pageSize.toString())
     return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
   }
 }
