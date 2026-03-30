@@ -18,7 +18,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Books = entity.Books.Select(e => new Book
+                Books = entity.Books?.Select(e => new Book
                 {
                     Id = e.Id,
                     Title = e.Title
