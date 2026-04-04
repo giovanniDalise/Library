@@ -35,7 +35,7 @@ export class EditorsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated = this.userRoleService.isAuthenticated();
-    this.isAdmin = this.userRoleService.isAdmin()
+    this.isAdmin = this.userRoleService.isAdmin();
 
     this.searchEditors();
   }  
