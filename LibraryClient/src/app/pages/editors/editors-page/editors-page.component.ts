@@ -42,8 +42,9 @@ export class EditorsPageComponent implements OnInit {
 
   // Default parameter → "non mi è arrivato nulla, usa quello che avevo già salvato" 
   //  serve per i cambi pagina e i refresh senza nuovo filtro.
-  searchEditors(searchFilter: EditorRequest  = this.lastSearchFilter): void {
+  searchEditors (searchFilter:EditorRequest = this.lastSearchFilter): void{
   //mi è arrivato un nuovo filtro, salvalo" — serve per portarlo nei cambi pagina futuri.
+    
     this.lastSearchFilter = searchFilter;
 
     const normalizedFilter: EditorRequest = {
@@ -51,19 +52,22 @@ export class EditorsPageComponent implements OnInit {
       name: searchFilter.name?.trim() ?? undefined
     };
 
-    this.editorsService
-      .getEditors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize)
-      .subscribe({
+    this.editorsService.getEditors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize).subscribe(
+      //subscribe accetta un oggetto con due callback dentro
+      {
+        // prima callback: riceve i risultati e aggiorna le proprietà del componente
         next: results => {
           this.editors = results.items;
-          this.pagination.totalRecords = results.totalRecords;
+          this.pagination.totalRecords = results.totalRecords
         },
+        // seconda callback: in caso di errore logga e resetta i dati     
         error: error => {
-          console.error('Errore nella ricerca:', error);
+          console.error ('Errore nella ricerca:', error)
           this.editors = [];
           this.pagination.totalRecords = 0;
         }
-      });
+      }
+    );
   }
 
   viewDetail(editorId: number): void {
