@@ -40,8 +40,10 @@ export class EditorsPageComponent implements OnInit {
     this.searchEditors();
   }  
 
+  // Default parameter → "non mi è arrivato nulla, usa quello che avevo già salvato" 
+  //  serve per i cambi pagina e i refresh senza nuovo filtro.
   searchEditors(searchFilter: EditorRequest  = this.lastSearchFilter): void {
-
+  //mi è arrivato un nuovo filtro, salvalo" — serve per portarlo nei cambi pagina futuri.
     this.lastSearchFilter = searchFilter;
 
     const normalizedFilter: EditorRequest = {
