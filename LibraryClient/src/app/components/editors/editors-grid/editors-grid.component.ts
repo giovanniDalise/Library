@@ -19,11 +19,12 @@ export class EditorsGridComponent {
   @Input() totalPages = 0;  
   @Input() totalRecords = 0;
   
+  //emitter per il padre, chiamata a nextPage
   @Output() nextPage = new EventEmitter<void>();
   @Output() prevPage = new EventEmitter<void>();
   @Output() viewDetail = new EventEmitter<number>();
 
-
+ // onNextPage va a chiamare nextPage (del padre pageComponent)
   onNextPage(): void {
     this.nextPage.emit();
   }
