@@ -58,7 +58,7 @@ export class EditorsPageComponent implements OnInit {
         // prima callback: riceve i risultati e aggiorna le proprietà del componente
         next: results => {
           this.editors = results.items;
-          this.pagination.totalRecords = results.totalRecords
+          this.pagination.totalRecords = results.totalRecords;
         },
         // seconda callback: in caso di errore logga e resetta i dati     
         error: error => {
