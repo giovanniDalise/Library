@@ -23,7 +23,6 @@ export class EditorsPageComponent implements OnInit {
 
   pagination = new PaginationState();
 
-  editorId?: number;
   // ultimo filtro impostato utile per tenere in memoria il filtro e non perderlo con il cambio pagina
   private lastSearchFilter: EditorRequest = {};
 
@@ -62,7 +61,7 @@ export class EditorsPageComponent implements OnInit {
         },
         // seconda callback: in caso di errore logga e resetta i dati     
         error: error => {
-          console.error ('Errore nella ricerca:', error)
+          console.error ('Search error:', error)
           this.editors = [];
           this.pagination.totalRecords = 0;
         }
