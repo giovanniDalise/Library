@@ -21,11 +21,22 @@ export class EditorsPageComponent implements OnInit {
   isAdmin = false;
   isAuthenticated = false;
 
+  // uso il new perchè è una classe e ha il costruttore e logica (metodi)
   pagination = new PaginationState();
 
   // ultimo filtro impostato utile per tenere in memoria il filtro e non perderlo con il cambio pagina
+  // Se una variabile: NON deve essere usata nel template, NON deve essere esposta mettila private senza pensarci
+  // non uso il new perchè è un interface (molto utile per i dto) che non ha costruttore e logica e quindi inizializzo l'oggetto vuoto
   private lastSearchFilter: EditorRequest = {};
 
+  // il private nel costruttore invece ha una funzione di shortcut in typescript ad esempio se no avresti doveuto prima dichiarare le singole
+  // variabili. ESEMPIO:
+  /* private authorService: AuthorsService;
+
+    constructor(authorService: AuthorsService) {
+      this.authorService = authorService; 
+    }
+  */
   constructor(
     private editorsService: EditorsService,
     private userRoleService: UserRoleService,
@@ -61,7 +72,7 @@ export class EditorsPageComponent implements OnInit {
         },
         // seconda callback: in caso di errore logga e resetta i dati     
         error: error => {
-          console.error ('Search error:', error)
+          console.error ("Search error:", error)
           this.editors = [];
           this.pagination.totalRecords = 0;
         }
