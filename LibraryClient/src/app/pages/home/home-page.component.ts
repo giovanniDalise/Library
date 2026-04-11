@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
+import {  RouterLink,  Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserRoleService } from '../../services/user-role.service';
 
@@ -10,7 +9,7 @@ import { UserRoleService } from '../../services/user-role.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, FormsModule ],
+  imports: [CommonModule, RouterLink, FormsModule ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })

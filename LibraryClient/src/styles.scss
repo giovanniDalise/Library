@@ -97,5 +97,13 @@ body {
   text-decoration: none; /* assicurati che resti senza underline */
 }
 
-
-
+/* styles.scss */
+.main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fffafa;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
