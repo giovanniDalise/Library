@@ -9,8 +9,15 @@
     </app-authors-filters>  
     
     <app-authors-grid
-    >
-        
+    [authors] = "authors"
+    [isAdmin] = "isAdmin"
+    [isAuthenticated] = "isAuthenticated"
+    [currentPage] = "pagination.currentPage"
+    [totalPages] = "pagination.totalPages"
+    [totalRecords] = "pagination.totalRecords"
+    (nextPage) = "nextPage()"
+    (prevPage) = "prevPage()"
+    (viewDetail)="viewDetail($event)">    
     </app-authors-grid>
     
 </div>

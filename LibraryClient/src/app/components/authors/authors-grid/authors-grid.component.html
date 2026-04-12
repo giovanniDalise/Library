@@ -1,1 +1,37 @@
-<p>authors-grid works!</p>
+<div class="container py-5">
+    <div *ngIf="authors.length > 0; else noAuthors">
+        <div class="table-responsive">
+            <table class="table table-custom align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th *ngIf="isAdmin">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let author of authors">
+                        <td class="editor-name" (click)="onViewDetail(author.id)">
+                            {{ author.name }} {{ author.surname }}
+                        </td>
+                        <td *ngIf="isAdmin">
+                            <!-- actions admin -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <app-pagination
+                [currentPage]="currentPage"
+                [totalPages]="totalPages"
+                [totalRecords]="totalRecords"
+                (next)="onNextPage()"
+                (prev)="onPrevPage()">
+            </app-pagination>    
+
+        </div>
+    </div>
+    <ng-template #noAuthors>
+        <p>No authors found</p>
+    </ng-template>
+</div>
+

@@ -1,7 +1,7 @@
 <div class="container py-5">
     <div *ngIf="editors.length > 0; else noEditors">
         <div class="table-responsive">
-            <table class="table editor-table align-middle">
+            <table class="table table-custom align-middle">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -10,7 +10,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let editor of editors">
-                        <td class="editor-name" (click)="onViewDetail(editor.id)">
+                        <td (click)="onViewDetail(editor.id)">
                             {{ editor.name }}
                         </td>
                         <td *ngIf="isAdmin">
