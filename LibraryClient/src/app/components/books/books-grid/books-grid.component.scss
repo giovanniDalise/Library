@@ -1,39 +1,4 @@
 
-.book-table th {
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-}
-
-/* 🔹 Arrotondamenti per l'intestazione */
-.book-table thead tr:first-child th:first-child {
-  border-top-left-radius: 1rem;
-}
-.book-table thead tr:first-child th:last-child {
-  border-top-right-radius: 1rem;
-}
-
-/* 🔹 Arrotondamenti per l'ultima riga */
-.book-table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: 1rem;
-}
-.book-table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: 1rem;
-}
-
-/* Assicura che il bordo inferiore resti coerente */
-.book-table td,
-.book-table th {
-  border: none;
-}
-
-/* ✅ Forza un colore coerente di sfondo per l’intera riga */
-.book-table tr {
-  background-color: rgba(49, 56, 63, 0.85);
-}
-
 
 /* Bottone uniforme per azioni Edit/Delete */
 .action-btn {
