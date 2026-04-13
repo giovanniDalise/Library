@@ -58,6 +58,7 @@ export class EditorsPageComponent implements OnInit {
     this.lastSearchFilter = searchFilter;
 
     const normalizedFilter: EditorRequest = {
+    //assegnazione chiave valore utiliziamo : (solitamente invece usato per definire i tipi) quando costruiamo un oggetto  e non = (javascriptBase)
       id: searchFilter.id ?? undefined,
       name: searchFilter.name?.trim() ?? undefined
     };
