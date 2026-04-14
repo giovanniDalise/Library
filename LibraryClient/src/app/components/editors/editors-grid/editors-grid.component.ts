@@ -11,7 +11,7 @@ import { Editor } from '../../../models/editor/editor/editor';
   styleUrl: './editors-grid.component.scss'
 })
 export class EditorsGridComponent {
-  
+  //@Input ricevo dal padre (page componet)
   @Input() isAdmin = false;
   @Input() editors: Editor[] = [];
   @Input() isAuthenticated = false;
@@ -19,7 +19,7 @@ export class EditorsGridComponent {
   @Input() totalPages = 0;  
   @Input() totalRecords = 0;
   
-  //emitter per il padre, chiamata a nextPage
+  //@Output do al padre, chiamata a nextPage
   @Output() nextPage = new EventEmitter<void>();
   @Output() prevPage = new EventEmitter<void>();
   @Output() viewDetail = new EventEmitter<number>();
@@ -32,7 +32,10 @@ export class EditorsGridComponent {
   onPrevPage(): void {
     this.prevPage.emit();
   }  
-
+  // immagina la paginazione in questo modo dal bottone nel pagination-component figlio delle grid scaturisce l'event che
+  // passa dal grid, al page fino alla classe PaginationState andando poi a cambiando i valori (come currentPages).
+  // Questi valori poi a loro volta sono trasmessi all'inverso ossia dalla PaginationState nelle page fino al pagination component 
+  // nelle grid
   onViewDetail(editorId: number): void { this.viewDetail.emit(editorId); } 
 
 }
