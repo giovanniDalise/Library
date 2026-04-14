@@ -32,8 +32,8 @@ export class EditorsGridComponent {
   onPrevPage(): void {
     this.prevPage.emit();
   }  
-  // La paginazione procede dal bottone nel pagination-component figlio delle grid scaturisce l'event che
-  // passa dal grid, al page fino alla classe PaginationState andando poi a cambiando i valori (come currentPages).
+  // La paginazione procede dal bottone nel pagination-component figlio delle grid dove scaturisce l'event che
+  // passa dal grid al page e infine alla classe PaginationState andando poi a cambiando i valori (come currentPages).
   // Questi valori poi a loro volta sono trasmessi all'inverso ossia dalla PaginationState nelle page fino al pagination component 
   // nelle grid
   onViewDetail(editorId: number): void { this.viewDetail.emit(editorId); } 
