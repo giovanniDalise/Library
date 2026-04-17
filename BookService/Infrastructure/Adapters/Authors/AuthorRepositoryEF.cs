@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
-    public class AuthorRepositoryEF:IAuthorRepositoryPort
+    public class AuthorRepositoryEF : IAuthorRepositoryPort
     {
         private readonly AuthorEntityMapper _authorMapper;
         private readonly BookDBContext _context;
@@ -20,13 +20,13 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             AuthorEntityMapper authorMapper,
             BookDBContext context,
             ILoggerPort logger)
-        { 
+        {
             _authorMapper = authorMapper;
             _context = context;
             _logger = logger;
         }
-    
-    public async Task<(List<Author> Items, int TotalRecords)> GetAuthorsAsync (Author searchAuthor, int page, int pageSize)
+
+        public async Task<(List<Author> Items, int TotalRecords)> GetAuthorsAsync(Author searchAuthor, int page, int pageSize)
         {
             _logger.Info($"GetAuthorsAsync - Started | Author: {searchAuthor.Name} {searchAuthor.Surname}");
 
@@ -36,7 +36,7 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 
                 IQueryable<AuthorEntity> query = _context.Authors;
 
-                if(searchAuthor.Id > 0)
+                if (searchAuthor.Id > 0)
                 {
                     query = query.Where(a => a.Id == searchAuthor.Id);
                 }
@@ -64,6 +64,45 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 _logger.Error($"GetAuthorsAsync - Error", ex);
                 throw new AuthorRepositoryEFException("Error retrieving authors", ex);
+            }
+        }
+        public async Task<(Author author, int TotalBooks)> GetAuthorsByIdAsync(long id, int page, int pageSize)
+        {
+            _logger.Info($"GetAuthorsByIdAsync - Started | Id: {id}");
+            try
+            {
+                var authorEntity = await _context.Authors
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (authorEntity == null)
+                {
+                    _logger.Warn($"GetAuthorsByIdAsync - Author not found | Id: {id}");
+                    return (null, 0);
+                }
+
+                int totalBooks = await _context.Books
+                    .Where(b => b.Authors.Any(a => a.Id == id))
+                    .CountAsync();
+
+                int offset = (page - 1) * pageSize;
+
+                var books = await _context.Books
+                    .Where(b => b.Authors.Any(a => a.Id == id))
+                    .OrderBy(b => b.Id)
+                    .Skip(offset)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                authorEntity.Books = books;
+
+                _logger.Info($"GetAuthorsByIdAsync - Completed | Author: {authorEntity.Name}, Books: {books.Count}");
+
+                return (_authorMapper.ToDomain(authorEntity), totalBooks);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("GetAuthorsByIdAsync - Error", e);
+                throw new AuthorRepositoryEFException("Error retrieving authors", e);
             }
         }
     }

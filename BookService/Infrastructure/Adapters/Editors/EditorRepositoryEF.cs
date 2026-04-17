@@ -71,8 +71,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger.Info($"GetEditorByIdAsync - Started | Id: {id}");
             try
             {
-                var editorEntity = await _context.Editors
-                    .FirstOrDefaultAsync(e => e.Id == id);
+                var editorEntity = await _context.Editors.FirstOrDefaultAsync(e => e.Id == id);
 
                 if (editorEntity == null)
                 {
@@ -94,7 +93,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Take(pageSize)
                     .ToListAsync();
 
-                editorEntity.Books = books.ToHashSet();
+                editorEntity.Books = books.ToList();
 
                 _logger.Info($"GetEditorByIdAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
                 return (_editorMapper.ToDomain(editorEntity), totalBooks);
