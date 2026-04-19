@@ -28,6 +28,8 @@ export class EditorsService {
     const params = new HttpParams()
       .set("page", page)
       .set("pageSize", pageSize)
+      //httpclient ritorna un observable, i metodi però sono generici e quindi bisogna specificare il tipo paramatrizzandoli 
+      //un po come quando fai new List<Editor>(). Qui dopo il post serve per specificare e gestire il tipo della response che mi arriva nel json
       return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
   }
 }
