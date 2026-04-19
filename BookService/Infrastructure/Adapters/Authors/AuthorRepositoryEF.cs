@@ -66,7 +66,7 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                 throw new AuthorRepositoryEFException("Error retrieving authors", ex);
             }
         }
-        public async Task<(Author author, int TotalBooks)> GetAuthorsByIdAsync(long id, int page, int pageSize)
+        public async Task<(Author author, int TotalBooks)> GetAuthorByIdAsync(long id, int page, int pageSize)
         {
             _logger.Info($"GetAuthorsByIdAsync - Started | Id: {id}");
             try

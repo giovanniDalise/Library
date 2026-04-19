@@ -19,5 +19,9 @@ namespace Library.BookService.Core.Application
         {
             return await _authorDomainService.GetAuthorsAsync(searchAuthor, page, pageSize);
         }
+        public async Task<(Author Author, int TotalRecords)> GetAuthorByIdAsync(long id, int page, int pageSize)
+        {
+            return await _authorDomainService.GetAuthorByIdAsync(id, page, pageSize);
+        }
     }
 }
