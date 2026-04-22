@@ -32,4 +32,18 @@ export class EditorsService {
       //un po come quando fai new List<Editor>(). Qui dopo il post serve per specificare e gestire il tipo della response che mi arriva nel json
       return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
   }
+    /*{params} è tra graffe perchè l'HttpClient.post come terzo parametro vuole un oggetto di configurazione e le graffe in angular
+    servono proprio a definire un oggetto
+    {
+        params?: HttpParams;
+        headers?: HttpHeaders;
+        observe?: ...
+        responseType?: ...
+    } 
+    che nel nostro caso avendo solo i params sarebbbe 
+    {
+          params: params
+    } 
+    oppure con lo shortland (uno shortcut) possiamo direttamente scrivere {params}     
+    */
 }
