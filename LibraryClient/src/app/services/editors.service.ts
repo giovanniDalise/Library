@@ -24,13 +24,13 @@ export class EditorsService {
       return this.http.get<EditorDetail>(url, { params });
   }
   
-  getEditors(searchFilter:EditorRequest, page:number, pageSize: number): Observable<PagedResponse<Editor>>{
-    const params = new HttpParams()
-      .set("page", page)
-      .set("pageSize", pageSize)
-      //httpclient ritorna un observable, i metodi però sono generici e quindi bisogna specificare il tipo paramatrizzandoli 
-      //un po come quando fai new List<Editor>(). Qui dopo il post serve per specificare e gestire il tipo della response che mi arriva nel json
-      return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
+  getEditors(searchFilter:EditorRequest, page:number, pageSize:number):Observable<PagedResponse<Editor>>{
+    /*HttpParams è una classe particolare utilizzata per le query string negli url ?page=1&pageSize=10
+    non puoi semplicemente scrivere key:value come gli altri oggetti js perchè httpparams è immutabile e quindi ogni volta che
+    cambia il valore sarà creato un nuovo oggetto httpparams che vuole la sintassi con il set("key", value)
+    */
+    const params = new HttpParams().set("page", page).set("pageSize",pageSize);
+    return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, searchFilter, {params})
   }
     /*{params} è tra graffe perchè l'HttpClient.post come terzo parametro vuole un oggetto di configurazione e le graffe in angular
     servono proprio a definire un oggetto
