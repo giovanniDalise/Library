@@ -12,7 +12,6 @@ import { Author } from '../../../models/author/author';
 })
 export class AuthorsGridComponent {
   @Input() isAdmin = false;
-  @Input() isAuthenticated = false;
   @Input() authors : Author[] = [];
   @Input() currentPage = 1;
   @Input() totalPages = 0;

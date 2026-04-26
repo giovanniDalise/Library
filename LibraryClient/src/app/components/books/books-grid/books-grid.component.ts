@@ -15,7 +15,6 @@ export class BooksGridComponent {
 
   @Input() books: Book[] = [];
   @Input() isAdmin = false;
-  @Input() isAuthenticated = false;
   @Input() currentPage = 1;
   @Input() totalPages = 0;
   @Input() totalRecords = 0;  
