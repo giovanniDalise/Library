@@ -14,7 +14,6 @@ export class EditorsGridComponent {
   //@Input ricevo dal padre (page componet)
   @Input() isAdmin = false;
   @Input() editors: Editor[] = [];
-  @Input() isAuthenticated = false;
   @Input() currentPage = 1;
   @Input() totalPages = 0;  
   @Input() totalRecords = 0;
