@@ -33,6 +33,16 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             if (page < 1)
             {
                 _logger.Warn($"Invalid attempt with Page: {page}");
+
+                // sintassi per creare un oggetto anonimo per creare un oggetto al volo
+                //public class ErrorResponse
+                //{
+                //    public string error { get; set; }
+                //}
+                //in modo che poi ASP.NET Core lo serializza e restituisce 400 con questo Json
+                //{
+                //    "error": "Page must be greater than or equal to 1."
+                //}
                 return BadRequest(new { error = "Page must be greater than or equal to 1." });
             }
 
