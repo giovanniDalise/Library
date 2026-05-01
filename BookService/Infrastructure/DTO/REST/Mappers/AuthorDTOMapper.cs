@@ -25,6 +25,21 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
                 Surname = request.Surname
             };
         }
+
+        public static AuthorDetailResponse ToDetailResponse (Author author, int totalBooks)
+        {
+            return new AuthorDetailResponse
+            {
+                Id = author.Id,
+                Name = author.Name,
+                Surname = author.Surname,
+                Books = new PagedResponse<string>
+                {
+                    Items = author.Books?.Select(b => b.Title).ToList() ?? new List<string>(),
+                    TotalRecords = totalBooks
+                }
+            };
+        }
         public static List<AuthorResponse> ToResponseList (List<Author> authors)
         {
             return authors.Select(ToResponse).ToList();

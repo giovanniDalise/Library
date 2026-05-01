@@ -22,6 +22,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
         [HttpPost("GetEditors")]
         [AllowAnonymous]
+        //POST /api/authors/GetEditors?page=1&pageSize=10
         public async Task<ActionResult<PagedResponse<EditorResponse>>> GetEditors(
             [FromBody] EditorRequest request,
             [FromQuery] int page = 1,
@@ -75,6 +76,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
         [HttpGet("{id}")]
         [AllowAnonymous]
+        //GET /api/editors/10?page=1&pageSize=10 il ? segna l'inizio della query ed è posto dopo la route
         public async Task<ActionResult<PagedResponse<EditorDetailResponse>>> GetEditorById(
             long id,
             [FromQuery] int page = 1,

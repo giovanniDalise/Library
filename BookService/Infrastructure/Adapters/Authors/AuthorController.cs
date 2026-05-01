@@ -5,6 +5,7 @@ using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
@@ -60,6 +61,36 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 _logger.Error("Error while retrieving authors", ex);
                 return StatusCode(500,"Internal server error");
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AuthorDetailResponse>> GetAuthorById(
+        long id,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
+        {
+            _logger.Info($"Call to GetAuthorById | Id:{id}");
+            if (id <= 0)
+            {
+                _logger.Warn($"Invalid attempt with Id: {id}");
+                return BadRequest(new {error = "Id must be greater than 0."});
+            }
+            try
+            {
+                var (author, totalBooks) = await _authorAppService.GetAuthorByIdAsync(id, page, pageSize);
+
+                if(author == null)
+                {
+                    _logger.Warn($"Author not found | Id:{id}");
+                    return BadRequest(new { error = $"Author with id {id} not found" });
+                }
+
+                return Ok(AuthorDTOMapper.ToDetailResponse(author, totalBooks));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error while retrieving author by id.", ex);
+                return StatusCode(500, "Internal server error.");
             }
         }
     }
