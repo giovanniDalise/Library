@@ -15,6 +15,13 @@ import { PaginationComponent } from '../../../components/shared/pagination/pagin
 })
 export class EditorDetailComponent implements OnInit {
 
+  //rispetto all'EditorRequest che ha tutte proprietà nullabili l'EditorDetail è un dato reale che ci torna dall'api senza dati nullabili,
+  // che inizialmente mettiamo a null fino a che non ci viene restituito dall'API.
+  // potresti utilizzare anche editor!:EditorDetail (trust me) facendo si che typescript non controlli ma è più rischioso se poi non viene inizializzato
+  // in tempo, romendo il FE.
+  //diverso è il caso di editors: Editor [] = []; dove editor è un altro dato reale con nuessuna proprietà opzionale e anche nel suo caso nell'editor page component
+  //ci arriva da un api ma la differenza qui è che un array vuoto ( o una lista vuota) è uno stato valido mentre un oggetto EditorDetail {} 
+  // vuoto non esiste. Potevi creare una classe al posto di un interface con costruttore vuote ma comunque sarebbe incoerente per le logiche.
   editor: EditorDetail | null = null;
   isLoading = true;
   errorMessage = '';

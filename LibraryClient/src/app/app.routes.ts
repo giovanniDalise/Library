@@ -8,6 +8,7 @@ import { BooksGridComponent } from './components/books/books-grid/books-grid.com
 import { EditorsPageComponent } from './pages/editors/editors-page/editors-page.component';
 import { EditorDetailComponent } from './pages/editors/editor-detail/editor-detail.component';
 import { AuthorsPageComponent } from './pages/authors/authors-page/authors-page.component';
+import { AuthorDetailComponent } from './pages/authors/author-detail/author-detail.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -20,5 +21,7 @@ export const routes: Routes = [
     { path: 'editors', component: EditorsPageComponent },
     { path: 'editors/:id', component: EditorDetailComponent},
     { path: 'authors', component: AuthorsPageComponent },
+    { path: 'authors/:id', component: AuthorDetailComponent },
+
 
 ];

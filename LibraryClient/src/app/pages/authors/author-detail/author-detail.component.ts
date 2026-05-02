@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthorsService } from '../../../services/authors.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-author-detail',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './author-detail.component.html',
   styleUrl: './author-detail.component.scss'
 })
@@ -16,6 +17,7 @@ export class AuthorDetailComponent {
     private router: Router,
     private authorService: AuthorsService
   ) {}  
+  
   onBack(): void {
     this.router.navigate(['/authors']);
   }  
