@@ -25,6 +25,8 @@ export class EditorDetailComponent implements OnInit {
   editor: EditorDetail | null = null;
   isLoading = true;
   errorMessage = '';
+  // in questo caso invece è sicuto utilizzare il trust me (!) del definite assignment assertion dato che editorId viene valorizzato subito
+  // nell'onOnInit
   editorId!: number;
 
   pagination = new PaginationState();

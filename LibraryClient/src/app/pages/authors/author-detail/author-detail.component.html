@@ -1,5 +1,18 @@
 <div class="container py-5">
+    
     <a class="home-btn mb-4" (click)="onBack()">
         Authors
-    </a>    
+    </a>
+
+    <div *ngIf="isLoading" class="text-center text-light mt-5">
+        <div class="spinner-border" role="status"></div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-4">
+        {{ errorMessage }}
+    </div>    
+
+    <div *ngIf="!isLoading && author" class="row justify-content-center">
+    </div>    
+
 </div>
