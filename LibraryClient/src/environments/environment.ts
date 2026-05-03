@@ -28,7 +28,8 @@ export const environment = {
       getById: '/{id}'  
     },
     authors:{
-      getAuthors: '/getAuthors'
+      getAuthors: '/getAuthors',
+      getById: '/{id}'
     },    
     auth: {
       login: '/login'

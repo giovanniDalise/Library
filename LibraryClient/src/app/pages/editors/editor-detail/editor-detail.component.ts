@@ -33,17 +33,20 @@ export class EditorDetailComponent implements OnInit {
 
 
   constructor(
+    //ActivatedRoute: legge info(queryparams, pathparams e via dicendo) dalla rotta attuale
     private route: ActivatedRoute,
+    //Router: naviga tra le rotte
     private router: Router,
     private editorService: EditorsService
   ) {}
 
   ngOnInit(): void {
+    //quindi in questo caso stiamo valorizzando l'editorId con uno snapshot del valore di id nel pathparams dell'url es. da /editors/123 estraggo il valore 123
     this.editorId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadDetail();
   }
 
-    loadDetail(): void {
+  loadDetail(): void {
     this.isLoading = true;
     this.editorService.getEditorDetail(this.editorId, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({

@@ -25,13 +25,43 @@ export class AuthorDetailComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authorService: AuthorsService
-  ) {}  
+  ) {} 
+  
+  ngOnInit(): void {
+    this.authorId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadDetail();
+  }  
 
+  loadDetail(): void {
+    this.isLoading = true;
+    this.authorService.getAuthorDetail(this.authorId, this.pagination.currentPage, this.pagination.pageSize)
+      .subscribe({
+        next: (author) => {
+          this.author = author;
+          this.pagination.totalRecords = author.books.totalRecords;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.errorMessage = 'Error loading author.';
+          this.isLoading = false;
+        }
+      });
+  }  
 
   onEdit(): void {
     this.router.navigate(['/editors', this.author?.id, 'edit']);
   }  
   onBack(): void {
     this.router.navigate(['/authors']);
+  }  
+
+  nextPage(): void {
+    this.pagination.next();
+    this.loadDetail();
+  }
+
+  prevPage(): void {
+    this.pagination.prev();
+    this.loadDetail();
   }  
 }

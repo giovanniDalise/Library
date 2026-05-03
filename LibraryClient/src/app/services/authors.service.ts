@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PagedResponse } from '../models/pagination/paged-response';
 import { Author } from '../models/author/author';
 import { AuthorRequest } from '../models/author/author-request';
+import { AuthorDetail } from '../models/author/author-detail/author-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -22,4 +23,13 @@ export class AuthorsService {
       .set('pageSize', pageSize.toString())    
     return this.http.post<PagedResponse<Author>>(this.baseUrl + this.endpoints.getAuthors, searchFilter, {params})  
   }
+
+
+  getAuthorDetail(id: number, page: number, pageSize: number): Observable<AuthorDetail> {
+      const params = new HttpParams()
+          .set('page', page)
+          .set('pageSize', pageSize)
+      const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+      return this.http.get<AuthorDetail>(url, { params });
+  }  
 }
