@@ -1,4 +1,5 @@
 ﻿
+using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Books;
@@ -148,6 +149,32 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             {
                 _logger.Error("Error while retrieving books.", ex);
                 return StatusCode(500, "Internal server error.");
+            }
+        }
+
+        // GET /library/{id}
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<BookResponse>> GetBookById(long id)
+        {
+            _logger.Info($"Chiamata a GetBookById() con ID {id}");
+
+            try
+            {
+                var book = await _bookAppService.GetBookByIdAsync(id);
+                if (book == null)
+                {
+                    _logger.Warn($"Libro non trovato per ID {id}");
+                    return NotFound();
+                }
+
+                var response = BookDTOMapper.ToResponse(book);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Errore durante il recupero del libro ID {id}", ex);
+                return StatusCode(500, "Errore interno del server");
             }
         }
     }
