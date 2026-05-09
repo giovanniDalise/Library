@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.BookService.Infrastructure.Adapters.Books
 {
-    [Route("library")]
+    [Route("books")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
         }
 
         // POST /library
-        [HttpPost]
+        [HttpPost("GetBooks")]
         [Authorize(Roles = "admin")]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<long>> AddBook([FromForm] BookRequest request)

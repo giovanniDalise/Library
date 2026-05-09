@@ -1,4 +1,4 @@
-import { Book } from "../../book/book";
+import { Book } from "../../book/book/book";
 
 export interface Editor {
     id:number;

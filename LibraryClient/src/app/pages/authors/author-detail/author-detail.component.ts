@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { AuthorsService } from '../../../services/authors.service';
 import { CommonModule } from '@angular/common';
 import { AuthorDetail } from '../../../models/author/author-detail/author-detail';
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
+import { AuthorService } from '../../../services/author.service';
 
 @Component({
   selector: 'app-author-detail',
@@ -24,7 +24,7 @@ export class AuthorDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authorService: AuthorsService
+    private authorService: AuthorService
   ) {} 
   
   ngOnInit(): void {

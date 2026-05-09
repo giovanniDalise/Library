@@ -3,14 +3,14 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../models/pagination/paged-response';
-import { Author } from '../models/author/author';
-import { AuthorRequest } from '../models/author/author-request';
 import { AuthorDetail } from '../models/author/author-detail/author-detail';
+import { AuthorRequest } from '../models/author/author/author-request';
+import { Author } from '../models/author/author/author';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorsService {
+export class AuthorService {
 
   private baseUrl = `${environment.apiUrls.authors}`;
   private endpoints = environment.api.authors;

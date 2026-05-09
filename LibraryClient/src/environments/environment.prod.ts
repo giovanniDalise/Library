@@ -8,7 +8,7 @@ export const environment = {
   production: true,
   // In locale punti direttamente ai microservizi
   apiUrls: {
-    books: 'http://localhost:5282/library',
+    books: 'http://localhost:5282/books',
     editors: 'http://localhost:5282/editors',
     authors: 'http://localhost:5282/authors',
     users: 'http://localhost:5022/users',

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { EditorsService } from '../../../services/editors.service';
 import { EditorDetail } from '../../../models/editor/editor-detail/editor-details';
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
+import { EditorService } from '../../../services/editor.service';
 
 @Component({
   selector: 'app-editor-detail',
@@ -37,7 +37,7 @@ export class EditorDetailComponent implements OnInit {
     private route: ActivatedRoute,
     //Router: naviga tra le rotte
     private router: Router,
-    private editorService: EditorsService
+    private editorService: EditorService
   ) {}
 
   ngOnInit(): void {

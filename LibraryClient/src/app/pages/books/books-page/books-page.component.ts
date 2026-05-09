@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BooksGridComponent } from '../../../components/books/books-grid/books-grid.component';
-import { BooksService } from '../../../services/books.service';
 import { UserRoleService } from '../../../services/user-role.service';
-import { Book } from '../../../models/book/book';
 import { BooksFiltersComponent } from '../../../components/books/books-filters/books-filters.component';
-import { BookRequest } from '../../../models/book/book-request';
 import { PaginationState } from '../../../models/pagination/pagination-state';
+import { BookRequest } from '../../../models/book/book/book-request';
+import { Book } from '../../../models/book/book/book';
+import { BookService } from '../../../services/book.service';
 
 @Component({
   selector: 'app-books-page',
@@ -31,9 +31,10 @@ export class BooksPageComponent implements OnInit {
   private lastCriteria: BookRequest = {};
 
   constructor(
-    private booksService: BooksService,
+    private bookService: BookService,
     private snackBar: MatSnackBar,
-    private userRoleService: UserRoleService
+    private userRoleService: UserRoleService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class BooksPageComponent implements OnInit {
   /* ===================== ACTIONS ===================== */
 
   deleteBook(bookId: number): void {
-    this.booksService.deleteBook(bookId).subscribe(() => {
+    this.bookService.deleteBook(bookId).subscribe(() => {
       this.books = this.books.filter(b => b.id !== bookId);
       this.snackBar.open('Libro eliminato con successo!', 'Chiudi', {
         duration: 3000,
@@ -91,7 +92,7 @@ export class BooksPageComponent implements OnInit {
         : undefined
     };
 
-    this.booksService
+    this.bookService
       .getBooks(searchCriteria, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
@@ -104,5 +105,9 @@ export class BooksPageComponent implements OnInit {
           this.pagination.totalRecords = 0;
         }
       });
+  }
+
+  viewDetail(bookId:number):void{
+    this.router.navigate(["/books", bookId]);
   }
 }

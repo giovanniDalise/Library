@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Book } from '../../../models/book/book';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Book } from '../../../models/book/book/book';
 
 @Component({
   selector: 'app-books-filters',

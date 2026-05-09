@@ -1,15 +1,16 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Book } from '../models/book/book';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { BookRequest } from '../models/book/book-request';
 import { PagedResponse } from '../models/pagination/paged-response';
+import { BookDetail } from '../models/book/book-detail/book-detail';
+import { BookRequest } from '../models/book/book/book-request';
+import { Book } from '../models/book/book/book';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BooksService {
+export class BookService {
   private baseUrl = `${environment.apiUrls.books}`;
   private endpoints = environment.api.books;
 
@@ -33,6 +34,11 @@ export class BooksService {
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());  
     return this.http.post<PagedResponse<Book>>(this.baseUrl + this.endpoints.getBooks, criteria, {params})
+  }
+
+  getBookDetail(id:number):Observable<BookDetail>{
+    const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+    return this.http.get<BookDetail>(url);
   }
   
 }

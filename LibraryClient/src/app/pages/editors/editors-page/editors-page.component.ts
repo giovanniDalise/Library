@@ -3,10 +3,10 @@ import { EditorsGridComponent } from '../../../components/editors/editors-grid/e
 import { EditorsFiltersComponent } from '../../../components/editors/editors-filters/editors-filters.component';
 import { Router, RouterLink } from '@angular/router';
 import { UserRoleService } from '../../../services/user-role.service';
-import { EditorsService } from '../../../services/editors.service';
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { EditorRequest } from '../../../models/editor/editor/editor-request';
 import { Editor } from '../../../models/editor/editor/editor';
+import { EditorService } from '../../../services/editor.service';
 
 @Component({
   selector: 'app-editors-page',
@@ -38,7 +38,7 @@ export class EditorsPageComponent implements OnInit {
     }
   */
   constructor(
-    private editorsService: EditorsService,
+    private editorService: EditorService,
     private userRoleService: UserRoleService,
     private router: Router 
   ){}
@@ -63,7 +63,7 @@ export class EditorsPageComponent implements OnInit {
       name: searchFilter.name?.trim() ?? undefined
     };
 
-    this.editorsService.getEditors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize).subscribe(
+    this.editorService.getEditors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize).subscribe(
       //subscribe accetta un oggetto con due callback dentro
       {
         // prima callback: riceve i risultati e aggiorna le proprietà del componente

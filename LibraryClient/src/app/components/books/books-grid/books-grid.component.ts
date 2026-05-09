@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Book } from '../../../models/book/book';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { Book } from '../../../models/book/book/book';
 
 @Component({
   selector: 'app-books-grid',
@@ -22,6 +22,7 @@ export class BooksGridComponent {
   @Output() delete = new EventEmitter<number>();
   @Output() nextPage = new EventEmitter<void>();
   @Output() prevPage = new EventEmitter<void>();
+  @Output() viewDetail = new EventEmitter<number>();
 
   onDelete(bookId: number): void {
     this.delete.emit(bookId);
@@ -33,5 +34,9 @@ export class BooksGridComponent {
 
   onPrevPage(): void {
     this.prevPage.emit();
+  }
+
+  onViewDetail(bookId:number):void{
+    this.viewDetail.emit(bookId);
   }
 }

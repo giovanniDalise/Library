@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorsGridComponent } from '../../../components/authors/authors-grid/authors-grid.component';
 import { AuthorsFiltersComponent } from '../../../components/authors/authors-filters/authors-filters.component';
 import { Router, RouterLink } from '@angular/router';
-import { Author } from '../../../models/author/author';
 import { PaginationState } from '../../../models/pagination/pagination-state';
-import { AuthorRequest } from '../../../models/author/author-request';
-import { AuthorsService } from '../../../services/authors.service';
 import { UserRoleService } from '../../../services/user-role.service';
+import { AuthorRequest } from '../../../models/author/author/author-request';
+import { Author } from '../../../models/author/author/author';
+import { AuthorService } from '../../../services/author.service';
 
 @Component({
   selector: 'app-authors-page',
@@ -26,7 +26,7 @@ export class AuthorsPageComponent implements OnInit{
   private lastSearchFilter: AuthorRequest = {};
 
   constructor(
-    private authorService: AuthorsService,
+    private authorService: AuthorService,
     private userRoleService: UserRoleService,
     private router: Router
   ){};

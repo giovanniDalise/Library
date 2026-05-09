@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
-import { Author } from '../../../models/author/author';
+import { Author } from '../../../models/author/author/author';
 
 @Component({
   selector: 'app-authors-grid',

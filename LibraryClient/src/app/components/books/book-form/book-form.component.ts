@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Book } from '../../../models/book/book';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BooksService } from '../../../services/books.service';
-import { ActivatedRoute, Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar'; // Aggiungi l'import per MatSnackBar
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Book } from '../../../models/book/book/book';
+import { BookService } from '../../../services/book.service';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterOutlet, RouterLink, RouterLinkActive, ], 
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink ], 
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
@@ -23,7 +23,7 @@ export class BookFormComponent {
   coverFile: File | null = null;
 
   constructor(
-    private booksService: BooksService,
+    private bookService: BookService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -76,7 +76,7 @@ export class BookFormComponent {
         const bookIdNumber = Number(this.bookId);
 
         if (!isNaN(bookIdNumber)) {
-          this.booksService.getBooks({ id: bookIdNumber }, 1, 10)
+          this.bookService.getBooks({ id: bookIdNumber }, 1, 10)
             .subscribe(response => {
               const book = response.items?.[0];
 
@@ -129,7 +129,7 @@ export class BookFormComponent {
     }
 
     // Chiamiamo il servizio che invia FormData
-    this.booksService.createBookFormData(formData).subscribe(
+    this.bookService.createBookFormData(formData).subscribe(
       (createdBook: Book) => {
         this.snackBar.open(
           `Book created successfully`,
@@ -160,7 +160,7 @@ export class BookFormComponent {
       if (!isNaN(bookIdNumber)) {
         console.log('Book ID:', bookIdNumber);  // Utilizza bookIdNumber
         const updatedBook = { ...book, bookId: bookIdNumber };  // Imposta l'ID del libro da bookIdNumber
-        this.booksService.updateBook(updatedBook).subscribe(response => {
+        this.bookService.updateBook(updatedBook).subscribe(response => {
           console.log("Book updated:", response);
           
           // Mostra una notifica di successo dopo l'aggiornamento

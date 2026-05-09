@@ -1,5 +1,5 @@
-import { Author } from "../author/author";
-import { Editor } from "../editor/editor/editor";
+import { Author } from "../../author/author/author";
+import { Editor } from "../../editor/editor/editor";
 
 export interface Book {
     id: number;

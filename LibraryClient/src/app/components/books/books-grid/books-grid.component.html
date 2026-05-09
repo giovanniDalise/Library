@@ -29,7 +29,7 @@
               </ng-template>
             </td>
 
-            <td>{{ book.title }}</td>
+            <td (click)="onViewDetail(book.id)">{{ book.title }}</td>
             <td>{{ book.isbn }}</td>
 
             <td>
