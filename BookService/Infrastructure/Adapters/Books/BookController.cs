@@ -155,7 +155,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
         // GET /library/{id}
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<BookResponse>> GetBookById(long id)
+        public async Task<ActionResult<BookDetailResponse>> GetBookById(long id)
         {
             _logger.Info($"Chiamata a GetBookById() con ID {id}");
 

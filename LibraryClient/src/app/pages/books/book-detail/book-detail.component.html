@@ -52,12 +52,14 @@
 
               <div class="book-info-item">
                 <dt><i class="bi bi-person me-2"></i>Author</dt>
-                <dd>{{ book.authorName }} {{ book.authorSurname }}</dd>
+                <dd *ngFor=" let author of book.authors">
+                  {{ author.name }} {{ author.surname }}
+                </dd>
               </div>
 
               <div class="book-info-item">
                 <dt><i class="bi bi-building me-2"></i>Editor</dt>
-                <dd>{{ book.editorName || '—' }}</dd>
+                <dd>{{ book.editor.name}}</dd>
               </div>
 
             </dl>
