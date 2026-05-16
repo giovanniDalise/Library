@@ -22,7 +22,7 @@ export class BookService {
   }
 
   createBookFormData(formData: FormData): Observable<Book> {
-    return this.http.post<Book>(this.baseUrl + this.endpoints.create, formData);
+    return this.http.post<Book>(this.baseUrl + this.endpoints.addBook, formData);
   }
 
   updateBook(book: Book): Observable<BookRequest> {

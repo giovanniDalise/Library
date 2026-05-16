@@ -12,7 +12,7 @@ export const environment = {
     books: {
       getBooks: '/getBooks',
       getById: '/{id}',
-      create: '',
+      addBook: '/addBook',
       update: '/{id}',
       delete: '/{id}'
     },

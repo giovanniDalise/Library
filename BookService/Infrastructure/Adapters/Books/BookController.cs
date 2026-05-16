@@ -25,7 +25,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
         }
 
         // POST /library
-        [HttpPost("GetBooks")]
+        [HttpPost("AddBook")]
         [Authorize(Roles = "admin")]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<long>> AddBook([FromForm] BookRequest request)

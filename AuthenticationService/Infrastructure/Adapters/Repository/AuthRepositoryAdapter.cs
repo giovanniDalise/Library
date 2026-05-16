@@ -2,6 +2,8 @@
 using Library.AuthenticationService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using MySql.Data.MySqlClient;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Library.AuthenticationService.Infrastructure.Adapters.Repository
 {
