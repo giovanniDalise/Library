@@ -243,8 +243,8 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
                     query = query.Where(b =>
                         b.Authors.Any(a =>
-                            (string.IsNullOrEmpty(author.Name) || a.Name.Contains(author.Name)) &&
-                            (string.IsNullOrEmpty(author.Surname) || a.Surname.Contains(author.Surname))
+                            a.Name.Contains(author.Name) ||
+                            a.Surname.Contains(author.Surname)
                         ));
                 }
 

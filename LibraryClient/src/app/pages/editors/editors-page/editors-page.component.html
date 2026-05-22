@@ -4,7 +4,9 @@
     </a>
     <h1 class="main-title">Editors</h1>
 
-    <app-editors-filters>
+    <app-editors-filters
+        [isAdmin]="isAdmin"
+        (search)="searchEditors($event)">    
     </app-editors-filters>
 
     <app-editors-grid

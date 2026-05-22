@@ -1,1 +1,16 @@
-<p>editors-filters works!</p>
+<div class="pages-filters">
+  <form [formGroup]="filterForm" class="filters-grid">
+
+    <div class="filter-item" *ngIf="isAdmin">
+      <input type="number" class="form-control" formControlName="editorId" placeholder="Editor ID" />
+    </div>
+
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="name" placeholder="Editor Name" />
+    </div>
+    
+    <div class="filter-actions">
+      <button type="button" class="btn btn-primary" (click)="onSearch()">Search</button>
+    </div>    
+  </form>
+</div>

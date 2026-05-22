@@ -8,7 +8,7 @@ export interface BookRequest {
   };
   authors?: {
     id?: number;
-    name?: string;
-    surname?: string;
+    name?: string;    
+    surname?: string; 
   }[];
 }

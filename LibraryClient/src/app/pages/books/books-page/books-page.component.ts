@@ -70,30 +70,10 @@ export class BooksPageComponent implements OnInit {
   } 
 
   searchBook(criteria: BookRequest = this.lastCriteria): void {
-
     this.lastCriteria = criteria;
 
-    const searchCriteria: BookRequest = {
-      id: criteria.id ?? undefined,
-      title: criteria.title?.trim() || undefined,
-      isbn: criteria.isbn?.trim() || undefined,
-      editor: criteria.editor
-        ? {
-            editorId: criteria.editor.editorId ?? undefined,
-            name: criteria.editor.name?.trim() || undefined
-          }
-        : undefined,
-      authors: criteria.authors?.length
-        ? criteria.authors.map(a => ({
-            authorId: a.id ?? undefined,
-            name: a.name?.trim() || undefined,
-            surname: a.surname?.trim() || undefined
-          }))
-        : undefined
-    };
-
     this.bookService
-      .getBooks(searchCriteria, this.pagination.currentPage, this.pagination.pageSize)
+      .getBooks(criteria, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
           this.books = results.items;
