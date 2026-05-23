@@ -22,7 +22,9 @@ export class EditorsFiltersComponent {
     editorId: new FormControl(''),
     name: new FormControl('')
   });
-  //Un Form Group è formato da più FormControl che inizializiamo con una stringa vuota (")
+  //Un Form Group è formato da più FormControl che inizializiamo con una stringa vuota ("), inoltre ho le parentesi per la 
+  // inizializzazione del FormGroup e le {} per la definizione di un oggetto js che gli sto passando (formato da
+  // singoli FormControl)
 
   onSearch() {
     const formValue = this.filterForm.value;
