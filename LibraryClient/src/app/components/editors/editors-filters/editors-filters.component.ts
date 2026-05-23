@@ -22,6 +22,7 @@ export class EditorsFiltersComponent {
     editorId: new FormControl(''),
     name: new FormControl('')
   });
+  //Un Form Group è formato da più FormControl che inizializiamo con una stringa vuota (")
 
   onSearch() {
     const formValue = this.filterForm.value;
