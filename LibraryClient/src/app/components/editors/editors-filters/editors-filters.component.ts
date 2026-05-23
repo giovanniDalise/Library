@@ -26,14 +26,12 @@ export class EditorsFiltersComponent {
   // inizializzazione del FormGroup e le {} per la definizione di un oggetto js che gli sto passando (formato da
   // singoli FormControl)
 
-  onSearch() {
+  onSearch():void {
     const formValue = this.filterForm.value;
-    const criteria: EditorRequest = {
+    const criteria: EditorRequest ={
       id: this.isAdmin && formValue.editorId ? Number(formValue.editorId) : undefined,
-      // operatore ternario: se l'utente è admin e se editorId è valorizzato allora trasforma la stringa 
-      // (form restituisce sempre stringhe) in number oppure id è undefined
-      name: formValue.name?.trim() || undefined,
-    };
+      name: formValue.name?.trim() ?? undefined,
+    }
     this.search.emit(criteria);
   } 
 }
