@@ -16,15 +16,19 @@ export class EditorsFiltersComponent {
   @Input() isAdmin = false;
   @Output() search = new EventEmitter<EditorRequest>();
   
+  // potresti utilizzare anche dei semplici div con input, ma per tanti campi di input puoi avere un oggetto unico con il FormGroup
+  // che ti porta a gestire meglio più campi, ti permette metodi di validazione e altri vantaggi
   filterForm = new FormGroup({
-    id: new FormControl(''),
+    editorId: new FormControl(''),
     name: new FormControl('')
   });
 
   onSearch() {
     const formValue = this.filterForm.value;
     const criteria: EditorRequest = {
-      id: this.isAdmin && formValue.id ? Number(formValue.id) : undefined,
+      id: this.isAdmin && formValue.editorId ? Number(formValue.editorId) : undefined,
+      // operatore ternario: se l'utente è admin e se editorId è valorizzato allora trasforma la stringa 
+      // (form restituisce sempre stringhe) in number oppure id è undefined
       name: formValue.name?.trim() || undefined,
     };
     this.search.emit(criteria);

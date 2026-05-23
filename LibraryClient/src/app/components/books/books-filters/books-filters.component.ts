@@ -18,7 +18,7 @@ export class BooksFiltersComponent {
 @Output() search = new EventEmitter<BookRequest>();
 
   filterForm = new FormGroup({
-    id: new FormControl(''),
+    bookId: new FormControl(''),
     title: new FormControl(''),
     isbn: new FormControl(''),
     author: new FormControl(''),
@@ -31,16 +31,16 @@ export class BooksFiltersComponent {
     const authorValue = formValue.author?.trim() || undefined;
 
     const criteria: BookRequest = {
-      id: this.isAdmin && formValue.id ? Number(formValue.id) : undefined,
+      id: this.isAdmin && formValue.bookId ? Number(formValue.bookId) : undefined,
       title: formValue.title?.trim() || undefined,
       isbn: formValue.isbn?.trim() || undefined,
       editor: formValue.editor?.trim()
         ? { name: formValue.editor.trim() }
         : undefined,
       authors: authorValue
-        ? [{ name: authorValue, surname: authorValue }] // ← stesso valore in entrambi
+        ? [{ name: authorValue, surname: authorValue }] 
         : undefined,
     };
-    this.search.emit(criteria); // ← mancava questo
+    this.search.emit(criteria); 
   }
 }
