@@ -1,6 +1,7 @@
 <div class="pages-filters">
   <form [formGroup]="filterForm" class="filters-grid">
-
+    <!--proeprty binding ossia collego il valore della variabile del ts filterForm allla proprietà
+    formGroup del form dell'html-->
     <div class="filter-item" *ngIf="isAdmin">
       <input type="number" class="form-control" formControlName="editorId" placeholder="Editor ID" />
     </div>
