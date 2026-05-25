@@ -19,8 +19,8 @@ export class EditorsFiltersComponent {
   // potresti utilizzare anche dei semplici div con input, ma per tanti campi di input puoi avere un oggetto unico con il FormGroup
   // che ti porta a gestire meglio più campi, ti permette metodi di validazione e altri vantaggi
   filterForm = new FormGroup({
-    editorId: new FormControl(''),
-    name: new FormControl('')
+    editorId: new FormControl(""),
+    editorName: new FormControl("")
   });
   //Un Form Group è formato da più FormControl che inizializiamo con una stringa vuota ("), inoltre ho le parentesi per la 
   // inizializzazione del FormGroup e le {} per la definizione di un oggetto js che gli sto passando (formato da
@@ -30,7 +30,7 @@ export class EditorsFiltersComponent {
     const formValue = this.filterForm.value;
     const criteria: EditorRequest ={
       id: this.isAdmin && formValue.editorId ? Number(formValue.editorId) : undefined,
-      name: formValue.name?.trim() ?? undefined,
+      name: formValue.editorName?.trim() ?? undefined,
     }
     this.search.emit(criteria);
   } 
