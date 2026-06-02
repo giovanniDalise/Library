@@ -29,13 +29,14 @@ export class EditorsPageComponent implements OnInit {
   // non uso il new perchè è un interface (molto utile per i dto) che non ha costruttore e logica e quindi inizializzo l'oggetto vuoto
   private lastSearchFilter: EditorRequest = {};
 
-  // il private nel costruttore invece ha una funzione di shortcut in typescript ad esempio se no avresti doveuto prima dichiarare le singole
-  // variabili. ESEMPIO:
+  // il private nel costruttore invece ha una funzione di shortcut in typescript chiamata Parameter Properties
+  // ad esempio se no avresti dovuto prima dichiarare le singole variabili. ESEMPIO:
   /* private authorService: AuthorsService;
 
     constructor(authorService: AuthorsService) {
       this.authorService = authorService; 
     }
+  // quindi non dichiari ne le variabili e ne le associ nella sezione tra parentesi come fai nel BE    
   */
   constructor(
     private editorService: EditorService,
