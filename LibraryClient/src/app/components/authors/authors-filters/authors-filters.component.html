@@ -1,1 +1,17 @@
-<p>authors-filters works!</p>
+<div class="pages-filters">
+  <form [formGroup]="filterForm" class="filters-grid">
+
+    <div class="filter-item" *ngIf="isAdmin">
+      <input type="number" class="form-control" formControlName="authorId" placeholder="Author ID" />
+    </div>
+
+    <div class="filter-item">
+      <input type="text" class="form-control" formControlName="authorFullName" placeholder="Name or Surname" />
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="btn btn-primary" (click)="onSearch()">Search</button>
+    </div>
+
+  </form>
+</div>

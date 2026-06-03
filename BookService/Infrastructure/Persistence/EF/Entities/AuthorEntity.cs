@@ -13,8 +13,6 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Entities
 
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string FullName => $"{Name} {Surname}";
-
         public virtual ICollection<BookEntity> Books { get; set; }
 
         public AuthorEntity()

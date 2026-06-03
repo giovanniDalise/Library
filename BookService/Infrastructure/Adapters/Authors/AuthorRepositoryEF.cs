@@ -41,11 +41,11 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                     query = query.Where(a => a.Id == searchAuthor.Id);
                 }
 
-                if (!string.IsNullOrEmpty(searchAuthor.FullName))
+                if (!string.IsNullOrEmpty(searchAuthor.Name))
                 {
                     query = query.Where(a =>
-                        (a.Name + " " + a.Surname).Contains(searchAuthor.FullName) ||
-                        (a.Surname + " " + a.Name).Contains(searchAuthor.FullName));
+                        a.Name.Contains(searchAuthor.Name) ||
+                        a.Surname.Contains(searchAuthor.Name));
                 }
 
                 int total = await query.CountAsync();

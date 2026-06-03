@@ -5,7 +5,9 @@
 
     <h1 class="main-title">Authors</h1>
 
-    <app-authors-filters>
+    <app-authors-filters
+    [isAdmin] = "isAdmin"
+    (search) = "searchAuthors($event)">
     </app-authors-filters>  
     
     <app-authors-grid

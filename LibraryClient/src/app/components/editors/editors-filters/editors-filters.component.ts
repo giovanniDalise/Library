@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EditorRequest } from '../../../models/editor/editor/editor-request';
-import { Editor } from '../../../models/editor/editor/editor';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

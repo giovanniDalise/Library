@@ -42,7 +42,7 @@ export class AuthorsPageComponent implements OnInit{
     const normalizedFilter: AuthorRequest = {
       id: searchFilter.id ?? undefined,
       name: searchFilter.name?.trim() ?? undefined,
-      surname: searchFilter.name?.trim() ?? undefined
+      surname: undefined
     }
     this.authorService.getAuthors(normalizedFilter, this.pagination.currentPage, this.pagination.pageSize).subscribe(
       {
