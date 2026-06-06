@@ -20,5 +20,9 @@ namespace Library.BookService.Core.Domain.Services
         {
             return await _editorRepositoryPort.GetEditorByIdAsync(id, page, pageSize);
         }
+        public async Task<Editor> CreateEditorAsync(Editor editor)
+        {
+            return await _editorRepositoryPort.CreateEditorAsync(editor);
+        }
     }
 }

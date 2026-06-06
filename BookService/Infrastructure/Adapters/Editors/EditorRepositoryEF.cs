@@ -6,8 +6,6 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using NLog.Filters;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -104,5 +102,29 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 throw new EditorRepositoryEFException("Error retrieving editor by id", e);
             }
         }
+        public async Task<Editor> CreateEditorAsync (Editor editor)
+        {
+            _logger.Info($"CreateEditorAsync - Start | Craetion Book: {editor.Name}");
+            try
+            {
+                var editorEntity = new EditorEntity
+                {
+                    Name = editor.Name,
+                };
+
+                await _context.Editors.AddAsync(editorEntity);
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"Editor ID {editorEntity.Id} created");
+                return _editorMapper.ToDomain(editorEntity);
+            }
+            catch(Exception e)
+            {
+                _logger.Error($"Error CreateEditorAsync for editor {editor.Name}", e);
+                throw new EditorRepositoryEFException("Error creating editor: " + e.Message);
+
+            }
+        }
+
     }
 }
