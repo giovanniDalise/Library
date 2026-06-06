@@ -15,6 +15,7 @@ using Library.Logging.Abstractions;
 using Library.Logging.NLog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,50 +50,62 @@ builder.Services.AddScoped<EditorEntityMapper>();  // Registrazione di EditorMap
 builder.Services.AddScoped<AuthorEntityMapper>();  // Registrazione di AuthorMapper nel DI
 
 
-// Aggiungi i servizi per i controller
-builder.Services.AddControllers();  // Aggiungi questa riga per registrare i controller
+builder.Services.AddControllers();
 
-// Configura i servizi di sicurezza (JWT, CORS, etc.)
 builder.Services.ConfigureSecurity(builder.Configuration);
 
-// Swagger configuration (optional, for API documentation)
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Book Service API",
+        Version = "v1"
+    });
 
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Inserisci il token JWT nel formato: Bearer {token}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 var app = builder.Build();
 
-// Configurazione middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-var imagesPath = builder.Configuration["Media:BasePath"]
-    ?? throw new Exception("Media:BasePath not configured");
-
+var imagesPath = builder.Configuration["Media:BasePath"] ?? throw new Exception("Media:BasePath not configured");
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(imagesPath),
     RequestPath = "/images"
 });
-
-
-// Configura routing
-app.UseRouting();
-
-// Usa CORS prima di UseRouting
 app.UseCors("AllowAll");
 
-// Abilita il middleware JWT
-app.UseMiddleware<JwtMiddleware>();
-
-// Abilita l'autenticazione e l'autorizzazione
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-
-app.MapControllers();  // Assicurati che i controller vengano mappati correttamente
+app.MapControllers();
 
 app.Run();

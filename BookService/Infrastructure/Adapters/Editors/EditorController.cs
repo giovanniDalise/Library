@@ -1,5 +1,7 @@
-﻿using Library.BookService.Core.Ports.Editors;
+﻿using Library.BookService.Core.Application;
+using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.DTO.REST;
+using Library.BookService.Infrastructure.DTO.REST.Books;
 using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
@@ -106,6 +108,28 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 _logger.Error("Error while retrieving editor by id.", ex);
                 return StatusCode(500, "Internal server error.");
+            }
+        }
+        [HttpPost("AddEditor")]
+        [Authorize(Roles = "admin")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<long>> AddEditor([FromForm] EditorRequest request)
+        {
+            _logger.Info($"Attempting to add a new editor: {request.Name}");
+
+            try
+            {
+                var editorDomain = EditorDTOMapper.ToDomain(request);
+
+                var createdEditor = await _editorAppService.CreateEditorAsync(editorDomain);
+                _logger.Info($"Editor successfully added with ID: {createdEditor.Id}");
+
+                return Ok(createdEditor.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while adding editor: {request.Name}", ex);
+                return StatusCode(500, "Internal server error");
             }
         }
     }
