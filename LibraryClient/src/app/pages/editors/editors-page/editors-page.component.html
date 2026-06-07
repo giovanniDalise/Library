@@ -19,4 +19,8 @@
         (prevPage)="prevPage()"
         (viewDetail)="viewDetail($event)">
     </app-editors-grid>
+
+    <button *ngIf="isAdmin" class="btn btn-primary fab-btn" (click)="goToAdd()">
+        <i class="bi bi-plus-lg"></i>
+    </button>
 </div>  

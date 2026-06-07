@@ -9,19 +9,20 @@ import { EditorDetailComponent } from './pages/editors/editor-detail/editor-deta
 import { AuthorsPageComponent } from './pages/authors/authors-page/authors-page.component';
 import { AuthorDetailComponent } from './pages/authors/author-detail/author-detail.component';
 import { BookDetailComponent } from './pages/books/book-detail/book-detail.component';
+import { EditorsFormComponent } from './components/editors/editors-form/editors-form.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
-    { path: 'home', component: HomeComponent},  
-    { path: 'login', component: LoginComponent},  
-    { path: 'books', component: BooksPageComponent },    
+    { path: 'home', component: HomeComponent },  
+    { path: 'login', component: LoginComponent },  
+    { path: 'books/add', component: BookFormComponent },
+    { path: 'books/edit/:bookId', component: BookFormComponent },
     { path: 'books/:id', component: BookDetailComponent },
-    { path: 'book-form/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
-    { path: 'book-form/:bookId/:mode', component: BookFormComponent, canActivate: [AuthGuard] },
+    { path: 'books', component: BooksPageComponent },    
+    { path: 'editors/add', component: EditorsFormComponent },
+    { path: 'editors/edit/:editorId', component: EditorsFormComponent },
+    { path: 'editors/:id', component: EditorDetailComponent },
     { path: 'editors', component: EditorsPageComponent },
-    { path: 'editors/:id', component: EditorDetailComponent},
     { path: 'authors', component: AuthorsPageComponent },
-    { path: 'authors/:id', component: AuthorDetailComponent },
-
-
+    { path: 'authors/:id', component: AuthorDetailComponent },  
 ];

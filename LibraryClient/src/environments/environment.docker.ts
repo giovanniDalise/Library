@@ -18,12 +18,18 @@ export const environment = {
     },
     editors: {
       getEditors: '/getEditors',
-      getById: '/{id}'  
+      getById: '/{id}',
+      addEditor: '/addEditor',
+      update: '/{id}',
+      delete: '/{id}'
     },
-    authors:{
+    authors: {
       getAuthors: '/getAuthors',
-      getById: '/{id}'
-    },            
+      getById: '/{id}',
+      addAuthor: '/addAuthor',
+      update: '/{id}',
+      delete: '/{id}'
+    },           
     auth: {
       login: '/login'
     }    

@@ -7,11 +7,12 @@ import { PaginationState } from '../../../models/pagination/pagination-state';
 import { EditorRequest } from '../../../models/editor/editor/editor-request';
 import { Editor } from '../../../models/editor/editor/editor';
 import { EditorService } from '../../../services/editor.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-editors-page',
   standalone: true,
-  imports: [EditorsGridComponent, EditorsFiltersComponent, RouterLink],
+  imports: [EditorsGridComponent, EditorsFiltersComponent, RouterLink, CommonModule],
   templateUrl: './editors-page.component.html',
   styleUrl: './editors-page.component.scss'
 })
@@ -96,8 +97,11 @@ export class EditorsPageComponent implements OnInit {
   prevPage(): void {
     this.pagination.prev();
     this.searchEditors(this.lastSearchFilter);
-  } 
+  }
 
+  goToAdd(): void {
+    this.router.navigate(['/editors/add']);
+  }
 
 }
 

@@ -46,4 +46,18 @@ export class EditorService {
     } 
     oppure con lo shortland (uno shortcut) possiamo direttamente scrivere {params}     
     */
+
+  addEditor(request: EditorRequest): Observable<number> {
+    return this.http.post<number>(this.baseUrl + this.endpoints.addEditor, request);
+  }
+
+  updateEditor(id: number, request: EditorRequest): Observable<void> {
+    const url = this.baseUrl + this.endpoints.update.replace('{id}', id.toString());
+    return this.http.put<void>(url, request);
+  }
+
+  deleteEditor(id: number): Observable<void> {
+    const url = this.baseUrl + this.endpoints.delete.replace('{id}', id.toString());
+    return this.http.delete<void>(url);
+  }    
 }
