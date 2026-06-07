@@ -38,7 +38,7 @@ export class EditorsFormComponent implements OnInit {
       this.setPageTexts();
 
       if (this.mode === 'update' && this.editorId) {
-        this.editorService.getEditorDetail(this.editorId).subscribe({
+        this.editorService.getEditorById(this.editorId).subscribe({
           next: editor => {
             this.editorForm.patchValue({ name: editor.name });
           },
