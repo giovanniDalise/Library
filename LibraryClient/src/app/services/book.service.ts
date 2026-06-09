@@ -11,7 +11,7 @@ import { Book } from '../models/book/book/book';
   providedIn: 'root'
 })
 export class BookService {
-  private baseUrl = `${environment.apiUrls.books}`;
+  private baseUrl = environment.apiUrls.books;
   private endpoints = environment.api.books;
 
 

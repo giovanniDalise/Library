@@ -12,7 +12,7 @@ import { Author } from '../models/author/author/author';
 })
 export class AuthorService {
 
-  private baseUrl = `${environment.apiUrls.authors}`;
+  private baseUrl = environment.apiUrls.authors;
   private endpoints = environment.api.authors;
   
   constructor(private http:HttpClient) { }

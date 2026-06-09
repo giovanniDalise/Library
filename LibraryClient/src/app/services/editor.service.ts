@@ -11,7 +11,7 @@ import { PagedResponse } from '../models/pagination/paged-response';
   providedIn: 'root'
 })
 export class EditorService {
-  private baseUrl = `${environment.apiUrls.editors}`;
+  private baseUrl = environment.apiUrls.editors;
   private endpoints = environment.api.editors;
 
   constructor(private http:HttpClient) { }
