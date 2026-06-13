@@ -60,4 +60,9 @@ export class EditorService {
     const url = this.baseUrl + this.endpoints.delete.replace('{id}', id.toString());
     return this.http.delete<void>(url);
   }    
+
+  getEditorById(id: number): Observable<Editor> {
+    const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+    return this.http.get<Editor>(url);
+  }  
 }

@@ -1,20 +1,8 @@
-.home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  text-decoration: none;
-  transition: color 0.2s ease;
-  &:hover { color: #ffffff; }
-}
-
 .card {
   background-color: rgba(49, 56, 63, 0.85);
   border: none;
 }
 
-// ← sostituisce detail-table, molto più semplice
 .book-list {
   list-style: none;
   padding: 0;

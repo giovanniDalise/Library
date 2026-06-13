@@ -39,7 +39,6 @@ body {
     overflow: hidden;
   }
 
-  /* TESTO ARCADE */
   .mat-mdc-snack-bar-label {
     background-color: #524242;  /* sfondo bianco */
     color: #fffdfd;             /* testo nero */
@@ -53,8 +52,8 @@ body {
     letter-spacing: 1px;
     text-transform: uppercase;
   }
-/* Link "Home Page" uniforme con stile View All Books */
-.home-link {
+
+  .home-link {
   color: #f0f0f0; /* colore chiaro */
   text-decoration: none; /* niente sottolineatura */
   display: inline-flex; 
@@ -66,10 +65,9 @@ body {
 }
 
 .home-link:hover {
-  color: #0d6efd; /* blu chiaro al passaggio */
+  color: #0d6efd; 
 }
 
-/* Bottone Home Page più piccolo, testo centrato, spigoli dritti */
 .home-btn {
   display: inline-flex;
   justify-content: center;
@@ -96,7 +94,6 @@ body {
   text-decoration: none; /* assicurati che resti senza underline */
 }
 
-/* styles.scss */
 .main-title {
   font-family: 'Montserrat', sans-serif;
   font-size: 3rem;
@@ -105,4 +102,21 @@ body {
   font-weight: 600;
   color: #fffafa;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.btn.btn-action-outline {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn.btn-action-outline:hover {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
 }
