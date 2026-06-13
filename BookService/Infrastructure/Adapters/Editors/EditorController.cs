@@ -76,15 +76,15 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getEditorDetail/{id}")]
         [AllowAnonymous]
         //GET /api/editors/10?page=1&pageSize=10 il ? segna l'inizio della query ed è posto dopo la route
-        public async Task<ActionResult<PagedResponse<EditorDetailResponse>>> GetEditorById(
+        public async Task<ActionResult<PagedResponse<EditorDetailResponse>>> GetEditorDetail(
             long id,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
         {
-            _logger.Info($"Call to GetEditorById | Id: {id}");
+            _logger.Info($"Call to GetEditorDetail | Id: {id}");
 
             if (id <= 0)
             {
@@ -94,7 +94,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
             try
             {
-                var (editor, totalBooks) = await _editorAppService.GetEditorByIdAsync(id, page, pageSize);
+                var (editor, totalBooks) = await _editorAppService.GetEditorDetailAsync(id, page, pageSize);
 
                 if (editor == null)
                 {
@@ -128,6 +128,31 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             catch (Exception ex)
             {
                 _logger.Error($"Error while adding editor: {request.Name}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<EditorResponse>> GetEditorById(long id)
+        {
+            _logger.Info($"Call to GetEditorById | Id: {id}");
+
+            try
+            {
+                var editor = await _editorAppService.GetEditorByIdAsync(id);
+
+                if (editor == null)
+                {
+                    _logger.Warn($"Editor not found | Id: {id}");
+                    return NotFound();
+                }
+
+                var response = EditorDTOMapper.ToResponse(editor);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while retrieving editor {id}", ex);
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -20,7 +20,7 @@ export class EditorService {
       const params = new HttpParams()
           .set('page', page)
           .set('pageSize', pageSize)
-      const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+      const url = this.baseUrl + this.endpoints.getEditorDetail.replace('{id}', id.toString());
       return this.http.get<EditorDetail>(url, { params });
   }
   

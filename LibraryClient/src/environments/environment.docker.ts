@@ -19,6 +19,7 @@ export const environment = {
     editors: {
       getEditors: '/getEditors',
       getById: '/{id}',
+      getEditorDetail: '/getEditorDetail/{id}',
       addEditor: '/addEditor',
       update: '/{id}',
       delete: '/{id}'

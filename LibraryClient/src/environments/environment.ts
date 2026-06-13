@@ -19,13 +19,14 @@ export const environment = {
     books: {
       getBooks: '/getBooks',
       getById: '/{id}',
+      getEditorDetail: '/getEditorDetail/{id}',
       addBook: '/addBook',
       update: '/{id}',
       delete: '/{id}'
     },
     editors: {
       getEditors: '/getEditors',
-      getById: '/{id}',
+      getEditorDetail: '/{id}',
       addEditor: '/addEditor',
       update: '/{id}',
       delete: '/{id}'

@@ -64,16 +64,16 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             }
         }
 
-        public async Task<(Editor Editor, int TotalBooks)> GetEditorByIdAsync(long id, int page, int pageSize)
+        public async Task<(Editor Editor, int TotalBooks)> GetEditorDetailAsync(long id, int page, int pageSize)
         {
-            _logger.Info($"GetEditorByIdAsync - Started | Id: {id}");
+            _logger.Info($"GetEditorDetailAsync - Started | Id: {id}");
             try
             {
                 var editorEntity = await _context.Editors.FirstOrDefaultAsync(e => e.Id == id);
 
                 if (editorEntity == null)
                 {
-                    _logger.Warn($"GetEditorByIdAsync - Editor not found | Id: {id}");
+                    _logger.Warn($"GetEditorDetailAsync - Editor not found | Id: {id}");
                     return (null, 0);
                 }
 
@@ -93,12 +93,12 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
                 editorEntity.Books = books.ToList();
 
-                _logger.Info($"GetEditorByIdAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
+                _logger.Info($"GetEditorDetailAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
                 return (_editorMapper.ToDomain(editorEntity), totalBooks);
             }
             catch (Exception e)
             {
-                _logger.Error($"GetEditorByIdAsync - Error", e);
+                _logger.Error($"GetEditorDetailAsync - Error", e);
                 throw new EditorRepositoryEFException("Error retrieving editor by id", e);
             }
         }
@@ -125,6 +125,28 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 
             }
         }
+        public async Task<Editor?> GetEditorByIdAsync(long id)
+        {
+            _logger.Info($"GetEditorByIdAsync - Start | Id: {id}");
 
+            try
+            {
+                var editorEntity = await _context.Editors
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (editorEntity == null)
+                {
+                    return null;
+                }
+
+                _logger.Info($"GetEditorByIdAsync - Completed | Id: {id}");
+                return _editorMapper.ToDomain(editorEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"GetEditorByIdAsync - Error | Id: {id}", ex);
+                throw new EditorRepositoryEFException("Error retrieving editor by id", ex);
+            }
+        }
     }
 }
