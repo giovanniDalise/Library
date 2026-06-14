@@ -1,0 +1,26 @@
+.mat-mdc-snack-bar-container {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 420px;
+  max-width: 600px;
+  min-height: 44px;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.mat-mdc-snack-bar-label {
+  background-color: #524242;
+  color: #fffdfd;
+  padding: 16px 20px;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
