@@ -1,0 +1,27 @@
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(145, 145, 145, 0.4)), url("../assets/img/libraryBackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fffafa;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}

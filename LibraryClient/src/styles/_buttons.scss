@@ -1,0 +1,148 @@
+.home-link {
+  color: #f0f0f0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.home-link:hover {
+  color: #0d6efd;
+}
+
+.home-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff !important;
+  background-color: #555;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.2rem;
+  width: auto !important;
+  min-width: 150px;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #fff;
+  color: #111 !important;
+  text-decoration: none;
+}
+
+// Navigazione (menu home, link tra pagine, auth icon)
+.btn.btn-nav-outline {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid #999;
+  color: #f0f0f0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn.btn-nav-outline:hover {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
+}
+
+// Azioni (Add New X, Search, Save, Update...)
+.btn.btn-action-outline {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn.btn-action-outline:hover {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
+}
+
+// Edit nel dettaglio
+.btn-edit {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+
+// Bottone tondo login/logout
+.auth-top-right {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+}
+
+.auth-btn {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.auth-btn i {
+  font-size: 1.8rem;
+}
+
+.auth-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 60px;
+  right: 50%;
+  transform: translateX(50%);
+  background-color: rgba(66, 40, 40, 0.85);
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.auth-btn[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  top: 52px;
+  right: 50%;
+  transform: translateX(50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.85) transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1002;
+}
+
+.auth-btn[data-tooltip]:hover::after,
+.auth-btn[data-tooltip]:hover::before {
+  opacity: 1;
+  transform: translateX(50%) translateY(-4px);
+}
