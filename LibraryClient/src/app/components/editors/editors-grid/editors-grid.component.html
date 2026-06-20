@@ -1,44 +1,22 @@
-<div class="container py-5">
-    <div *ngIf="editors.length > 0; else noEditors">
-        <div class="table-responsive">
-            <table class="table table-custom align-middle">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th *ngIf="isAdmin">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let editor of editors">
-                        <td (click)="onViewDetail(editor.id)">
-                            {{ editor.name }}
-                        </td>
-                        <td *ngIf="isAdmin">
-                            <!-- actions admin -->
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- qui abbiamo l'eventemitter next del pagination component che chiama il metodo onNextPage al componente padre 
-              page-component e ugualmente accade per il prev-->
-              <!-- [] do al figlio  (in questo caso il pagination component)
-                   () ricevo dal figlio -->
-            <app-pagination
-                [currentPage]="currentPage"
-                [totalPages]="totalPages"
-                [totalRecords]="totalRecords"
-                (next)="onNextPage()"
-                (prev)="onPrevPage()">
-            </app-pagination>      
-            <!-- nel template dal punto di vista del componente definisci i rapporti con il figlio tramite property [] (da al figlio)
-             e event () binding (ricevo dal figlio) mentre nel ts sono definiti i rapporti con il padre tramite decoratori Input (ricevo 
-             dal padre) e Output (do al padre)-->   
-        </div>
-    </div>
-
-    <ng-template #noEditors>
-        <p>No editors found</p>    
-    </ng-template>
+<div *ngIf="editors.length > 0; else noEditors">
+  <div class="table-responsive">
+    <table class="table table-custom align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th *ngIf="isAdmin">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let editor of editors">
+          <td (click)="onViewDetail(editor.id)">{{ editor.name }}</td>
+          <td *ngIf="isAdmin"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
+<ng-template #noEditors>
+  <p>No editors found</p>
+</ng-template>

@@ -1,0 +1,19 @@
+.form-card {
+  max-width: 600px;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-row .input-group {
+  flex: 1 1 300px;
+}
+
+.form-row .btn-submit {
+  flex: 0 0 auto;
+}

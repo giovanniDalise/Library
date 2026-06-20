@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { Editor } from '../../../models/editor/editor/editor';
 
 @Component({
   selector: 'app-editors-grid',
   standalone: true,
-  imports: [CommonModule, PaginationComponent],
+  imports: [CommonModule],
   templateUrl: './editors-grid.component.html',
   styleUrl: './editors-grid.component.scss'
 })
@@ -14,9 +13,6 @@ export class EditorsGridComponent {
   //@Input ricevo dal padre (page componet)
   @Input() isAdmin = false;
   @Input() editors: Editor[] = [];
-  @Input() currentPage = 1;
-  @Input() totalPages = 0;  
-  @Input() totalRecords = 0;
   
   //@Output do al padre, chiamata a nextPage
   @Output() nextPage = new EventEmitter<void>();

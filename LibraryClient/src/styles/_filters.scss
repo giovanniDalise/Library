@@ -37,10 +37,13 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   align-items: center;
+  justify-items: center;
 }
 
-.filter-actions button:focus {
-  box-shadow: none;
+.filter-actions {
+  grid-column: 1 / -1; // occupa tutta la larghezza
+  display: flex;
+  justify-content: center;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -52,4 +55,24 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   appearance: textfield;
   -moz-appearance: textfield;
+}
+
+.filter-item input.form-control {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.filter-item input.form-control::placeholder {
+  color: #cfcfcf;
+}
+
+.filter-item input.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #fff;
+  background-color: rgba(0, 0, 0, 0.75);
 }

@@ -25,3 +25,11 @@ body {
   color: #fffafa;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
+
+.pagination-actions-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}

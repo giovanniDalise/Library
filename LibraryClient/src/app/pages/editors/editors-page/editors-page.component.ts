@@ -8,11 +8,12 @@ import { EditorRequest } from '../../../models/editor/editor/editor-request';
 import { Editor } from '../../../models/editor/editor/editor';
 import { EditorService } from '../../../services/editor.service';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-editors-page',
   standalone: true,
-  imports: [EditorsGridComponent, EditorsFiltersComponent, RouterLink, CommonModule],
+  imports: [EditorsGridComponent, EditorsFiltersComponent, RouterLink, CommonModule, PaginationComponent],
   templateUrl: './editors-page.component.html',
   styleUrl: './editors-page.component.scss'
 })

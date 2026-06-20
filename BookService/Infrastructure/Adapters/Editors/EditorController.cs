@@ -112,7 +112,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         }
         [HttpPost("AddEditor")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<long>> AddEditor([FromForm] EditorRequest request)
+        public async Task<ActionResult<long>> AddEditor([FromBody] EditorRequest request)
         {
             _logger.Info($"Attempting to add a new editor: {request.Name}");
 

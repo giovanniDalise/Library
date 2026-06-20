@@ -8,19 +8,25 @@
         [isAdmin]="isAdmin"
         (search)="searchEditors($event)">    
     </app-editors-filters>
-
     <app-editors-grid
         [editors]="editors"
         [isAdmin]="isAdmin"
-        [currentPage]="pagination.currentPage"
-        [totalPages]="pagination.totalPages"
-        [totalRecords]="pagination.totalRecords"
-        (nextPage)="nextPage()"
-        (prevPage)="prevPage()"
-        (viewDetail)="viewDetail($event)">
+        (viewDetail)="viewDetail($event)"
+        class="mt-3">
     </app-editors-grid>
-
-    <button *ngIf="isAdmin" class="btn btn-action-outline" (click)="goToAdd()">
-        <i class="bi bi-plus-lg me-2"></i> Add New Editor
-    </button>
+    <div class="pagination-actions-row">
+        <div></div>
+        <app-pagination
+            [currentPage]="pagination.currentPage"
+            [totalPages]="pagination.totalPages"
+            [totalRecords]="pagination.totalRecords"
+            (next)="nextPage()"
+            (prev)="prevPage()">
+        </app-pagination>
+        <div style="display:flex; justify-content:flex-start; padding-left: 1rem;">
+            <button *ngIf="isAdmin" class="btn btn-action-outline btn-sm" (click)="goToAdd()">
+                Add New Editor
+            </button>
+        </div>
+    </div>
 </div>  
