@@ -1,4 +1,5 @@
-﻿using Library.BookService.Core.Ports.Authors;
+﻿using Library.BookService.Core.Application;
+using Library.BookService.Core.Ports.Authors;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Authors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
@@ -91,6 +92,26 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 _logger.Error("Error while retrieving author by id.", ex);
                 return StatusCode(500, "Internal server error.");
+            }
+        }
+        [HttpPost("AddAuthor")]
+        [Authorize(Roles ="admin")]
+        public async Task<ActionResult<long>> AddAuthor([FromBody] AuthorRequest request)
+        {
+            _logger.Info($"Attempting to add a new author: {request.Name} {request.Surname}");
+            try
+            {
+                var authorDomain = AuthorDTOMapper.ToDomain(request);
+
+                var createdAuthor = await _authorAppService.CreateAuthorAsync(authorDomain);
+                _logger.Info($"Author successfully added with ID: {createdAuthor.Id}");
+
+                return Ok(createdAuthor.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while adding author: {request.Name} {request.Surname}", ex);
+                return StatusCode(500, "Internal server error");
             }
         }
     }

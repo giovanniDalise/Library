@@ -104,7 +104,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         }
         public async Task<Editor> CreateEditorAsync (Editor editor)
         {
-            _logger.Info($"CreateEditorAsync - Start | Craetion Book: {editor.Name}");
+            _logger.Info($"CreateEditorAsync - Start | Creation Editor: {editor.Name}");
             try
             {
                 var editorEntity = new EditorEntity

@@ -105,5 +105,27 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                 throw new AuthorRepositoryEFException("Error retrieving authors", e);
             }
         }
+        public async Task<Author> CreateAuthorAsync (Author author)
+        {
+            _logger.Info($"CreateAuthorAsync - Started | Creation Author:{author.Name} {author.Surname}");
+            try
+            {
+                var authorEntity = new AuthorEntity
+                {
+                    Name = author.Name,
+                    Surname = author.Surname
+                };
+                await _context.Authors.AddAsync(authorEntity);
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"Author Id {authorEntity.Id} created");
+                return _authorMapper.ToDomain(authorEntity);
+            }
+            catch(Exception e)
+            {
+                _logger.Error($"Error CreateAuthorAsync for author {author.Name} {author.Surname}", e);
+                throw new AuthorRepositoryEFException("Error creating author:" + e.Message);
+            }
+        }
     }
 }
