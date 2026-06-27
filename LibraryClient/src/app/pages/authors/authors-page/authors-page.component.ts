@@ -7,11 +7,13 @@ import { UserRoleService } from '../../../services/user-role.service';
 import { AuthorRequest } from '../../../models/author/author/author-request';
 import { Author } from '../../../models/author/author/author';
 import { AuthorService } from '../../../services/author.service';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-authors-page',
   standalone: true,
-  imports: [AuthorsGridComponent, AuthorsFiltersComponent, RouterLink],
+  imports: [AuthorsGridComponent, AuthorsFiltersComponent, RouterLink, CommonModule,PaginationComponent],
   templateUrl: './authors-page.component.html',
   styleUrl: './authors-page.component.scss'
 })
@@ -72,4 +74,8 @@ export class AuthorsPageComponent implements OnInit{
     this.pagination.prev();
     this.searchAuthors(this.lastSearchFilter);
   }
+
+  goToAdd(): void {
+    this.router.navigate(['/authors/add']);
+  }  
 }

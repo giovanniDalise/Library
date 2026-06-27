@@ -6,19 +6,29 @@
     <h1 class="main-title">Authors</h1>
 
     <app-authors-filters
-    [isAdmin] = "isAdmin"
-    (search) = "searchAuthors($event)">
+        [isAdmin] = "isAdmin"
+        (search) = "searchAuthors($event)">
     </app-authors-filters>  
     
     <app-authors-grid
-    [authors] = "authors"
-    [isAdmin] = "isAdmin"
-    [currentPage] = "pagination.currentPage"
-    [totalPages] = "pagination.totalPages"
-    [totalRecords] = "pagination.totalRecords"
-    (nextPage) = "nextPage()"
-    (prevPage) = "prevPage()"
-    (viewDetail)="viewDetail($event)">    
+        [authors] = "authors"
+        [isAdmin] = "isAdmin"
+        (viewDetail)="viewDetail($event)">    
     </app-authors-grid>
+    <div class="pagination-actions-row">
+        <div></div>
+        <app-pagination
+            [currentPage]="pagination.currentPage"
+            [totalPages]="pagination.totalPages"
+            [totalRecords]="pagination.totalRecords"
+            (next)="nextPage()"
+            (prev)="prevPage()">
+        </app-pagination>
+        <div style="display:flex; justify-content:flex-start; padding-left: 1rem;">
+            <button *ngIf="isAdmin" class="btn btn-action-outline btn-sm" (click)="goToAdd()">
+                Add New Author
+            </button>
+        </div>
+    </div>    
     
 </div>

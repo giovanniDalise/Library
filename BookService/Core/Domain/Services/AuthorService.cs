@@ -16,13 +16,17 @@ namespace Library.BookService.Core.Domain.Services
         {
             return await _authorRepositoryPort.GetAuthorsAsync(searchAuthor, page, pageSize);
         }
-        public async Task<(Author Author, int TotalBooks)> GetAuthorByIdAsync(long id, int page, int pageSize)
+        public async Task<(Author Author, int TotalBooks)> GetAuthorDetailAsync(long id, int page, int pageSize)
         {
-            return await _authorRepositoryPort.GetAuthorByIdAsync(id, page, pageSize);
+            return await _authorRepositoryPort.GetAuthorDetailAsync(id, page, pageSize);
         }
         public async Task<Author> CreateAuthorAsync(Author author)
         {
             return await _authorRepositoryPort.CreateAuthorAsync(author);
+        }
+        public async Task<Author?> GetAuthorByIdAsync(long id)
+        {
+            return await _authorRepositoryPort.GetAuthorByIdAsync(id);
         }
     }
 }

@@ -131,8 +131,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 return StatusCode(500, "Internal server error");
             }
         }
+
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<EditorResponse>> GetEditorById(long id)
         {
             _logger.Info($"Call to GetEditorById | Id: {id}");

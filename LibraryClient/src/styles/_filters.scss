@@ -76,3 +76,15 @@ input[type="number"] {
   border-color: #fff;
   background-color: rgba(0, 0, 0, 0.75);
 }
+
+.filter-item--full {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  input {
+    width: 100%;
+    max-width: 300px;
+  }
+}

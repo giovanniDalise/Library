@@ -66,9 +66,9 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                 throw new AuthorRepositoryEFException("Error retrieving authors", ex);
             }
         }
-        public async Task<(Author author, int TotalBooks)> GetAuthorByIdAsync(long id, int page, int pageSize)
+        public async Task<(Author author, int TotalBooks)> GetAuthorDetailAsync(long id, int page, int pageSize)
         {
-            _logger.Info($"GetAuthorsByIdAsync - Started | Id: {id}");
+            _logger.Info($"GetAuthorDetailAsync - Started | Id: {id}");
             try
             {
                 var authorEntity = await _context.Authors
@@ -76,7 +76,7 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 
                 if (authorEntity == null)
                 {
-                    _logger.Warn($"GetAuthorsByIdAsync - Author not found | Id: {id}");
+                    _logger.Warn($"GetAuthorDetailAsync - Author not found | Id: {id}");
                     return (null, 0);
                 }
 
@@ -95,13 +95,13 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 
                 authorEntity.Books = books;
 
-                _logger.Info($"GetAuthorsByIdAsync - Completed | Author: {authorEntity.Name}, Books: {books.Count}");
+                _logger.Info($"GetAuthorDetailAsync - Completed | Author: {authorEntity.Name}, Books: {books.Count}");
 
                 return (_authorMapper.ToDomain(authorEntity), totalBooks);
             }
             catch (Exception e)
             {
-                _logger.Error("GetAuthorsByIdAsync - Error", e);
+                _logger.Error("GetAuthorDetailAsync - Error", e);
                 throw new AuthorRepositoryEFException("Error retrieving authors", e);
             }
         }
@@ -125,6 +125,29 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 _logger.Error($"Error CreateAuthorAsync for author {author.Name} {author.Surname}", e);
                 throw new AuthorRepositoryEFException("Error creating author:" + e.Message);
+            }
+        }
+        public async Task<Author?> GetAuthorByIdAsync(long id)
+        {
+            _logger.Info($"GetAuthorByIdAsync - Start | Id: {id}");
+
+            try
+            {
+                var authorEntity = await _context.Authors
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (authorEntity == null)
+                {
+                    return null;
+                }
+
+                _logger.Info($"GetAuthorByIdAsync - Completed | Id: {id}");
+                return _authorMapper.ToDomain(authorEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"GetAuthorByIdAsync - Error | Id: {id}", ex);
+                throw new AuthorRepositoryEFException("Error retrieving author by id", ex);
             }
         }
     }

@@ -29,7 +29,21 @@ export class AuthorService {
       const params = new HttpParams()
           .set('page', page)
           .set('pageSize', pageSize)
-      const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+      const url = this.baseUrl + this.endpoints.getAuthorDetail.replace('{id}', id.toString());
       return this.http.get<AuthorDetail>(url, { params });
+  }
+
+  addAuthor(request: AuthorRequest): Observable<number> {
+    return this.http.post<number>(this.baseUrl + this.endpoints.addAuthor, request);
+  }
+
+  updateAuthor(id: number, request: AuthorRequest): Observable<void> {
+    const url = this.baseUrl + this.endpoints.update.replace('{id}', id.toString());
+    return this.http.put<void>(url, request);
   }  
+
+  getAuthorById(id: number): Observable<Author> {
+    const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+    return this.http.get<Author>(url);
+  }    
 }

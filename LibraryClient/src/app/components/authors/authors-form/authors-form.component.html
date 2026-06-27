@@ -1,0 +1,36 @@
+<div class="container py-5">
+  <a routerLink="/authors" class="home-btn mb-3">
+    <i class="bi bi-people"></i> Authors
+  </a>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card shadow rounded p-4 form-card mx-auto">
+
+        <h2 class="text-center text-light mb-4">{{ pageTitle }}</h2>
+
+        <form [formGroup]="authorForm" (ngSubmit)="onSubmit()" class="form-row">
+        
+          <div class="input-group">
+            <span class="input-group-text">Name</span>
+            <input type="text" class="form-control" formControlName="name" placeholder="Author name"/>
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-text">Surname</span>
+            <input type="text" class="form-control" formControlName="surname" placeholder="Author surname"/>
+          </div>          
+
+          <div class="input-group">
+          </div>          
+
+          <button type="submit" class="btn btn-action-outline btn-submit" [disabled]="authorForm.invalid">
+            <i class="bi bi-check-circle"></i> {{ submitLabel }}
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

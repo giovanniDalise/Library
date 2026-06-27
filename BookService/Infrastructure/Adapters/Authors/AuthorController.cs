@@ -2,6 +2,7 @@
 using Library.BookService.Core.Ports.Authors;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Authors;
+using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -64,13 +65,14 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                 return StatusCode(500,"Internal server error");
             }
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AuthorDetailResponse>> GetAuthorById(
+        [HttpGet("getAuthorDetail/{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<AuthorDetailResponse>> GetAuthorDetail(
         long id,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10)
         {
-            _logger.Info($"Call to GetAuthorById | Id:{id}");
+            _logger.Info($"Call to GetAuthorDetail | Id:{id}");
             if (id <= 0)
             {
                 _logger.Warn($"Invalid attempt with Id: {id}");
@@ -78,7 +80,7 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             }
             try
             {
-                var (author, totalBooks) = await _authorAppService.GetAuthorByIdAsync(id, page, pageSize);
+                var (author, totalBooks) = await _authorAppService.GetAuthorDetailAsync(id, page, pageSize);
 
                 if(author == null)
                 {
@@ -111,6 +113,32 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             catch (Exception ex)
             {
                 _logger.Error($"Error while adding author: {request.Name} {request.Surname}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<AuthorResponse>> GetAuthorById(long id)
+        {
+            _logger.Info($"Call to GetAuthorById | Id: {id}");
+
+            try
+            {
+                var author = await _authorAppService.GetAuthorByIdAsync(id);
+
+                if (author == null)
+                {
+                    _logger.Warn($"Author not found | Id: {id}");
+                    return NotFound();
+                }
+
+                var response = AuthorDTOMapper.ToResponse(author);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while retrieving editor {id}", ex);
                 return StatusCode(500, "Internal server error");
             }
         }

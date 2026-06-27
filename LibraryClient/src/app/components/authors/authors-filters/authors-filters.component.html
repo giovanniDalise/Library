@@ -5,7 +5,7 @@
       <input type="number" class="form-control" formControlName="authorId" placeholder="Author ID" />
     </div>
 
-    <div class="filter-item">
+    <div class="filter-item" [class.filter-item--full]="!isAdmin">
       <input type="text" class="form-control" formControlName="authorFullName" placeholder="Name or Surname" />
     </div>
 

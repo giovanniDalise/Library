@@ -34,6 +34,7 @@ export const environment = {
     authors: {
       getAuthors: '/getAuthors',
       getById: '/{id}',
+      getAuthorDetail: '/getAuthorDetail/{id}',
       addAuthor: '/addAuthor',
       update: '/{id}',
       delete: '/{id}'

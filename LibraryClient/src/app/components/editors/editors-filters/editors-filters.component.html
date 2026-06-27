@@ -6,7 +6,7 @@
       <input type="number" class="form-control" formControlName="editorId" placeholder="Editor ID" />
     </div>
 
-    <div class="filter-item">
+    <div class="filter-item" [class.filter-item--full]="!isAdmin">
       <input type="text" class="form-control" formControlName="editorName" placeholder="Editor Name" />
     </div>
     
