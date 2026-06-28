@@ -44,42 +44,19 @@ namespace Library.BookService.Infrastructure.Adapters.Books
         }
         public async Task<Book> CreateBookAsync(Book book)
         {
-            _logger.Info($"CreateBookAsync - Start | Craetion Book: {book.Title}");
             try
             {
-                // Controlla se l'editor esiste
                 var editorEntity = await _context.Editors
-                    .FirstOrDefaultAsync(e => e.Name == book.Editor.Name);
-
-                // Se non esiste, crealo
+                    .FirstOrDefaultAsync(e => e.Id == book.Editor.Id);
                 if (editorEntity == null)
-                {
-                    _logger.Debug($"Editor non trovato, creazione: {book.Editor.Name}");
-                    editorEntity = new EditorEntity { Name = book.Editor.Name };
-                    await _context.Editors.AddAsync(editorEntity);
-                    await _context.SaveChangesAsync(); // salva subito per avere l'ID
-                }
+                    throw new BookRepositoryEFException($"Editor non trovato con ID {book.Editor.Id}");
 
-                // Gestione autori
-                var authorEntities = new List<AuthorEntity>();
-                foreach (var author in book.Authors)
-                {
-                    var authorEntity = await _context.Authors
-                        .FirstOrDefaultAsync(a => a.Name == author.Name && a.Surname == author.Surname);
+                var authorEntities = await _context.Authors
+                    .Where(a => book.Authors.Select(x => x.Id).Contains(a.Id))
+                    .ToListAsync();
+                if (authorEntities.Count != book.Authors.Count)
+                    throw new BookRepositoryEFException("Uno o più autori non trovati");
 
-                    if (authorEntity == null)
-                    {
-                        _logger.Debug($"Autore non trovato, creazione: {author.Name} {author.Surname}");
-                        // Se non esiste, crealo
-                        authorEntity = new AuthorEntity { Name = author.Name, Surname = author.Surname };
-                        await _context.Authors.AddAsync(authorEntity);
-                        await _context.SaveChangesAsync(); // salva subito per avere l'ID
-                    }
-
-                    authorEntities.Add(authorEntity);
-                }
-
-                // Crea la BookEntity con editor e autori esistenti o appena creati
                 var bookEntity = new BookEntity
                 {
                     Title = book.Title,
@@ -95,12 +72,17 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 _logger.Info($"Book ID {bookEntity.Id} created");
                 return _bookMapper.ToDomain(bookEntity);
             }
+            catch (BookRepositoryEFException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 _logger.Error($"Error CreateBookAsync for book {book.Title}", e);
                 throw new BookRepositoryEFException("Error creating book: " + e.Message);
             }
         }
+
         public async Task<long> DeleteBookAsync(long id)
         {
             _logger.Info($"DeleteBookAsync - Start | Deleting Book ID {id}");

@@ -4,6 +4,7 @@ using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Books;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
+using Library.BookService.Infrastructure.exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,32 +25,31 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             _logger = logger;
         }
 
-        // POST /library
         [HttpPost("AddBook")]
         [Authorize(Roles = "admin")]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<long>> AddBook([FromForm] BookRequest request)
         {
-            _logger.Info($"Tentativo di aggiungere un nuovo libro: {request.Title}");
-
+            _logger.Info($"Attempting to add new book: {request.Title}");
             try
             {
-                // Creazione libro senza cover
                 var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
                 string? coverFileName = request.Cover?.FileName;
                 Stream? coverStream = request.Cover?.OpenReadStream();
 
-                var createdBook = await _bookAppService.CreateBookAsync(
-                    bookDomain, coverStream, coverFileName
-                );
-                _logger.Info($"Libro aggiunto con id: {createdBook.Id}");
-
+                var createdBook = await _bookAppService.CreateBookAsync(bookDomain, coverStream, coverFileName);
+                _logger.Info($"Book added with ID: {createdBook.Id}");
                 return Ok(createdBook.Id);
+            }
+            catch (BookRepositoryEFException ex)
+            {
+                _logger.Error($"Validation error while adding book: {request.Title}", ex);
+                return BadRequest(ex.Message); 
             }
             catch (Exception ex)
             {
-                _logger.Error($"Errore durante l'aggiunta del libro: {request.Title}", ex);
-                return StatusCode(500, "Errore interno del server");
+                _logger.Error($"Unexpected error while adding book: {request.Title}", ex);
+                return StatusCode(500, "Internal server error");
             }
         }
 

@@ -35,30 +35,17 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
             return books.Select(ToResponse).ToList();
         }
 
-        // DTO Request → Domain
         public static Book ToDomain(BookRequest request, string? coverReference = null)
         {
             return new Book
             {
-                Id = request.Id,
                 Title = request.Title,
                 Isbn = request.Isbn,
                 CoverReference = coverReference,
-                Editor = request.Editor != null
-                    ? new Editor
-                    {
-                        Id = request.Editor.Id,
-                        Name = request.Editor.Name
-                    }
-                    : null,
-                Authors = request.Authors != null
-                    ? request.Authors.Select(a => new Author
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-                        Surname = a.Surname
-                    }).ToList()
-                    : new List<Author>()
+                Editor = new Editor { Id = request.EditorId },
+                Authors = request.AuthorIds
+                    .Select(id => new Author { Id = id })
+                    .ToList()
             };
         }
     }
