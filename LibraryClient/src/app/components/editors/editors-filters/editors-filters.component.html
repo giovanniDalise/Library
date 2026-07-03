@@ -1,12 +1,14 @@
 <div class="page-filters">
   <form [formGroup]="filterForm" class="filters-grid">
-    <!--proeprty binding ossia collego il valore della variabile del ts filterForm allla proprietà
+    <!--property binding ossia collego il valore della variabile del ts filterForm allla proprietà
     formGroup del form dell'html-->
     <div class="filter-item" *ngIf="isAdmin">
       <input type="number" class="form-control" formControlName="editorId" placeholder="Editor ID" />
     </div>
 
     <div class="filter-item" [class.filter-item--full]="!isAdmin">
+	  <!-- [class.filter-item--full] classe dello style utilizzata nel caso in cui l'utente
+    non è admin è ha solo il campo name per la ricerca -->
       <input type="text" class="form-control" formControlName="editorName" placeholder="Editor Name" />
     </div>
     
