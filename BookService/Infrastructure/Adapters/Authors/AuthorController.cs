@@ -29,7 +29,9 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
         public async Task<ActionResult<PagedResponse<AuthorResponse>>> GetAuthors (
             [FromBody] AuthorRequest request,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10)
+            [FromQuery] int pageSize = 10,
+            [FromQuery] bool all = false
+            )
         {
             _logger.Info("Call to GetAuthors");
 
@@ -48,7 +50,11 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 var authorDomain = AuthorDTOMapper.ToDomain(request);
 
-                var (authors, totalRecords) = await _authorAppService.GetAuthorsAsync(authorDomain, page, pageSize);
+                var (authors, totalRecords) = await _authorAppService.GetAuthorsAsync(
+                    authorDomain,
+                    all ? 1 : page,
+                    all ? int.MaxValue : pageSize
+                );
 
                 var response = new PagedResponse<AuthorResponse>
                 {

@@ -83,8 +83,8 @@ export class BookFormComponent implements OnInit {
   }
 
   private loadAuthors(): void {
-    this.authorService.getAuthors({}, 1, 100).subscribe({
-      next: result => this.availableAuthors = result.items,
+    this.authorService.getAllAuthors().subscribe({
+      next: authors => this.availableAuthors = authors,
       error: err => console.error('Error loading authors:', err)
     });
   }
@@ -117,10 +117,11 @@ export class BookFormComponent implements OnInit {
     const formData = new FormData();
     formData.append('title', this.bookForm.value.title);
     formData.append('isbn', this.bookForm.value.isbn);
-    formData.append('editor.id', this.bookForm.value.editorId.toString());
+    formData.append('editorId', this.bookForm.value.editorId.toString());
 
-    this.selectedAuthors.forEach((author, index) => {
-      formData.append(`authors[${index}].id`, author.id.toString());
+    // AuthorIds come lista
+    this.selectedAuthors.forEach(author => {
+      formData.append('authorIds', author.id.toString());
     });
 
     if (this.coverFile) {
