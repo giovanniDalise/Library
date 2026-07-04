@@ -48,10 +48,22 @@ export class EditorService {
     */
   getAllEditors(): Observable<Editor[]> {
     const params = new HttpParams().set('all', 'true');
-    return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, {}, { params }).pipe(
-      map(response => response.items)
-    );
-}
+    return this.http.post<PagedResponse<Editor>>(
+      this.baseUrl + this.endpoints.getEditors, {}, { params }
+/*       Il secondo parametro di http.post è il body della richiesta. Nella getEditors normale passi 
+      searchFilter come body perché vuoi filtrare. Nella getAllEditors non vuoi filtrare nulla, 
+      ma http.post vuole comunque un body — non puoi ometterlo. Quindi passi {} che è un oggetto vuoto,
+       che il BE riceve come EditorRequest con tutti i campi null/default, quindi nessun filtro applicato. */
+    ).pipe(map(response => response.items));
+/*     getEditors ritorna Observable<PagedResponse<Editor>> — un oggetto con items e totalRecords. 
+    getAllEditors invece vuole ritornare direttamente Observable<Editor[]> 
+    solo la lista, senza la paginazione che non serve per la dropdown.
+    Il .pipe(map(...)) trasforma l'Observable prima che arrivi al subscriber:
+    È come fare il .Select() di LINQ in C# — prendi l'oggetto che arriva e ne estrai solo la parte che 
+    ti interessa, così chi chiama getAllEditors riceve direttamente Editor[] 
+    senza dover fare result.items ogni volta. */
+  }
+  
   addEditor(request: EditorRequest): Observable<number> {
     return this.http.post<number>(this.baseUrl + this.endpoints.addEditor, request);
   }

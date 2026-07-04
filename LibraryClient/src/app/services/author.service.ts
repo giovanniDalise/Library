@@ -27,12 +27,8 @@ export class AuthorService {
   getAllAuthors(): Observable<Author[]> {
     const params = new HttpParams().set('all', 'true');
     return this.http.post<PagedResponse<Author>>(
-      this.baseUrl + this.endpoints.getAuthors, 
-      {}, 
-      { params }
-    ).pipe(
-      map(response => response.items)
-    );
+      this.baseUrl + this.endpoints.getAuthors, {}, { params }
+    ).pipe(map(response => response.items));
   }
   getAuthorDetail(id: number, page: number, pageSize: number): Observable<AuthorDetail> {
       const params = new HttpParams()
