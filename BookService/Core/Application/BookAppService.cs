@@ -51,15 +51,15 @@ namespace Library.BookService.Core.Application
             return await _bookDomainService.UpdateBookAsync(id, book);
         }
 
-        public async Task<long> DeleteBookAsync(long bookId)
-        {
-            var book = await _bookDomainService.GetBookByIdAsync(bookId);
-            if (book == null) return -1;
+        //public async Task<long> DeleteBookAsync(long bookId)
+        //{
+        //    var book = await _bookDomainService.GetBookByIdAsync(bookId);
+        //    if (book == null) return -1;
 
-            await _mediaStorage.DeleteAsync(bookId);
+        //    await _mediaStorage.DeleteAsync(bookId);
 
-            return await _bookDomainService.DeleteBookAsync(bookId);
-        }
+        //    return await _bookDomainService.DeleteBookAsync(bookId);
+        //}
 
 
         public async Task<(List<Book> Books, int TotalRecords)> GetBooksAsync(Book searchBook, int page, int pageSize)
@@ -67,9 +67,9 @@ namespace Library.BookService.Core.Application
             return await _bookDomainService.GetBooksAsync(searchBook, page, pageSize);
         }
 
-        public async Task<Book?> GetBookByIdAsync(long bookId)
+        public async Task<Book?> GetBookDetailAsync(long bookId)
         {
-            return await _bookDomainService.GetBookByIdAsync(bookId);
+            return await _bookDomainService.GetBookDetailAsync(bookId);
         }
     }
 

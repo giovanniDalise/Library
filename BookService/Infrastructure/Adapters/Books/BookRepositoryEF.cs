@@ -25,9 +25,9 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             _logger = logger;
         }
 
-        public async Task<Book> GetBookByIdAsync(long id)
+        public async Task<Book> GetBookDetailAsync(long id)
         {
-            _logger.Info($"GetBookByIdAsync - Started | Retrieving book ID {id}");
+            _logger.Info($"GetBookDetailAsync - Started | Retrieving book ID {id}");
             try
             {
                 var bookEntity = await _context.Books
@@ -38,7 +38,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
             catch (Exception e)
             {
-                _logger.Error($"Errore GetBookByIdAsync ID {id}", e);
+                _logger.Error($"Errore GetBookDetailAsync ID {id}", e);
                 throw new BookRepositoryEFException("Error getting book by id: " + e.Message);
             }
         }

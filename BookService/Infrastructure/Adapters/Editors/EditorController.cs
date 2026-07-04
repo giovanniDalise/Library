@@ -28,7 +28,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         public async Task<ActionResult<PagedResponse<EditorResponse>>> GetEditors(
             [FromBody] EditorRequest request,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10
+            [FromQuery] int pageSize = 10,
+            [FromQuery] bool all = false
             )
         {
             _logger.Info($"Call to GetEditors");
@@ -59,7 +60,10 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 var editorDomain = EditorDTOMapper.ToDomain(request);
 
-                var (editors, totalRecords) = await _editorAppService.GetEditorsAsync(editorDomain, page, pageSize);
+                var (editors, totalRecords) = await _editorAppService.GetEditorsAsync(editorDomain,
+                    all ? 1 : page,
+                    all ? int.MaxValue : pageSize
+                );
 
                 var response = new PagedResponse<EditorResponse>
                 {

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BooksGridComponent } from '../../../components/books/books-grid/books-grid.component';
 import { UserRoleService } from '../../../services/user-role.service';
 import { BooksFiltersComponent } from '../../../components/books/books-filters/books-filters.component';
@@ -9,11 +8,12 @@ import { PaginationState } from '../../../models/pagination/pagination-state';
 import { BookRequest } from '../../../models/book/book/book-request';
 import { Book } from '../../../models/book/book/book';
 import { BookService } from '../../../services/book.service';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-books-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, BooksGridComponent, BooksFiltersComponent],
+  imports: [CommonModule, RouterLink, BooksGridComponent, BooksFiltersComponent, PaginationComponent],
   templateUrl: './books-page.component.html',
   styleUrl: './books-page.component.scss'
 })
@@ -28,11 +28,10 @@ export class BooksPageComponent implements OnInit {
 
 
   bookId?: number;
-  private lastCriteria: BookRequest = {};
+  private lastSearchFilter: BookRequest = {};
 
   constructor(
     private bookService: BookService,
-    private snackBar: MatSnackBar,
     private userRoleService: UserRoleService,
     private router: Router
   ) {}
@@ -46,34 +45,11 @@ export class BooksPageComponent implements OnInit {
 
   /* ===================== ACTIONS ===================== */
 
-  deleteBook(bookId: number): void {
-    this.bookService.deleteBook(bookId).subscribe(() => {
-      this.books = this.books.filter(b => b.id !== bookId);
-      this.snackBar.open('Libro eliminato con successo!', 'Chiudi', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
-    });
-  }
-
-  /* ===================== PAGINATION ===================== */
-
-  nextPage(): void {
-    this.pagination.next();
-    this.searchBook(this.lastCriteria);
-  }
-
-  prevPage(): void {
-    this.pagination.prev();
-    this.searchBook(this.lastCriteria);
-  } 
-
-  searchBook(criteria: BookRequest = this.lastCriteria): void {
-    this.lastCriteria = criteria;
+  searchBook(searchFilter: BookRequest = this.lastSearchFilter): void {
+    this.lastSearchFilter = searchFilter;
 
     this.bookService
-      .getBooks(criteria, this.pagination.currentPage, this.pagination.pageSize)
+      .getBooks(searchFilter, this.pagination.currentPage, this.pagination.pageSize)
       .subscribe({
         next: results => {
           this.books = results.items;
@@ -90,4 +66,20 @@ export class BooksPageComponent implements OnInit {
   viewDetail(bookId:number):void{
     this.router.navigate(["/books", bookId]);
   }
+
+  /* ===================== PAGINATION ===================== */
+
+  nextPage(): void {
+    this.pagination.next();
+    this.searchBook(this.lastSearchFilter);
+  }
+
+  prevPage(): void {
+    this.pagination.prev();
+    this.searchBook(this.lastSearchFilter);
+  }
+
+  goToAdd(): void {
+    this.router.navigate(['/books/add']);
+  }  
 }

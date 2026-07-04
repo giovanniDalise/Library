@@ -1,208 +1,166 @@
-import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Book } from '../../../models/book/book/book';
 import { BookService } from '../../../services/book.service';
+import { EditorService } from '../../../services/editor.service';
+import { AuthorService } from '../../../services/author.service';
+import { Editor } from '../../../models/editor/editor/editor';
+import { Author } from '../../../models/author/author/author';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink ], 
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, FormsModule],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
-export class BookFormComponent {
-  @Input() bookData: Book | null = null;
-  bookForm: FormGroup;
+export class BookFormComponent implements OnInit {
+
   mode: 'create' | 'update' = 'create';
-  bookId: string | null = null;
+  bookId: number | null = null;
   pageTitle = '';
   submitLabel = '';
   coverFile: File | null = null;
 
+  // Liste per le dropdown
+  availableEditors: Editor[] = [];
+  availableAuthors: Author[] = [];
+
+  // Autori selezionati
+  selectedAuthors: Author[] = [];
+  selectedAuthorId: number | null = null;
+
+  bookForm: FormGroup;
+
   constructor(
-    private bookService: BookService,
     private fb: FormBuilder,
+    private bookService: BookService,
+    private editorService: EditorService,
+    private authorService: AuthorService,
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
-    // Inizializza bookForm con un form per gestire un array di autori e un oggetto editor
     this.bookForm = this.fb.group({
-      title: [''],
-      isbn: [''],
-      authors: this.fb.array([this.createAuthor()]),  // Un array per gli autori
-      editor: this.fb.group({
-        name: [''],
-        address: ['']
-      })
+      title: ['', Validators.required],
+      isbn: ['', Validators.required],
+      editorId: [null, Validators.required],
     });
-  }
-
-  // Getter per gli autori. La sintassi del getter è get<nomeProprietà>() e stai richiamando il get per accedere agli authors del formGroup
-  // quando utilizzi this.authors sia in addAuthor che in removeAuthor()
-  get authors(): FormArray {
-    return this.bookForm.get('authors') as FormArray;
-  }
-
-  // Metodo per creare un form per un autore
-  createAuthor(): FormGroup {
-    return this.fb.group({
-      name: [''],
-      surname: ['']
-    });
-  }
-
-  // Metodo per aggiungere un autore all'array
-  addAuthor() {
-    this.authors.push(this.createAuthor()); //Qui stai usando il getter authors per accedere al FormArray degli autori. Quando chiami this.authors, Angular invoca automaticamente il getter e ti restituisce il FormArray. Quindi, puoi aggiungere un nuovo autore con push.
-  }
-
-  // Metodo per rimuovere un autore dall'array
-  removeAuthor(index: number) {
-    this.authors.removeAt(index);
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.mode = params.get('mode') as 'create' | 'update' || 'create';
-      this.bookId = params.get('bookId');
+    const id = this.route.snapshot.paramMap.get('bookId');
+    this.bookId = id ? Number(id) : null;
+    this.mode = this.bookId ? 'update' : 'create';
+    this.setPageTexts();
 
-      this.setPageTexts();
+    this.loadEditors();
+    this.loadAuthors();
 
-      if (this.mode === 'update' && this.bookId) {
-        const bookIdNumber = Number(this.bookId);
-
-        if (!isNaN(bookIdNumber)) {
-          this.bookService.getBooks({ id: bookIdNumber }, 1, 10)
-            .subscribe(response => {
-              const book = response.items?.[0];
-
-              if (book) {
-                this.bookData = book;
-                this.bookForm.patchValue(book);
-              }
-            });
-        }
-      }
-    });
-  }
-
-
-  onSubmit(): void {   //quando premi il submit del form va a chiamare le differenti funzioni
-    if (this.bookForm.valid) {
-      const book: Book = this.bookForm.value;
-
-      if (this.mode === 'create') {
-        this.createBook(book);
-      } else if (this.mode === 'update') {
-        this.updateBook(book);
-      } 
+    if (this.mode === 'update' && this.bookId) {
+      this.bookService.getBookDetail(this.bookId).subscribe({
+        next: book => {
+          this.bookForm.patchValue({
+            title: book.title,
+            isbn: book.isbn,
+            editorId: book.editor?.id
+          });
+          // pre-popola autori selezionati
+          this.selectedAuthors = book.authors ?? [];
+        },
+        error: err => console.error('Error loading book:', err)
+      });
     }
   }
 
-  private createBook(book: Book): void {
+  private loadEditors(): void {
+    this.editorService.getAllEditors().subscribe({
+      next: editors => this.availableEditors = editors,
+      error: err => console.error('Error loading editors:', err)
+    });
+  }
+
+  private loadAuthors(): void {
+    this.authorService.getAuthors({}, 1, 100).subscribe({
+      next: result => this.availableAuthors = result.items,
+      error: err => console.error('Error loading authors:', err)
+    });
+  }
+
+  addSelectedAuthor(): void {
+    if (!this.selectedAuthorId) return;
+
+    const author = this.availableAuthors.find(a => a.id === Number(this.selectedAuthorId));
+    if (!author) return;
+
+    // evita duplicati
+    if (this.selectedAuthors.some(a => a.id === author.id)) return;
+
+    this.selectedAuthors = [...this.selectedAuthors, author];
+    this.selectedAuthorId = null;
+  }
+
+  removeAuthor(authorId: number): void {
+    this.selectedAuthors = this.selectedAuthors.filter(a => a.id !== authorId);
+  }
+
+  onCoverSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.coverFile = input.files?.[0] ?? null;
+  }
+
+  onSubmit(): void {
+    if (this.bookForm.invalid || this.selectedAuthors.length === 0) return;
+
     const formData = new FormData();
-    formData.append('title', book.title);
-    formData.append('isbn', book.isbn);
+    formData.append('title', this.bookForm.value.title);
+    formData.append('isbn', this.bookForm.value.isbn);
+    formData.append('editor.id', this.bookForm.value.editorId.toString());
 
-    // Editor: se editorId esiste lo inviamo, altrimenti lasciamo che il backend lo generi
-    if (book.editor?.id) {
-      formData.append('editor.id', book.editor.id.toString());
-    }
-    formData.append('editor.name', book.editor?.name ?? '');
-
-    // Autori
-    book.authors.forEach((author, index) => {
-      if (author.id) {
-        formData.append(`authors[${index}].id`, author.id.toString());
-      }
-      formData.append(`authors[${index}].name`, author.name);
-      formData.append(`authors[${index}].surname`, author.surname);
+    this.selectedAuthors.forEach((author, index) => {
+      formData.append(`authors[${index}].id`, author.id.toString());
     });
 
-    // Cover opzionale
     if (this.coverFile) {
       formData.append('cover', this.coverFile, this.coverFile.name);
     }
 
-    // Chiamiamo il servizio che invia FormData
-    this.bookService.createBookFormData(formData).subscribe(
-      (createdBook: Book) => {
-        this.snackBar.open(
-          `Book created successfully`,
-          'OK',
-          {
-            duration: 6000, // comunque si chiude
-            panelClass: ['snackbar-success']
-          }
-        );
-      },
-      error => {
-        this.snackBar.open(
-          'Something went wrong while saving the book',
-          'OK',
-          {
-            duration: 8000,
-            panelClass: ['snackbar-error']
-          }
-        );
-      }
-    );
+    if (this.mode === 'create') {
+      this.createBook(formData);
+    } else {
+      this.updateBook(formData);
+    }
   }
 
-  private updateBook(book: Book): void {
-    // Verifica che l'ID del libro sia disponibile
-    if (this.bookId) {
-      const bookIdNumber = Number(this.bookId);  // Trasforma bookId in numero
-      if (!isNaN(bookIdNumber)) {
-        console.log('Book ID:', bookIdNumber);  // Utilizza bookIdNumber
-        const updatedBook = { ...book, bookId: bookIdNumber };  // Imposta l'ID del libro da bookIdNumber
-        this.bookService.updateBook(updatedBook).subscribe(response => {
-          console.log("Book updated:", response);
-          
-          // Mostra una notifica di successo dopo l'aggiornamento
-          this.snackBar.open('Book updated successfully!', 'Close', {
-            duration: 3000,  // Durata della notifica (in millisecondi)
-          });
-        }, error => {
-          // Mostra una notifica di errore in caso di fallimento
-          this.snackBar.open('Failed to update book. Please try again.', 'Close', {
-            duration: 3000,
-            panelClass: ['error-snackbar']  // Puoi personalizzare l'aspetto con classi CSS
-          });
-        });
-      } else {
-        console.error('Invalid Book ID:', this.bookId);
+  private createBook(formData: FormData): void {
+    this.bookService.addBook(formData).subscribe({
+      next: createdId => {
+        this.snackBar.open('Book created successfully', 'OK', { duration: 6000, panelClass: ['snackbar-success'] });
+        this.router.navigate(['/books', createdId]);
+      },
+      error: () => {
+        this.snackBar.open('Something went wrong while saving the book', 'OK', { duration: 8000, panelClass: ['snackbar-error'] });
       }
-    } else {
-      console.error('Book ID is missing for update');
-    }
+    });
+  }
+
+  private updateBook(formData: FormData): void {
+    if (!this.bookId) return;
+    this.bookService.updateBook(this.bookId, formData).subscribe({
+      next: () => {
+        this.snackBar.open('Book updated successfully', 'OK', { duration: 3000 });
+        this.router.navigate(['/books', this.bookId]);
+      },
+      error: () => {
+        this.snackBar.open('Failed to update book', 'OK', { duration: 3000, panelClass: ['snackbar-error'] });
+      }
+    });
   }
 
   private setPageTexts(): void {
-    switch (this.mode) {
-      case 'create':
-        this.pageTitle = 'Add New Book';
-        this.submitLabel = 'Create Book';
-        break;
-
-      case 'update':
-        this.pageTitle = 'Edit Book';
-        this.submitLabel = 'Update Book';
-        break;
-
-    }
+    this.pageTitle = this.mode === 'create' ? 'Add New Book' : 'Edit Book';
+    this.submitLabel = this.mode === 'create' ? 'Create Book' : 'Update Book';
   }
-  onCoverSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.coverFile = input.files[0];
-    } else {
-      this.coverFile = null; // reset se rimuovono il file
-    }
-  }
-
 }

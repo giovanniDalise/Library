@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Editor } from '../models/editor/editor/editor';
 import { EditorRequest } from '../models/editor/editor/editor-request';
 import { EditorDetail } from '../models/editor/editor-detail/editor-details';
@@ -46,7 +46,12 @@ export class EditorService {
     } 
     oppure con lo shortland (uno shortcut) possiamo direttamente scrivere {params}     
     */
-
+  getAllEditors(): Observable<Editor[]> {
+    const params = new HttpParams().set('all', 'true');
+    return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, {}, { params }).pipe(
+      map(response => response.items)
+    );
+}
   addEditor(request: EditorRequest): Observable<number> {
     return this.http.post<number>(this.baseUrl + this.endpoints.addEditor, request);
   }

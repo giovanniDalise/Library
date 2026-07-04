@@ -53,7 +53,6 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
         }
 
-        // PUT /library/{id}
         [HttpPut("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> UpdateBook(long id, [FromBody] BookRequest request)
@@ -75,42 +74,40 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
         }
 
-        // DELETE /library/{id}
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<long>> DeleteBook(long id)
-        {
-            _logger.Info($"Called DeleteBook with ID {id}");
-            try
-            {
-                var book = await _bookAppService.GetBookByIdAsync(id);
-                if (book == null)
-                {
-                    _logger.Info($"Book not found with id: {id}");
-                    return NotFound();
-                }
+        //[HttpDelete("{id}")]
+        //[Authorize(Roles = "admin")]
+        //public async Task<ActionResult<long>> DeleteBook(long id)
+        //{
+        //    _logger.Info($"Called DeleteBook with ID {id}");
+        //    try
+        //    {
+        //        var book = await _bookAppService.GetBookByIdAsync(id);
+        //        if (book == null)
+        //        {
+        //            _logger.Info($"Book not found with id: {id}");
+        //            return NotFound();
+        //        }
 
-                // L'AppService si occupa di cancellare dal DB e dallo storage
-                var deletedId = await _bookAppService.DeleteBookAsync(id);
+        //        // L'AppService si occupa di cancellare dal DB e dallo storage
+        //        var deletedId = await _bookAppService.DeleteBookAsync(id);
 
-                if (deletedId <= 0)
-                {
-                    _logger.Warn($"Database delete failed for book ID: {id}");
-                    return StatusCode(500, "Errore durante eliminazione dal database");
-                }
+        //        if (deletedId <= 0)
+        //        {
+        //            _logger.Warn($"Database delete failed for book ID: {id}");
+        //            return StatusCode(500, "Errore durante eliminazione dal database");
+        //        }
 
-                _logger.Info($"Book deleted successfully with ID {id}");
-                return Ok(deletedId);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Error while deleting book with ID {id}", ex);
-                return StatusCode(500, "Internal server error");
-            }
-        }
+        //        _logger.Info($"Book deleted successfully with ID {id}");
+        //        return Ok(deletedId);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.Error($"Error while deleting book with ID {id}", ex);
+        //        return StatusCode(500, "Internal server error");
+        //    }
+        //}
 
 
-        // POST /library/GetBooks
         [HttpPost("GetBooks")]
         [AllowAnonymous]
         public async Task<ActionResult<PagedResponse<BookResponse>>> GetBooks(
@@ -152,16 +149,15 @@ namespace Library.BookService.Infrastructure.Adapters.Books
             }
         }
 
-        // GET /library/{id}
-        [HttpGet("{id}")]
+        [HttpGet("getBookDetail/{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<BookDetailResponse>> GetBookById(long id)
+        public async Task<ActionResult<BookDetailResponse>> GetBookDetail(long id)
         {
-            _logger.Info($"Chiamata a GetBookById() con ID {id}");
+            _logger.Info($"Chiamata a GetBookDetail() con ID {id}");
 
             try
             {
-                var book = await _bookAppService.GetBookByIdAsync(id);
+                var book = await _bookAppService.GetBookDetailAsync(id);
                 if (book == null)
                 {
                     _logger.Warn($"Libro non trovato per ID {id}");

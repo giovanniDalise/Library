@@ -21,12 +21,13 @@ export class BookService {
     return this.http.delete(this.baseUrl + this.endpoints.delete.replace('{id}', bookId.toString()));
   }
 
-  createBookFormData(formData: FormData): Observable<Book> {
+  addBook(formData: FormData): Observable<Book> {
     return this.http.post<Book>(this.baseUrl + this.endpoints.addBook, formData);
   }
 
-  updateBook(book: Book): Observable<BookRequest> {
-    return this.http.put<Book>(this.baseUrl + this.endpoints.update.replace('{id}', book.id.toString()), book)
+  updateBook(id: number, formData: FormData): Observable<void> {
+    const url = this.baseUrl + this.endpoints.update.replace('{id}', id.toString());
+    return this.http.put<void>(url, formData);
   }
 
   getBooks(criteria: BookRequest, page: number, pageSize: number): Observable<PagedResponse<Book>> {
@@ -37,7 +38,7 @@ export class BookService {
   }
 
   getBookDetail(id:number):Observable<BookDetail>{
-    const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
+    const url = this.baseUrl + this.endpoints.getBookDetail.replace('{id}', id.toString());
     return this.http.get<BookDetail>(url);
   }
   
