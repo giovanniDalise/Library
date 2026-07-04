@@ -4,13 +4,11 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th *ngIf="isAdmin">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let editor of editors">
           <td (click)="onViewDetail(editor.id)">{{ editor.name }}</td>
-          <td *ngIf="isAdmin"></td>
         </tr>
       </tbody>
     </table>

@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { Book } from '../../../models/book/book/book';
 
 @Component({
   selector: 'app-books-grid',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './books-grid.component.html',
   styleUrls: ['./books-grid.component.scss']
 })

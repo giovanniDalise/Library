@@ -5,16 +5,12 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th *ngIf="isAdmin">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let author of authors">
                         <td class="editor-name" (click)="onViewDetail(author.id)">
                             {{ author.name }} {{ author.surname }}
-                        </td>
-                        <td *ngIf="isAdmin">
-                            <!-- actions admin -->
                         </td>
                     </tr>
                 </tbody>

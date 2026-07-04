@@ -11,7 +11,6 @@
             <th>ISBN</th>
             <th>Authors</th>
             <th>Editor</th>
-            <th *ngIf="isAdmin">Actions</th>
           </tr>
         </thead>
 
@@ -39,15 +38,6 @@
             </td>
 
             <td>{{ book.editor.name }}</td>
-
-            <td *ngIf="isAdmin">
-              <a
-                [routerLink]="['/book-form', book.id, 'update']"
-                class="action-btn edit-btn me-2"
-              >
-                <i class="bi bi-pencil"> Edit</i>
-              </a>
-            </td>
           </tr>
         </tbody>
       </table>
