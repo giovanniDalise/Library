@@ -5,6 +5,7 @@ import { EditorDetail } from '../../../models/editor/editor-detail/editor-detail
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { EditorService } from '../../../services/editor.service';
+import { UserRoleService } from '../../../services/user-role.service';
 
 @Component({
   selector: 'app-editor-detail',
@@ -28,7 +29,7 @@ export class EditorDetailComponent implements OnInit {
   // in questo caso invece è sicuto utilizzare il trust me (!) del definite assignment assertion dato che editorId viene valorizzato subito
   // nell'onOnInit
   editorId!: number;
-
+  isAdmin = false;
   pagination = new PaginationState();
 
 
@@ -37,10 +38,12 @@ export class EditorDetailComponent implements OnInit {
     private route: ActivatedRoute,
     //Router: naviga tra le rotte
     private router: Router,
-    private editorService: EditorService
+    private editorService: EditorService,
+    private userRoleService: UserRoleService
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.userRoleService.isAdmin();
     //quindi in questo caso stiamo valorizzando l'editorId con uno snapshot del valore di id nel pathparams dell'url es. da /editors/123 estraggo il valore 123
     this.editorId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadDetail();
@@ -73,10 +76,21 @@ export class EditorDetailComponent implements OnInit {
   }
 
   onEdit(): void {
-    this.router.navigate(['/editors', this.editor?.id, 'edit']);
+    this.router.navigate(['/editors/edit', this.editorId]);
   }
 
   onBack(): void {
     this.router.navigate(['/editors']);
   }
+
+  onDelete(): void {
+    if (!confirm(`Are you sure you want to delete "${this.editor?.name}"?`)) return;
+
+    this.editorService.deleteEditor(this.editorId).subscribe({
+      next: () => {
+        this.router.navigate(['/editors']);
+      },
+      error: err => console.error('Error deleting editor:', err)
+    });
+  }  
 }

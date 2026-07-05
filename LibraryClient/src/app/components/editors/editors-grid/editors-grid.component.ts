@@ -11,7 +11,6 @@ import { Editor } from '../../../models/editor/editor/editor';
 })
 export class EditorsGridComponent {
   //@Input ricevo dal padre (page componet)
-  @Input() isAdmin = false;
   @Input() editors: Editor[] = [];
   
   @Output() viewDetail = new EventEmitter<number>();

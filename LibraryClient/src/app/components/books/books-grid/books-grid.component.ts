@@ -12,7 +12,6 @@ import { Book } from '../../../models/book/book/book';
 export class BooksGridComponent {
 
   @Input() books: Book[] = [];
-  @Input() isAdmin = false;
 
   @Output() viewDetail = new EventEmitter<number>();
 

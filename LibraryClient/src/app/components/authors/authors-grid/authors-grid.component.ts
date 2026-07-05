@@ -11,7 +11,6 @@ import { Author } from '../../../models/author/author/author';
   styleUrl: './authors-grid.component.scss'
 })
 export class AuthorsGridComponent {
-  @Input() isAdmin = false;
   @Input() authors : Author[] = [];
 
   @Output() viewDetail = new EventEmitter<number>();

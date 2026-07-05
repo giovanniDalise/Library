@@ -31,9 +31,9 @@ export class EditorsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.mode = params.get('mode') as 'create' | 'update' || 'create';
       const id = params.get('editorId');
       this.editorId = id ? Number(id) : null;
+      this.mode = this.editorId ? 'update' : 'create';
 
       this.setPageTexts();
 

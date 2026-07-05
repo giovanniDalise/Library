@@ -72,19 +72,6 @@
   border-color: #f0f0f0;
 }
 
-// Edit nel dettaglio
-.btn-edit {
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  transition: all 0.2s ease;
-}
-
-.btn-edit:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: #ffffff;
-}
-
 // Bottone tondo login/logout
 .auth-top-right {
   position: absolute;
