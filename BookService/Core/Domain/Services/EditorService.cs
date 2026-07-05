@@ -1,6 +1,7 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Core.Ports.Editors;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Library.BookService.Core.Domain.Services
 {
@@ -27,6 +28,10 @@ namespace Library.BookService.Core.Domain.Services
         public async Task<Editor> CreateEditorAsync(Editor editor)
         {
             return await _editorRepositoryPort.CreateEditorAsync(editor);
+        }
+        public async Task<Editor> UpdateEditorAsync(Editor editor)
+        {
+            return await _editorRepositoryPort.UpdateEditorAsync(editor);
         }
     }
 }

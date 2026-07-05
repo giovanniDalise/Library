@@ -161,5 +161,27 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> UpdateEditor(long id, [FromBody] EditorRequest request)
+        {
+            _logger.Info($"Attempting to update editor | Id: {id}");
+
+            try
+            {
+                var editorDomain = EditorDTOMapper.ToDomain(request);
+                editorDomain.Id = id;
+
+                await _editorAppService.UpdateEditorAsync(editorDomain);
+                _logger.Info($"Editor successfully updated | Id: {id}");
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while updating editor | Id: {id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

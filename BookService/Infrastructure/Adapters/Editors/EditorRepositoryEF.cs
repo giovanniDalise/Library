@@ -30,7 +30,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger.Info($"GetEditorsAsync - Started | Editor name: {searchEditor.Name ?? "null"}");
             try
             {
-                int offset = (page -1) * pageSize;
+                int offset = (page - 1) * pageSize;
 
                 IQueryable<EditorEntity> query = _context.Editors;
 
@@ -102,7 +102,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 throw new EditorRepositoryEFException("Error retrieving editor by id", e);
             }
         }
-        public async Task<Editor> CreateEditorAsync (Editor editor)
+        public async Task<Editor> CreateEditorAsync(Editor editor)
         {
             _logger.Info($"CreateEditorAsync - Start | Creation Editor: {editor.Name}");
             try
@@ -118,7 +118,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 _logger.Info($"Editor ID {editorEntity.Id} created");
                 return _editorMapper.ToDomain(editorEntity);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.Error($"Error CreateEditorAsync for editor {editor.Name}", e);
                 throw new EditorRepositoryEFException("Error creating editor: " + e.Message);
@@ -146,6 +146,38 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 _logger.Error($"GetEditorByIdAsync - Error | Id: {id}", ex);
                 throw new EditorRepositoryEFException("Error retrieving editor by id", ex);
+            }
+        }
+        public async Task<Editor> UpdateEditorAsync(Editor editor)
+        {
+            _logger.Info($"UpdateEditorAsync - Start | Id: {editor.Id}");
+
+            try
+            {
+                var editorEntity = await _context.Editors
+                    .FirstOrDefaultAsync(e => e.Id == editor.Id);
+
+                if (editorEntity == null)
+                {
+                    _logger.Warn($"UpdateEditorAsync - Editor not found | Id: {editor.Id}");
+                    throw new EditorRepositoryEFException($"Editor with id {editor.Id} not found");
+                }
+
+                editorEntity.Name = editor.Name;
+
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"UpdateEditorAsync - Completed | Id: {editor.Id}");
+                return _editorMapper.ToDomain(editorEntity);
+            }
+            catch (EditorRepositoryEFException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"UpdateEditorAsync - Error | Id: {editor.Id}", ex);
+                throw new EditorRepositoryEFException("Error updating editor", ex);
             }
         }
     }

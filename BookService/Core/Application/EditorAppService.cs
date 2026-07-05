@@ -33,7 +33,11 @@ namespace Library.BookService.Core.Application
         public async Task<Editor> CreateEditorAsync(Editor editor)
         {
             return await _editorDomainService.CreateEditorAsync(editor);
-            ;
         }
+        public async Task<Editor> UpdateEditorAsync(Editor editor)
+        {
+            return await _editorDomainService.UpdateEditorAsync(editor);
+        }
+
     }
 }

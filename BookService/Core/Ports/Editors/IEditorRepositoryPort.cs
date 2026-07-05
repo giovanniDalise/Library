@@ -8,6 +8,8 @@ namespace Library.BookService.Core.Ports.Editors
         Task<(Editor Editor, int TotalBooks)> GetEditorDetailAsync(long id, int page, int pageSize);
         Task<Editor?> GetEditorByIdAsync(long id);
         Task<Editor> CreateEditorAsync(Editor editor);
+        Task<Editor> UpdateEditorAsync(Editor editor);
+
 
 
     }
