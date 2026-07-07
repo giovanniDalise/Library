@@ -27,10 +27,10 @@ export class EditorsFiltersComponent {
 
   onSearch():void {
     const formValue = this.filterForm.value;
-    const criteria: EditorRequest ={
+    const searchFilter: EditorRequest ={
       id: this.isAdmin && formValue.editorId ? Number(formValue.editorId) : undefined,
       name: formValue.editorName?.trim() ?? undefined,
     }
-    this.search.emit(criteria);
+    this.search.emit(searchFilter);
   } 
 }
