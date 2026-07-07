@@ -48,8 +48,7 @@ export class EditorService {
     */
   getAllEditors(): Observable<Editor[]> {
     const params = new HttpParams().set('all', 'true');
-    return this.http.post<PagedResponse<Editor>>(
-      this.baseUrl + this.endpoints.getEditors, {}, { params }
+    return this.http.post<PagedResponse<Editor>>(this.baseUrl + this.endpoints.getEditors, {}, { params }
 /*       Il secondo parametro di http.post è il body della richiesta. Nella getEditors normale passi 
       searchFilter come body perché vuoi filtrare. Nella getAllEditors non vuoi filtrare nulla, 
       ma http.post vuole comunque un body — non puoi ometterlo. Quindi passi {} che è un oggetto vuoto,
@@ -61,7 +60,11 @@ export class EditorService {
     Il .pipe(map(...)) trasforma l'Observable prima che arrivi al subscriber:
     È come fare il .Select() di LINQ in C# — prendi l'oggetto che arriva e ne estrai solo la parte che 
     ti interessa, così chi chiama getAllEditors riceve direttamente Editor[] 
-    senza dover fare result.items ogni volta. */
+    senza dover fare result.items ogni volta. 
+    Inoltre qui poi notare la differenza tra il tipo restituito dal service al componente ossia un
+    Observable<Editor[]> e quello definito dopo l'http.post corrispondente alla response in json
+    restituita dal BE su cui facciamo la pipe. In questo modo capisci bene la differenza tra i due tipi
+    e il fatto che l'observable ovviamente lo utiliziamo solo su FE*/
   }
   
   addEditor(request: EditorRequest): Observable<number> {
