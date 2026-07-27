@@ -7,11 +7,10 @@ using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
-    [Microsoft.AspNetCore.Mvc.Route("authors")]
+    [Route("authors")]
     [ApiController]
     public class AuthorController:ControllerBase
     {
@@ -145,6 +144,28 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             catch (Exception ex)
             {
                 _logger.Error($"Error while retrieving editor {id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> UpdateAuthor(long id, [FromBody] AuthorRequest request)
+        {
+            _logger.Info($"Attempting to update author | Id: {id}");
+
+            try
+            {
+                var authorDomain = AuthorDTOMapper.ToDomain(request);
+                authorDomain.Id = id;
+
+                await _authorAppService.UpdateAuthorAsync(authorDomain);
+                _logger.Info($"Author successfully updated | Id: {id}");
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while updating author | Id: {id}", ex);
                 return StatusCode(500, "Internal server error");
             }
         }

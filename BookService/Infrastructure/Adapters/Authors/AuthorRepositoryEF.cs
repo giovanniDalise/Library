@@ -6,7 +6,6 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
 
 namespace Library.BookService.Infrastructure.Adapters.Authors
 {
@@ -129,7 +128,7 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
         }
         public async Task<Author?> GetAuthorByIdAsync(long id)
         {
-            _logger.Info($"GetAuthorByIdAsync - Start | Id: {id}");
+            _logger.Info($"GetAuthorByIdAsync - Started | Id: {id}");
 
             try
             {
@@ -148,6 +147,39 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             {
                 _logger.Error($"GetAuthorByIdAsync - Error | Id: {id}", ex);
                 throw new AuthorRepositoryEFException("Error retrieving author by id", ex);
+            }
+        }
+
+        public async Task<Author> UpdateAuthorAsync(Author author)
+        {
+            _logger.Info($"UpdateAuthorAsync - Started | Id: {author.Id}");
+            try
+            {
+                var authorEntity = await _context.Authors
+                    .FirstOrDefaultAsync(a => a.Id == author.Id);
+
+                if (authorEntity == null)
+                {
+                    _logger.Warn($"UpdateAuthorAsync - Author not found | Id: {author.Id}");
+                    throw new AuthorRepositoryEFException($"Author with id {author.Id} not found");
+                }
+
+                authorEntity.Name = author.Name;
+                authorEntity.Surname = author.Surname;
+
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"UpdateAuthorAsync - Completed | Id: {author.Id}");
+                return _authorMapper.ToDomain(authorEntity);
+            }
+            catch (AuthorRepositoryEFException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"UpdateAuthorAsync - Error | Id: {author.Id}", ex);
+                throw new AuthorRepositoryEFException("Error updating author", ex);
             }
         }
     }

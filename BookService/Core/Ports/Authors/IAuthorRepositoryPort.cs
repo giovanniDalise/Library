@@ -8,6 +8,8 @@ namespace Library.BookService.Core.Ports.Authors
         Task<(Author author, int TotalBooks)> GetAuthorDetailAsync(long id, int page, int pageSize);
         Task<Author?> GetAuthorByIdAsync(long id);
         Task<Author> CreateAuthorAsync(Author author);
+        Task<Author> UpdateAuthorAsync(Author author);
+
 
 
     }

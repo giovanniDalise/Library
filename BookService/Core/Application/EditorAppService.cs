@@ -1,6 +1,4 @@
 ﻿using Library.BookService.Core.Domain.Models;
-using Library.BookService.Core.Ports;
-using Library.BookService.Core.Ports.Books;
 using Library.BookService.Core.Ports.Editors;
 using Library.Logging.Abstractions;
 
@@ -38,6 +36,5 @@ namespace Library.BookService.Core.Application
         {
             return await _editorDomainService.UpdateEditorAsync(editor);
         }
-
     }
 }

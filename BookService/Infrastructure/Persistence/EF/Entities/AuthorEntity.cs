@@ -10,7 +10,6 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("author_id")]
         public long Id { get; set; }
-
         public string Name { get; set; }
         public string Surname { get; set; }
         public virtual ICollection<BookEntity> Books { get; set; }

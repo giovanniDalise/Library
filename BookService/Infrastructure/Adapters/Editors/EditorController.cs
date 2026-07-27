@@ -1,7 +1,5 @@
-﻿using Library.BookService.Core.Application;
-using Library.BookService.Core.Ports.Editors;
+﻿using Library.BookService.Core.Ports.Editors;
 using Library.BookService.Infrastructure.DTO.REST;
-using Library.BookService.Infrastructure.DTO.REST.Books;
 using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.Logging.Abstractions;

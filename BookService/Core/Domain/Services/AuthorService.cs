@@ -1,6 +1,5 @@
 ﻿using Library.BookService.Core.Domain.Models;
 using Library.BookService.Core.Ports.Authors;
-using Library.BookService.Core.Ports.Editors;
 
 namespace Library.BookService.Core.Domain.Services
 {
@@ -27,6 +26,10 @@ namespace Library.BookService.Core.Domain.Services
         public async Task<Author?> GetAuthorByIdAsync(long id)
         {
             return await _authorRepositoryPort.GetAuthorByIdAsync(id);
+        }
+        public async Task<Author> UpdateAuthorAsync(Author author)
+        {
+            return await _authorRepositoryPort.UpdateAuthorAsync(author);
         }
     }
 }

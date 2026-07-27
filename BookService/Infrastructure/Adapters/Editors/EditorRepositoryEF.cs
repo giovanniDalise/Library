@@ -150,7 +150,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         }
         public async Task<Editor> UpdateEditorAsync(Editor editor)
         {
-            _logger.Info($"UpdateEditorAsync - Start | Id: {editor.Id}");
+            _logger.Info($"UpdateEditorAsync - Started | Id: {editor.Id}");
 
             try
             {
@@ -180,5 +180,24 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 throw new EditorRepositoryEFException("Error updating editor", ex);
             }
         }
+        //Caso 1 — Editor non trovato:
+        //if (editorEntity == null)
+        //    → throw new EditorRepositoryEFException("Editor not found")  // lanciata manualmente
+        //    → catch (EditorRepositoryEFException) → throw  // rilancia identica
+        //    → arriva al controller → BadRequest o NotFound
+
+        //Caso 2 — Errore DB/EF:
+        //await _context.SaveChangesAsync()  // esplode per errore DB
+        //    → catch (Exception ex)  // cattura qualsiasi altra eccezione
+        //    → log dell'errore
+        //    → throw new EditorRepositoryEFException("Error updating editor", ex)  // wrappa
+        //    → arriva al controller → StatusCode 500
+        //Senza il primo catch (EditorRepositoryEFException), il caso 1 verrebbe catturato dal
+        //secondo catch — perché EditorRepositoryEFException è una sottoclasse di Exception — e
+        //otterresti un messaggio sbagliato tipo "Error updating editor" invece di "Editor with id X not found", perdendo il contesto.
+        //Quindi la regola generale è: se lanci manualmente un'eccezione specifica dentro un try
+        //che ha un catch generico, devi proteggere quella eccezione con un catch specifico prima di quello generico.
+        // Il primo catch che vedi quindi si riferisce all'eccezione più interna mentre l'ultimo catch gestische
+        //l'eccezione più esterna
     }
 }
