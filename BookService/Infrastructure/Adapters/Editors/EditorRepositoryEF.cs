@@ -6,6 +6,11 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -62,6 +67,24 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 _logger.Error($"GetEditorsAsync - Error", e);
                 throw new EditorRepositoryEFException("Error retrieving editors", e);
             }
+            //Il catch generico Exception cattura qualsiasi errore inaspettato(DB down, timeout, errore EF, ecc.) e lo wrappa in EditorRepositoryEFException con due scopi:
+            //1 — Nascondere i dettagli interni — chi chiama il repository non deve sapere se l'errore viene da EF, MySQL o altro. Riceve sempre EditorRepositoryEFException — un'eccezione del tuo dominio.
+            //2 — Preservare l'eccezione originale — new EditorRepositoryEFException("Error retrieving editors", e) — la e originale viene passata come innerException, quindi nei log hai tutta la catena:
+            //EditorRepositoryEFException: Error retrieving editors
+            //  → caused by: MySqlException: Connection refused
+            //      → caused by: ...
+            //Quindi la struttura è:
+            //            EF / DB esplode(Exception qualsiasi)
+            //  → catch (Exception e)
+            //  → log
+            //  → throw new EditorRepositoryEFException(..., e)  // wrappa mantenendo l'originale
+            //  → il controller riceve EditorRepositoryEFException → 500
+            //È il pattern repository exception wrapping — il repository traduce eccezioni infrastrutturali in eccezioni del tuo livello applicativo.
+            // Per questo motivo hai prima Exception e dentro EditorRepositoryEFException perchè ad ogni Exception
+            // scatenata poi sarà wrappata in EditorRepositoryEFException preservando sia l'eccezione originale
+            // che il layer infrastrutturale dove viene scatenata. 
+            // se avessi scritto catch (EditorRepositoryEFException e) allora non avrebbe catchato mai
+            // nessuna eccezione.
         }
 
         public async Task<(Editor Editor, int TotalBooks)> GetEditorDetailAsync(long id, int page, int pageSize)
