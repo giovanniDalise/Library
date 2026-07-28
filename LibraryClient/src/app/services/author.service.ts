@@ -30,6 +30,7 @@ export class AuthorService {
       this.baseUrl + this.endpoints.getAuthors, {}, { params }
     ).pipe(map(response => response.items));
   }
+
   getAuthorDetail(id: number, page: number, pageSize: number): Observable<AuthorDetail> {
       const params = new HttpParams()
           .set('page', page)
@@ -50,5 +51,10 @@ export class AuthorService {
   getAuthorById(id: number): Observable<Author> {
     const url = this.baseUrl + this.endpoints.getById.replace('{id}', id.toString());
     return this.http.get<Author>(url);
+  }
+
+  deleteAuthor(id: number): Observable<void> {
+    const url = this.baseUrl + this.endpoints.delete.replace('{id}', id.toString());
+    return this.http.delete<void>(url);
   }    
 }

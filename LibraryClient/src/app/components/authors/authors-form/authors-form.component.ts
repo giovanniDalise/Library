@@ -32,9 +32,10 @@ export class AuthorsFormComponent {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.mode = params.get('mode') as 'create' | 'update' || 'create';
       const id = params.get('authorId');
       this.authorId = id ? Number(id) : null;
+      this.mode = this.authorId ? 'update' : 'create';
+
 
       this.setPageTexts();
 

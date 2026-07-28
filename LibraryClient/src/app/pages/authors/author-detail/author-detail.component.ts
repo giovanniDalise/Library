@@ -5,6 +5,7 @@ import { AuthorDetail } from '../../../models/author/author-detail/author-detail
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { AuthorService } from '../../../services/author.service';
+import { UserRoleService } from '../../../services/user-role.service';
 
 @Component({
   selector: 'app-author-detail',
@@ -19,15 +20,18 @@ export class AuthorDetailComponent {
   isLoading = true;
   errorMessage = '';
   authorId!:number;
+  isAdmin = false;
   pagination = new PaginationState();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authorService: AuthorService
+    private authorService: AuthorService,
+    private userRoleService: UserRoleService
   ) {} 
   
   ngOnInit(): void {
+    this.isAdmin = this.userRoleService.isAdmin();
     this.authorId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadDetail();
   }  
@@ -49,7 +53,7 @@ export class AuthorDetailComponent {
   }  
 
   onEdit(): void {
-    this.router.navigate(['/editors', this.author?.id, 'edit']);
+    this.router.navigate(['/authors/edit', this.authorId]);
   }  
   onBack(): void {
     this.router.navigate(['/authors']);
@@ -63,5 +67,17 @@ export class AuthorDetailComponent {
   prevPage(): void {
     this.pagination.prev();
     this.loadDetail();
-  }  
+  }
+
+  onDelete(): void {
+    if (!confirm(`Are you sure you want to delete "${this.author?.name} ${this.author?.surname}"?`)) return;
+
+    this.authorService.deleteAuthor(this.authorId).subscribe({
+      next: () => {
+        this.router.navigate(['/authors']);
+      },
+      error: err => console.error('Error deleting author:', err)
+    });
+  }   
+
 }
