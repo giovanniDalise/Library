@@ -126,7 +126,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                     .Include(b => b.Editor)
                     .FirstOrDefaultAsync(b => b.Id == id);
 
-                if (existingEntity == null) 
+                if (existingEntity == null)
                 {
                     _logger.Warn($"UpdateBookAsync - Book not found | Id={id}");
                     throw new BookRepositoryEFException("Book not found");
@@ -137,44 +137,41 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 existingEntity.Isbn = book.Isbn;
                 existingEntity.CoverReference = book.CoverReference;
 
-                // Gestione editor
+                // Gestione editor — cerca per id, errore se non esiste
                 var editorEntity = await _context.Editors
-                    .FirstOrDefaultAsync(e => e.Name == book.Editor.Name);
+                    .FirstOrDefaultAsync(e => e.Id == book.Editor.Id);
 
                 if (editorEntity == null)
                 {
-                    _logger.Info($"UpdateAsync - Creating new editor | Name={book.Editor.Name}");
-
-                    editorEntity = new EditorEntity { Name = book.Editor.Name };
-                    await _context.Editors.AddAsync(editorEntity);
-                    await _context.SaveChangesAsync(); // salva subito per avere l'ID
+                    _logger.Warn($"UpdateBookAsync - Editor not found | Id={book.Editor.Id}");
+                    throw new BookRepositoryEFException($"Editor non trovato con ID {book.Editor.Id}");
                 }
                 existingEntity.Editor = editorEntity;
 
-                _logger.Info($"UpdateBookAsync - Updating authors | Count={book.Authors.Count}");
+                // Gestione autori — cerca per id, errore se qualcuno non esiste
+                var authorEntities = await _context.Authors
+                    .Where(a => book.Authors.Select(x => x.Id).Contains(a.Id))
+                    .ToListAsync();
 
-                // Gestione autori
-                existingEntity.Authors.Clear(); // rimuove le associazioni esistenti
-                foreach (var author in book.Authors)
+                if (authorEntities.Count != book.Authors.Count)
                 {
-                    var authorEntity = await _context.Authors
-                        .FirstOrDefaultAsync(a => a.Name == author.Name && a.Surname == author.Surname);
-
-                    if (authorEntity == null)
-                    {
-                        _logger.Info($"UpdateAsync - Creating new author | {author.Name} {author.Surname}");
-                        authorEntity = new AuthorEntity { Name = author.Name, Surname = author.Surname };
-                        await _context.Authors.AddAsync(authorEntity);
-                        await _context.SaveChangesAsync(); // salva subito per avere l'ID
-                    }
-
-                    existingEntity.Authors.Add(authorEntity);
+                    _logger.Warn($"UpdateBookAsync - One or more authors not found");
+                    throw new BookRepositoryEFException("Uno o più autori non trovati");
                 }
 
+                existingEntity.Authors.Clear();
+                foreach (var author in authorEntities)
+                {
+                    existingEntity.Authors.Add(author);
+                }
                 await _context.SaveChangesAsync();
 
                 _logger.Info($"UpdateBookAsync - Completed | Id={id}");
                 return id;
+            }
+            catch (BookRepositoryEFException)
+            {
+                throw;
             }
             catch (Exception e)
             {

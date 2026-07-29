@@ -41,10 +41,13 @@ namespace Library.BookService.Core.Application
 
         public async Task<long> UpdateBookAsync(long id, Book book, Stream? newCoverStream = null, string? newCoverFileName = null)
         {
-            if (newCoverStream != null && newCoverFileName != null && !string.IsNullOrWhiteSpace(book.CoverReference))
+            if (newCoverStream != null && newCoverFileName != null)
             {
+                // elimina la vecchia cover se esiste
                 await _mediaStorage.DeleteAsync(id);
-                var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", book.Id);
+
+                // salva la nuova
+                var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", id);
                 book.CoverReference = coverUrl;
             }
 

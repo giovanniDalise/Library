@@ -55,17 +55,26 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
         [HttpPut("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<long>> UpdateBook(long id, [FromBody] BookRequest request)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<long>> UpdateBook(long id, [FromForm] BookRequest request)
         {
             _logger.Info($"Tentativo di aggiornare libro ID {id}");
 
             try
             {
-                var bookDomain = BookDTOMapper.ToDomain(request);
-                var updatedId = await _bookAppService.UpdateBookAsync(id, bookDomain);
+                var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
+                Stream? coverStream = request.Cover?.OpenReadStream();
+                string? coverFileName = request.Cover?.FileName;
+
+                var updatedId = await _bookAppService.UpdateBookAsync(id, bookDomain, coverStream, coverFileName);
 
                 _logger.Info($"Libro aggiornato ID {updatedId}");
                 return Ok(updatedId);
+            }
+            catch (BookRepositoryEFException ex)
+            {
+                _logger.Error($"Validation error while updating book ID {id}", ex);
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -73,7 +82,6 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 return StatusCode(500, "Errore interno del server");
             }
         }
-
         //[HttpDelete("{id}")]
         //[Authorize(Roles = "admin")]
         //public async Task<ActionResult<long>> DeleteBook(long id)
