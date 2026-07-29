@@ -4,6 +4,7 @@ import { PaginationState } from '../../../models/pagination/pagination-state';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../../services/book.service';
+import { UserRoleService } from '../../../services/user-role.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -19,15 +20,19 @@ export class BookDetailComponent {
   pagination = new PaginationState();
   bookId!: number;
   errorMessage = '';
+  isAdmin = false;
+
 
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private bookService: BookService
+    private bookService: BookService,
+    private userRoleService: UserRoleService
   ) {} 
   
   ngOnInit(): void {
+    this.isAdmin = this.userRoleService.isAdmin();
     this.bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadDetail();
   }  
@@ -41,7 +46,7 @@ export class BookDetailComponent {
           this.isLoading = false;
         },
           error: () => {
-          this.errorMessage = 'Error loading editor.';
+          this.errorMessage = 'Error loading book.';
           this.isLoading = false;
         }
        }
@@ -49,10 +54,21 @@ export class BookDetailComponent {
   }
 
   onEdit(): void {
-    this.router.navigate(['/books', this.book?.id, 'edit']);
+    this.router.navigate(['/books/edit', this.bookId]);
   }
 
   onBack(): void {
     this.router.navigate(['/books']);
-  }  
+  }
+
+  onDelete(): void {
+    if (!confirm(`Are you sure you want to delete "${this.book?.title}"?`)) return;
+
+    this.bookService.deleteBook(this.bookId).subscribe({
+      next: () => {
+        this.router.navigate(['/books']);
+      },
+      error: err => console.error('Error deleting book:', err)
+    });
+  }    
 }
