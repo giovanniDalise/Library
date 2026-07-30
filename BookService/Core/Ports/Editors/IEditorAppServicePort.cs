@@ -9,5 +9,6 @@ namespace Library.BookService.Core.Ports.Editors
         Task<Editor?> GetEditorByIdAsync(long id);
         Task<Editor> CreateEditorAsync(Editor editor);
         Task<Editor> UpdateEditorAsync(Editor editor);
+        Task DeleteEditorAsync(long id);
     }
 }

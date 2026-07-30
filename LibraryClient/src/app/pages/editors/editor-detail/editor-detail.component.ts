@@ -6,6 +6,7 @@ import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { EditorService } from '../../../services/editor.service';
 import { UserRoleService } from '../../../services/user-role.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editor-detail',
@@ -32,6 +33,20 @@ export class EditorDetailComponent implements OnInit {
   isAdmin = false;
   pagination = new PaginationState();
 
+  onDelete(): void {
+    const snackRef = this.snackBar.open(
+      `Are you sure you want to delete "${this.editor?.name}"?`,
+      'Confirm',
+      {
+        duration: 5000,
+        panelClass: ['snackbar-success']
+      }
+    );
+
+    snackRef.onAction().subscribe(() => {
+      this.confirmDelete();
+    });
+  }
 
   constructor(
     //ActivatedRoute: legge info(queryparams, pathparams e via dicendo) dalla rotta attuale
@@ -39,7 +54,8 @@ export class EditorDetailComponent implements OnInit {
     //Router: naviga tra le rotte
     private router: Router,
     private editorService: EditorService,
-    private userRoleService: UserRoleService
+    private userRoleService: UserRoleService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -83,14 +99,21 @@ export class EditorDetailComponent implements OnInit {
     this.router.navigate(['/editors']);
   }
 
-  onDelete(): void {
-    if (!confirm(`Are you sure you want to delete "${this.editor?.name}"?`)) return;
-
+  confirmDelete(): void {
     this.editorService.deleteEditor(this.editorId).subscribe({
       next: () => {
+        this.snackBar.open('Editor deleted successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
         this.router.navigate(['/editors']);
       },
-      error: err => console.error('Error deleting editor:', err)
+      error: () => {
+        this.snackBar.open('Something went wrong while deleting the editor', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
     });
-  }  
+  }
 }

@@ -6,11 +6,6 @@ using Library.BookService.Infrastructure.Persistence.EF.Entities;
 using Library.BookService.Infrastructure.Persistence.EF.Mappers;
 using Library.Logging.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -222,5 +217,35 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         //che ha un catch generico, devi proteggere quella eccezione con un catch specifico prima di quello generico.
         // Il primo catch che vedi quindi si riferisce all'eccezione più interna mentre l'ultimo catch gestische
         //l'eccezione più esterna
+        public async Task DeleteEditorAsync(long id)
+        {
+            _logger.Info($"DeleteEditorAsync - Start | Id: {id}");
+
+            try
+            {
+                var editorEntity = await _context.Editors
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (editorEntity == null)
+                {
+                    _logger.Warn($"DeleteEditorAsync - Editor not found | Id: {id}");
+                    throw new EditorRepositoryEFException($"Editor with id {id} not found");
+                }
+
+                _context.Editors.Remove(editorEntity);
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"DeleteEditorAsync - Completed | Id: {id}");
+            }
+            catch (EditorRepositoryEFException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"DeleteEditorAsync - Error | Id: {id}", ex);
+                throw new EditorRepositoryEFException("Error deleting editor", ex);
+            }
+        }
     }
 }

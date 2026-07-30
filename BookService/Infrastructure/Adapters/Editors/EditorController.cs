@@ -2,6 +2,7 @@
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
+using Library.BookService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -178,6 +179,29 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             catch (Exception ex)
             {
                 _logger.Error($"Error while updating editor | Id: {id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> DeleteEditor(long id)
+        {
+            _logger.Info($"Attempting to delete editor | Id: {id}");
+
+            try
+            {
+                await _editorAppService.DeleteEditorAsync(id);
+                _logger.Info($"Editor successfully deleted | Id: {id}");
+                return NoContent();
+            }
+            catch (EditorRepositoryEFException ex)
+            {
+                _logger.Error($"Error while deleting editor | Id: {id}", ex);
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while deleting editor | Id: {id}", ex);
                 return StatusCode(500, "Internal server error");
             }
         }

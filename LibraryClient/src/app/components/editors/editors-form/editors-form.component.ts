@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EditorService } from '../../../services/editor.service';
 import { EditorRequest } from '../../../models/editor/editor/editor-request';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editor-form',
@@ -26,7 +27,8 @@ export class EditorsFormComponent implements OnInit {
   constructor(
     private editorService: EditorService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -62,25 +64,42 @@ export class EditorsFormComponent implements OnInit {
     }
   }
 
-  private createEditor(request: EditorRequest): void {
-    this.editorService.addEditor(request).subscribe({
-      next: createdId => {
-        this.router.navigate(['/editors', createdId]);
-      },
-      error: err => console.error('Error creating editor:', err)
-    });
-  }
+private createEditor(request: EditorRequest): void {
+  this.editorService.addEditor(request).subscribe({
+    next: createdId => {
+      this.snackBar.open('Editor created successfully', 'OK', {
+        duration: 6000,
+        panelClass: ['snackbar-success']
+      });
+      this.router.navigate(['/editors', createdId]);
+    },
+    error: () => {
+      this.snackBar.open('Something went wrong while saving the editor', 'OK', {
+        duration: 8000,
+        panelClass: ['snackbar-error']
+      });
+    }
+  });
+}
 
-  private updateEditor(request: EditorRequest): void {
-    if (!this.editorId) return;
-
-    this.editorService.updateEditor(this.editorId, request).subscribe({
-      next: () => {
-        this.router.navigate(['/editors', this.editorId]);
-      },
-      error: err => console.error('Error updating editor:', err)
-    });
-  }
+private updateEditor(request: EditorRequest): void {
+  if (!this.editorId) return;
+  this.editorService.updateEditor(this.editorId, request).subscribe({
+    next: () => {
+      this.snackBar.open('Editor updated successfully', 'OK', {
+        duration: 6000,
+        panelClass: ['snackbar-success']
+      });
+      this.router.navigate(['/editors', this.editorId]);
+    },
+    error: () => {
+      this.snackBar.open('Something went wrong while updating the editor', 'OK', {
+        duration: 8000,
+        panelClass: ['snackbar-error']
+      });
+    }
+  });
+}
 
   private setPageTexts(): void {
     switch (this.mode) {

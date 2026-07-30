@@ -31,5 +31,9 @@ namespace Library.BookService.Core.Domain.Services
         {
             return await _editorRepositoryPort.UpdateEditorAsync(editor);
         }
+        public async Task DeleteEditorAsync(long id)
+        {
+            await _editorRepositoryPort.DeleteEditorAsync(id);
+        }
     }
 }

@@ -24,3 +24,21 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
+.mat-mdc-snack-bar-container .mat-mdc-button .mat-mdc-button-persistent-ripple {
+  display: none !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button {
+  color: #fffdfd !important;
+}
+.mat-mdc-snack-bar-container .mat-mdc-button {
+  color: #fffdfd !important;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: #fffdfd !important;
+  }
+}

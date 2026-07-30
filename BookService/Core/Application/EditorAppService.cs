@@ -36,5 +36,9 @@ namespace Library.BookService.Core.Application
         {
             return await _editorDomainService.UpdateEditorAsync(editor);
         }
+        public async Task DeleteEditorAsync(long id)
+        {
+            await _editorDomainService.DeleteEditorAsync(id);
+        }
     }
 }
