@@ -4,6 +4,7 @@ import { AuthorService } from '../../../services/author.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthorRequest } from '../../../models/author/author/author-request';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-authors-form',
@@ -27,7 +28,8 @@ export class AuthorsFormComponent {
   constructor(
     private authorService: AuthorService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -69,9 +71,18 @@ export class AuthorsFormComponent {
   private createAuthor(request: AuthorRequest): void {
     this.authorService.addAuthor(request).subscribe({
       next: createdId => {
+        this.snackBar.open('Author created successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
         this.router.navigate(['/authors', createdId]);
       },
-      error: err => console.error('Error creating author:', err)
+      error: () => {
+        this.snackBar.open('Something went wrong while saving the author', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
     });
   }
 
@@ -80,9 +91,18 @@ export class AuthorsFormComponent {
 
     this.authorService.updateAuthor(this.authorId, request).subscribe({
       next: () => {
+        this.snackBar.open('Author updated successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
         this.router.navigate(['/authors', this.authorId]);
       },
-      error: err => console.error('Error updating author:', err)
+      error: () => {
+        this.snackBar.open('Something went wrong while updating the author', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
     });
   }
 

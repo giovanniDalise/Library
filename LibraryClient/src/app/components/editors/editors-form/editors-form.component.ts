@@ -64,42 +64,42 @@ export class EditorsFormComponent implements OnInit {
     }
   }
 
-private createEditor(request: EditorRequest): void {
-  this.editorService.addEditor(request).subscribe({
-    next: createdId => {
-      this.snackBar.open('Editor created successfully', 'OK', {
-        duration: 6000,
-        panelClass: ['snackbar-success']
-      });
-      this.router.navigate(['/editors', createdId]);
-    },
-    error: () => {
-      this.snackBar.open('Something went wrong while saving the editor', 'OK', {
-        duration: 8000,
-        panelClass: ['snackbar-error']
-      });
-    }
-  });
-}
+  private createEditor(request: EditorRequest): void {
+    this.editorService.addEditor(request).subscribe({
+      next: createdId => {
+        this.snackBar.open('Editor created successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
+        this.router.navigate(['/editors', createdId]);
+      },
+      error: () => {
+        this.snackBar.open('Something went wrong while saving the editor', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    });
+  }
 
-private updateEditor(request: EditorRequest): void {
-  if (!this.editorId) return;
-  this.editorService.updateEditor(this.editorId, request).subscribe({
-    next: () => {
-      this.snackBar.open('Editor updated successfully', 'OK', {
-        duration: 6000,
-        panelClass: ['snackbar-success']
-      });
-      this.router.navigate(['/editors', this.editorId]);
-    },
-    error: () => {
-      this.snackBar.open('Something went wrong while updating the editor', 'OK', {
-        duration: 8000,
-        panelClass: ['snackbar-error']
-      });
-    }
-  });
-}
+  private updateEditor(request: EditorRequest): void {
+    if (!this.editorId) return;
+    this.editorService.updateEditor(this.editorId, request).subscribe({
+      next: () => {
+        this.snackBar.open('Editor updated successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
+        this.router.navigate(['/editors', this.editorId]);
+      },
+      error: () => {
+        this.snackBar.open('Something went wrong while updating the editor', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    });
+  }
 
   private setPageTexts(): void {
     switch (this.mode) {
