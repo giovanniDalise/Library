@@ -232,6 +232,16 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     throw new EditorRepositoryEFException($"Editor with id {id} not found");
                 }
 
+                // Controlla se ci sono libri associati
+                var hasBooks = await _context.Books
+                    .AnyAsync(b => b.EditorId == id);
+
+                if (hasBooks)
+                {
+                    _logger.Warn($"DeleteEditorAsync - Editor has books | Id: {id}");
+                    throw new EditorRepositoryEFException($"Cannot delete editor with id {id} because it has books associated. Please delete the books first.");
+                }
+
                 _context.Editors.Remove(editorEntity);
                 await _context.SaveChangesAsync();
 

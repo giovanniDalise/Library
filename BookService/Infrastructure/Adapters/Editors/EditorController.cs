@@ -196,8 +196,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             }
             catch (EditorRepositoryEFException ex)
             {
-                _logger.Error($"Error while deleting editor | Id: {id}", ex);
-                return NotFound(new { error = ex.Message });
+                _logger.Warn($"Business rule violation while deleting editor | Id: {id} | {ex.Message}");
+                return BadRequest(new { error = ex.Message });
             }
             catch (Exception ex)
             {

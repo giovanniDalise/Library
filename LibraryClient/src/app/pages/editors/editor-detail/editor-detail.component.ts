@@ -108,8 +108,9 @@ export class EditorDetailComponent implements OnInit {
         });
         this.router.navigate(['/editors']);
       },
-      error: () => {
-        this.snackBar.open('Something went wrong while deleting the editor', 'OK', {
+      error: (err) => {
+        const message = err.error?.error ?? 'Something went wrong while deleting the editor';
+        this.snackBar.open(message, 'OK', {
           duration: 8000,
           panelClass: ['snackbar-error']
         });
