@@ -9,5 +9,6 @@ namespace Library.BookService.Core.Ports.Authors
         Task<Author?> GetAuthorByIdAsync(long id);
         Task<Author> CreateAuthorAsync(Author author);
         Task<Author> UpdateAuthorAsync(Author author);
+        Task DeleteAuthorAsync(long id);
     }
 }

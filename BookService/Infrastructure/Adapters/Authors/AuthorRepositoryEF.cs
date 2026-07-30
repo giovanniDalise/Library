@@ -182,5 +182,44 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
                 throw new AuthorRepositoryEFException("Error updating author", ex);
             }
         }
+        public async Task DeleteAuthorAsync(long id)
+        {
+            _logger.Info($"DeleteAuthorAsync - Start | Id: {id}");
+
+            try
+            {
+                var authorEntity = await _context.Authors
+                    .FirstOrDefaultAsync(a => a.Id == id);
+
+                if (authorEntity == null)
+                {
+                    _logger.Warn($"DeleteAuthorAsync - Author not found | Id: {id}");
+                    throw new AuthorRepositoryEFException($"Author with id {id} not found");
+                }
+
+                var hasBooks = await _context.Books
+                    .AnyAsync(b => b.Authors.Any(a => a.Id == id));
+
+                if (hasBooks)
+                {
+                    _logger.Warn($"DeleteAuthorAsync - Author has books | Id: {id}");
+                    throw new AuthorRepositoryEFException($"Cannot delete author with id {id} because it has books associated. Please delete the books first.");
+                }
+
+                _context.Authors.Remove(authorEntity);
+                await _context.SaveChangesAsync();
+
+                _logger.Info($"DeleteAuthorAsync - Completed | Id: {id}");
+            }
+            catch (AuthorRepositoryEFException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"DeleteAuthorAsync - Error | Id: {id}", ex);
+                throw new AuthorRepositoryEFException("Error deleting author", ex);
+            }
+        }
     }
 }

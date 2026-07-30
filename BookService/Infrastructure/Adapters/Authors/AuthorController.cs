@@ -1,9 +1,8 @@
-﻿using Library.BookService.Core.Application;
-using Library.BookService.Core.Ports.Authors;
+﻿using Library.BookService.Core.Ports.Authors;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Authors;
-using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
+using Library.BookService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -166,6 +165,30 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
             catch (Exception ex)
             {
                 _logger.Error($"Error while updating author | Id: {id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> DeleteAuthor(long id)
+        {
+            _logger.Info($"Attempting to delete author | Id: {id}");
+
+            try
+            {
+                await _authorAppService.DeleteAuthorAsync(id);
+                _logger.Info($"Author successfully deleted | Id: {id}");
+                return NoContent();
+            }
+            catch (AuthorRepositoryEFException ex)
+            {
+                _logger.Warn($"Business rule violation while deleting author | Id: {id} | {ex.Message}");
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while deleting author | Id: {id}", ex);
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -6,6 +6,7 @@ import { PaginationState } from '../../../models/pagination/pagination-state';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { AuthorService } from '../../../services/author.service';
 import { UserRoleService } from '../../../services/user-role.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-author-detail',
@@ -27,7 +28,9 @@ export class AuthorDetailComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authorService: AuthorService,
-    private userRoleService: UserRoleService
+    private userRoleService: UserRoleService,
+    private snackBar: MatSnackBar
+   
   ) {} 
   
   ngOnInit(): void {
@@ -70,14 +73,32 @@ export class AuthorDetailComponent {
   }
 
   onDelete(): void {
-    if (!confirm(`Are you sure you want to delete "${this.author?.name} ${this.author?.surname}"?`)) return;
+    const snackRef = this.snackBar.open(
+      `Are you sure you want to delete "${this.author?.name} ${this.author?.surname}"?`,
+      'Confirm',
+      {
+        duration: 5000,
+        panelClass: ['snackbar-success']
+      }
+    );
 
-    this.authorService.deleteAuthor(this.authorId).subscribe({
-      next: () => {
-        this.router.navigate(['/authors']);
-      },
-      error: err => console.error('Error deleting author:', err)
+    snackRef.onAction().subscribe(() => {
+      this.authorService.deleteAuthor(this.authorId).subscribe({
+        next: () => {
+          this.snackBar.open('Author deleted successfully', 'OK', {
+            duration: 6000,
+            panelClass: ['snackbar-success']
+          });
+          this.router.navigate(['/authors']);
+        },
+        error: (err) => {
+          const message = err.error?.error ?? 'Something went wrong while deleting the author';
+          this.snackBar.open(message, 'OK', {
+            duration: 8000,
+            panelClass: ['snackbar-error']
+          });
+        }
+      });
     });
-  }   
-
+  }
 }
