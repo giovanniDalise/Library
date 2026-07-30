@@ -81,38 +81,29 @@ namespace Library.BookService.Infrastructure.Adapters.Books
                 return StatusCode(500, "Errore interno del server");
             }
         }
-        //[HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
-        //public async Task<ActionResult<long>> DeleteBook(long id)
-        //{
-        //    _logger.Info($"Called DeleteBook with ID {id}");
-        //    try
-        //    {
-        //        var book = await _bookAppService.GetBookByIdAsync(id);
-        //        if (book == null)
-        //        {
-        //            _logger.Info($"Book not found with id: {id}");
-        //            return NotFound();
-        //        }
 
-        //        // L'AppService si occupa di cancellare dal DB e dallo storage
-        //        var deletedId = await _bookAppService.DeleteBookAsync(id);
-
-        //        if (deletedId <= 0)
-        //        {
-        //            _logger.Warn($"Database delete failed for book ID: {id}");
-        //            return StatusCode(500, "Errore durante eliminazione dal database");
-        //        }
-
-        //        _logger.Info($"Book deleted successfully with ID {id}");
-        //        return Ok(deletedId);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.Error($"Error while deleting book with ID {id}", ex);
-        //        return StatusCode(500, "Internal server error");
-        //    }
-        //}
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> DeleteBook(long id)
+        {
+            _logger.Info($"Attempting to delete book | Id: {id}");
+            try
+            {
+                await _bookAppService.DeleteBookAsync(id);
+                _logger.Info($"Book successfully deleted | Id: {id}");
+                return NoContent();
+            }
+            catch (BookRepositoryEFException ex)
+            {
+                _logger.Warn($"Business rule violation while deleting book | Id: {id} | {ex.Message}");
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error while deleting book | Id: {id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
 
         [HttpPost("GetBooks")]
