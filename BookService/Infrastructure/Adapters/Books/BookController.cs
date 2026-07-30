@@ -1,5 +1,4 @@
 ﻿
-using Library.BookService.Core.Domain.Services;
 using Library.BookService.Core.Ports.Books;
 using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Books;

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../../services/book.service';
 import { UserRoleService } from '../../../services/user-role.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-detail',
@@ -28,13 +29,29 @@ export class BookDetailComponent {
     private route: ActivatedRoute,
     private router: Router,
     private bookService: BookService,
-    private userRoleService: UserRoleService
+    private userRoleService: UserRoleService,
+    private snackBar: MatSnackBar
   ) {} 
   
   ngOnInit(): void {
     this.isAdmin = this.userRoleService.isAdmin();
     this.bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadDetail();
+  }  
+
+  onDelete(): void {
+    const snackRef = this.snackBar.open(
+      `Are you sure you want to delete "${this.book?.title}"?`,
+      'Confirm',
+      {
+        duration: 5000,
+        panelClass: ['snackbar-success']
+      }
+    );
+
+    snackRef.onAction().subscribe(() => {
+      this.confirmDelete();
+    });
   }  
 
   loadDetail():void{
@@ -61,14 +78,22 @@ export class BookDetailComponent {
     this.router.navigate(['/books']);
   }
 
-  onDelete(): void {
-    if (!confirm(`Are you sure you want to delete "${this.book?.title}"?`)) return;
-
+  confirmDelete(): void {
     this.bookService.deleteBook(this.bookId).subscribe({
       next: () => {
+        this.snackBar.open('Book deleted successfully', 'OK', {
+          duration: 6000,
+          panelClass: ['snackbar-success']
+        });
         this.router.navigate(['/books']);
       },
-      error: err => console.error('Error deleting book:', err)
+      error: (err) => {
+        const message = err.error?.error ?? 'Something went wrong while deleting the book';
+        this.snackBar.open(message, 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
+      }
     });
   }    
 }
