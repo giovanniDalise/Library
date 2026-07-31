@@ -39,16 +39,22 @@ namespace Library.BookService.Core.Application
             return createdBook;
         }
 
-        public async Task<long> UpdateBookAsync(long id, Book book, Stream? newCoverStream = null, string? newCoverFileName = null)
+        public async Task<long> UpdateBookAsync(
+            long id,
+            Book book,
+            Stream? newCoverStream = null,
+            string? newCoverFileName = null)
         {
             if (newCoverStream != null && newCoverFileName != null)
             {
-                // elimina la vecchia cover se esiste
                 await _mediaStorage.DeleteAsync(id);
-
-                // salva la nuova
                 var coverUrl = await _mediaStorage.SaveAsync(newCoverStream, newCoverFileName, "image/jpeg", id);
                 book.CoverReference = coverUrl;
+            }
+            else if (string.IsNullOrEmpty(book.CoverReference))
+            {
+                await _mediaStorage.DeleteAsync(id); // <-- questa è la riga che probabilmente ti manca
+                book.CoverReference = null;
             }
 
             return await _bookDomainService.UpdateBookAsync(id, book);

@@ -23,6 +23,7 @@ export class BookFormComponent implements OnInit {
   pageTitle = '';
   submitLabel = '';
   coverFile: File | null = null;
+  existingCoverReference: string | null = null;
 
   // Liste per le dropdown
   availableEditors: Editor[] = [];
@@ -69,6 +70,7 @@ export class BookFormComponent implements OnInit {
           });
           // pre-popola autori selezionati
           this.selectedAuthors = book.authors ?? [];
+          this.existingCoverReference = book.coverReference ?? null;
         },
         error: err => console.error('Error loading book:', err)
       });
@@ -109,6 +111,15 @@ export class BookFormComponent implements OnInit {
   onCoverSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.coverFile = input.files?.[0] ?? null;
+
+    if (this.coverFile) {
+      this.existingCoverReference = URL.createObjectURL(this.coverFile); // solo per preview
+    }
+  }
+
+  removeCover(): void {
+    this.coverFile = null;
+    this.existingCoverReference = null;
   }
 
   onSubmit(): void {
@@ -125,7 +136,11 @@ export class BookFormComponent implements OnInit {
     });
 
     if (this.coverFile) {
+      // nuovo file caricato
       formData.append('cover', this.coverFile, this.coverFile.name);
+    } else {
+      // nessun file nuovo: rimando sempre il valore corrente (o vuoto se rimosso)
+      formData.append('coverReference', this.existingCoverReference ?? '');
     }
 
     if (this.mode === 'create') {

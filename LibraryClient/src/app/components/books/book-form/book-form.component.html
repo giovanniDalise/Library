@@ -5,7 +5,7 @@
 
   <div class="row justify-content-center">
     <div class="col-12 col-xl-10 col-xxl-9">
-      <div class="card shadow rounded p-4">
+      <div class="card shadow rounded p-4" style="min-width: 400px;">
 
         <h2 class="text-center text-light mb-4">{{ pageTitle }}</h2>
 
@@ -68,9 +68,25 @@
           </div>
 
           <!-- COVER -->
-          <div class="input-group">
-            <span class="input-group-text">Cover</span>
-            <input type="file" class="form-control" (change)="onCoverSelected($event)" accept="image/*"/>
+          <div class="d-flex flex-column gap-2">
+            <div class="input-group">
+              <span class="input-group-text">Cover</span>
+              <input type="file" id="coverFile" class="d-none" (change)="onCoverSelected($event)" accept="image/*"/>
+              <label for="coverFile" class="form-control" style="cursor: pointer; margin-bottom: 0;">
+                {{ coverFile?.name || 'Choose file' }}
+              </label>
+            </div>
+
+            <div *ngIf="existingCoverReference" class="d-flex flex-column align-items-center gap-2 mt-2">
+              <img [src]="existingCoverReference" alt="Cover preview" class="book-cover rounded shadow-sm"/>
+              <button type="button" class="btn btn-action-outline btn-sm" (click)="removeCover()">
+                <i class="bi bi-trash"></i> Remove cover
+              </button>
+            </div>
+
+            <small *ngIf="!existingCoverReference && !coverFile" class="text-light">
+              No cover — leave empty or upload one.
+            </small>
           </div>
 
           <!-- SUBMIT -->

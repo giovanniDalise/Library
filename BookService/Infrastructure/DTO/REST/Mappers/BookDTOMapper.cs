@@ -41,7 +41,7 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
             {
                 Title = request.Title,
                 Isbn = request.Isbn,
-                CoverReference = coverReference,
+                CoverReference = coverReference ?? request.CoverReference,
                 Editor = new Editor { Id = request.EditorId },
                 Authors = request.AuthorIds
                     .Select(id => new Author { Id = id })

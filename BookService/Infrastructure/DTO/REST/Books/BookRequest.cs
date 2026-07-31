@@ -7,5 +7,6 @@
         public long EditorId { get; set; }
         public List<long> AuthorIds { get; set; } = new List<long>();
         public IFormFile? Cover { get; set; }
+        public string? CoverReference { get; set; }
     }
 }

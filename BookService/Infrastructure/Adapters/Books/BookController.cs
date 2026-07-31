@@ -61,7 +61,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 
             try
             {
-                var bookDomain = BookDTOMapper.ToDomain(request, coverReference: null);
+                var bookDomain = BookDTOMapper.ToDomain(request);
                 Stream? coverStream = request.Cover?.OpenReadStream();
                 string? coverFileName = request.Cover?.FileName;
 
