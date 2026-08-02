@@ -4,6 +4,7 @@ using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Books;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.BookService.Infrastructure.exceptions;
+using Library.BookService.Infrastructure.REST.Common;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -116,15 +117,11 @@ namespace Library.BookService.Infrastructure.Adapters.Books
         {
             _logger.Info($"Call to GetBooks");
 
-            if (page < 1)
+            var validationError = PaginationValidator.Validate(page, pageSize);
+            if (validationError != null)
             {
-                _logger.Warn($"Invalid attempt with Page: {page}");
-                return BadRequest(new { error = "Page must be greater than or equal to 1." });
-            }
-            if (pageSize < 1 || pageSize > 10)
-            {
-                _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
-                return BadRequest(new { error = "PageSize must be between 1 and 10." });
+                _logger.Warn($"Invalid pagination | Page={page} | PageSize={pageSize}");
+                return validationError;
             }
 
             try

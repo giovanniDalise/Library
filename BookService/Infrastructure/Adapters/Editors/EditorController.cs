@@ -3,14 +3,10 @@ using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Editors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.BookService.Infrastructure.Exceptions;
+using Library.BookService.Infrastructure.REST.Common;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Crmf;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Policy;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.WebRequestMethods;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -49,26 +45,11 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             //denial-of - service(basta ripetere la richiesta poche volte in parallelo
             //per stressare il DB).
 
-            if (page < 1)
+            var validationError = PaginationValidator.Validate(page, pageSize);
+            if (validationError != null)
             {
-                _logger.Warn($"Invalid attempt with Page: {page}");
-
-                // sintassi per creare un oggetto anonimo per creare un oggetto al volo
-                //public class ErrorResponse
-                //{
-                //    public string error { get; set; }
-                //}
-                //in modo che poi ASP.NET Core lo serializza e restituisce 400 con questo Json
-                //{
-                //    "error": "Page must be greater than or equal to 1."
-                //}
-                return BadRequest(new { error = "Page must be greater than or equal to 1." });
-            }
-
-            if (pageSize < 1 || pageSize > 10)
-            {
-                _logger.Warn($"Invalid attempt with PageSize: {pageSize}");
-                return BadRequest(new { error = "PageSize must be between 1 and 10." });
+                _logger.Warn($"Invalid pagination | Page={page} | PageSize={pageSize}");
+                return validationError;
             }
 
             try
@@ -105,10 +86,25 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         {
             _logger.Info($"Call to GetEditorDetail | Id: {id}");
 
+            var validationError = PaginationValidator.Validate(page, pageSize);
+            if (validationError != null)
+            {
+                _logger.Warn($"Invalid pagination | Page={page} | PageSize={pageSize}");
+                return validationError;
+            }
             if (id <= 0)
             {
                 _logger.Warn($"Invalid attempt with Id: {id}");
                 return BadRequest(new { error = "Id must be greater than 0." });
+                // sintassi per creare un oggetto anonimo per creare un oggetto al volo
+                //public class ErrorResponse
+                //{
+                //    public string error { get; set; }
+                //}
+                //in modo che poi ASP.NET Core lo serializza e restituisce 400 con questo Json
+                //{
+                //    "error": "Id must be greater than 0."
+                //}
             }
 
             try
@@ -129,6 +125,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 return StatusCode(500, "Internal server error.");
             }
         }
+
         [HttpPost("AddEditor")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> AddEditor([FromBody] EditorRequest request)

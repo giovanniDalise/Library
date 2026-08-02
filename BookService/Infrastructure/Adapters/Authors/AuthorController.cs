@@ -3,6 +3,7 @@ using Library.BookService.Infrastructure.DTO.REST;
 using Library.BookService.Infrastructure.DTO.REST.Authors;
 using Library.BookService.Infrastructure.DTO.REST.Mappers;
 using Library.BookService.Infrastructure.Exceptions;
+using Library.BookService.Infrastructure.REST.Common;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,17 +34,13 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
         {
             _logger.Info("Call to GetAuthors");
 
-            if(page < 1)
+            var validationError = PaginationValidator.Validate(page, pageSize);
+            if (validationError != null)
             {
-                _logger.Warn($"Invalid attempt with Page {page}");
-                return BadRequest(new {error = "Page must be greater or equal to 1"});
+                _logger.Warn($"Invalid pagination | Page={page} | PageSize={pageSize}");
+                return validationError;
             }
 
-            if(pageSize < 1 || pageSize > 10)
-            {
-                _logger.Warn($"Invalid attempt with PageSize {pageSize}");
-                return BadRequest(new { error = "PageSize must be between 1 and 10" });
-            }
             try
             {
                 var authorDomain = AuthorDTOMapper.ToDomain(request);
@@ -77,6 +74,13 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
         [FromQuery] int pageSize = 10)
         {
             _logger.Info($"Call to GetAuthorDetail | Id:{id}");
+
+            var validationError = PaginationValidator.Validate(page, pageSize);
+            if (validationError != null)
+            {
+                _logger.Warn($"Invalid pagination | Page={page} | PageSize={pageSize}");
+                return validationError;
+            }
             if (id <= 0)
             {
                 _logger.Warn($"Invalid attempt with Id: {id}");
