@@ -40,7 +40,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             //questi specifici controlli sembrano inutili dato che l'utente dal fe non potrà mai
             //selezionare il numero della pagina o il pageSize ma resta comunque un controllo necessario.
             //[AllowAnonymous] + [HttpPost("GetEditors")] con page/pageSize letti da query string.
-            //Questo significa che chiunque, senza nemmeno autenticarsi, può chiamare:
+            //Questo significa che chiunque, senza nemmeno autenticarsi, può chiamare
+            //con un client HTTP qualsiasi(Postman, curl, uno script):
             //POST / editors / GetEditors ? page = -1 & pageSize = 999999
             //Senza il controllo BE, un pageSize = 999999 forzerebbe una query che
             //tenta di caricare 999999 editor in un colpo solo — nella migliore
@@ -48,7 +49,6 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             //denial-of - service(basta ripetere la richiesta poche volte in parallelo
             //per stressare il DB).
 
-            con un client HTTP qualsiasi(Postman, curl, uno script),
             if (page < 1)
             {
                 _logger.Warn($"Invalid attempt with Page: {page}");
