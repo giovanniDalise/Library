@@ -6,6 +6,11 @@ using Library.BookService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Crmf;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Policy;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.WebRequestMethods;
 
 namespace Library.BookService.Infrastructure.Adapters.Editors
 {
@@ -32,7 +37,18 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             )
         {
             _logger.Info($"Call to GetEditors");
+            //questi specifici controlli sembrano inutili dato che l'utente dal fe non potrà mai
+            //selezionare il numero della pagina o il pageSize ma resta comunque un controllo necessario.
+            //[AllowAnonymous] + [HttpPost("GetEditors")] con page/pageSize letti da query string.
+            //Questo significa che chiunque, senza nemmeno autenticarsi, può chiamare:
+            //POST / editors / GetEditors ? page = -1 & pageSize = 999999
+            //Senza il controllo BE, un pageSize = 999999 forzerebbe una query che
+            //tenta di caricare 999999 editor in un colpo solo — nella migliore
+            //delle ipotesi un endpoint lento, nella peggiore un vettore per
+            //denial-of - service(basta ripetere la richiesta poche volte in parallelo
+            //per stressare il DB).
 
+            con un client HTTP qualsiasi(Postman, curl, uno script),
             if (page < 1)
             {
                 _logger.Warn($"Invalid attempt with Page: {page}");
