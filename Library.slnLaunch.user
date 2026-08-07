@@ -13,7 +13,7 @@
         "DebugTarget": "http"
       },
       {
-        "Path": "UserService\\Library.UserService.csproj",
+        "Path": "UserService\\Library.IdentityService.csproj",
         "Action": "Start",
         "DebugTarget": "http"
       }

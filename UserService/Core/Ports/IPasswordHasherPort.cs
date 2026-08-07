@@ -1,4 +1,4 @@
-﻿namespace Library.UserService.Core.Ports
+﻿namespace Library.IdentityService.Core.Ports
 {
     public interface IPasswordHasherPort
     {

@@ -1,4 +1,4 @@
-﻿namespace Library.UserService.Core.Exceptions
+﻿namespace Library.IdentityService.Core.Exceptions
 {
     public class UserRepositoryException: Exception
     {

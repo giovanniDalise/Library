@@ -1,4 +1,4 @@
-﻿namespace Library.UserService.Infrastructure.DTO.REST
+﻿namespace Library.IdentityService.Infrastructure.DTO.REST
 {
     public class UserResponse
     {

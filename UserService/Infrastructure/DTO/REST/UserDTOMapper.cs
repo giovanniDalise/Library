@@ -1,6 +1,7 @@
-﻿using Library.UserService.Core.Domain.Models;
+﻿
+using Library.IdentityService.Core.Domain.Models;
 
-namespace Library.UserService.Infrastructure.DTO.REST
+namespace Library.IdentityService.Infrastructure.DTO.REST
 {
     public static class UserDTOMapper
     {

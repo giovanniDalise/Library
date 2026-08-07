@@ -1,6 +1,6 @@
-﻿using Library.UserService.Core.Domain.Models;
+﻿using Library.IdentityService.Core.Domain.Models;
 
-namespace Library.UserService.Core.Ports
+namespace Library.IdentityService.Core.Ports
 {
     public interface IUserRepositoryPort
     {

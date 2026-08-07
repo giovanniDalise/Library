@@ -1,4 +1,4 @@
-﻿namespace Library.UserService.Core.Domain.Models
+﻿namespace Library.IdentityService.Core.Domain.Models
 {
     public class User
     {

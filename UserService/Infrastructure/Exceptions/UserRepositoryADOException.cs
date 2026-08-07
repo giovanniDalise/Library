@@ -1,6 +1,6 @@
-﻿using Library.UserService.Core.Exceptions;
+﻿using Library.IdentityService.Core.Exceptions;
 
-namespace Library.UserService.Infrastructure.Exceptions
+namespace Library.IdentityService.Infrastructure.Exceptions
 {
     public class UserRepositoryADOException: UserRepositoryException
     {

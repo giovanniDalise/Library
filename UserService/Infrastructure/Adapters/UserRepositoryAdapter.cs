@@ -1,13 +1,13 @@
-﻿using Library.UserService.Core.Domain.Models;
-using Library.UserService.Core.Ports;
-using Library.UserService.Infrastructure.Exceptions;
-using Library.Logging.Abstractions;
+﻿using Library.Logging.Abstractions;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Reflection;
 using System.Resources;
+using Library.IdentityService.Core.Ports;
+using Library.IdentityService.Core.Domain.Models;
+using Library.IdentityService.Infrastructure.Exceptions;
 
-namespace Library.UserService.Infrastructure.Adapters
+namespace Library.IdentityService.Infrastructure.Adapters
 {
     public class UserRepositoryAdapter : IUserRepositoryPort
     {

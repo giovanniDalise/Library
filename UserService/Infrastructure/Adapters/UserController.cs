@@ -1,11 +1,10 @@
-﻿using Library.UserService.Core.Domain.Models;
-using Library.UserService.Core.Ports;
-using Library.UserService.Infrastructure.DTO.REST;
-using Library.Logging.Abstractions;
+﻿using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Library.IdentityService.Core.Ports;
+using Library.IdentityService.Infrastructure.DTO.REST;
 
-namespace Library.UserService.Infrastructure.Adapters
+namespace Library.IdentityService.Infrastructure.Adapters
 {
     [Route("users")]
     [ApiController]

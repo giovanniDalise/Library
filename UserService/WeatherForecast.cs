@@ -1,4 +1,4 @@
-namespace Library.UserService
+namespace Library.IdentityService
 {
     public class WeatherForecast
     {

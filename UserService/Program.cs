@@ -1,8 +1,8 @@
+using Library.IdentityService.Core.Domain.Services;
+using Library.IdentityService.Core.Ports;
+using Library.IdentityService.Infrastructure.Adapters;
 using Library.Logging.Abstractions;
 using Library.Logging.NLog;
-using Library.UserService.Core.Domain.Services;
-using Library.UserService.Core.Ports;
-using Library.UserService.Infrastructure.Adapters;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,6 @@
-﻿using Library.UserService.Core.Ports;
-using BCrypt.Net;
-using Org.BouncyCastle.Crypto.Generators;
+﻿using Library.IdentityService.Core.Ports;
 
-namespace Library.UserService.Infrastructure.Adapters
+namespace Library.IdentityService.Infrastructure.Adapters
 {
     public class BCryptPasswordHasherAdapter : IPasswordHasherPort
     {

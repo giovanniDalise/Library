@@ -1,7 +1,9 @@
-﻿using Library.UserService.Core.Domain.Models;
-using Library.UserService.Core.Ports;
+﻿
 
-namespace Library.UserService.Core.Domain.Services
+using Library.IdentityService.Core.Domain.Models;
+using Library.IdentityService.Core.Ports;
+
+namespace Library.IdentityService.Core.Domain.Services
 {
     public class UserService:IUserServicePort
     {
