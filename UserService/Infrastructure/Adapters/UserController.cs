@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Library.IdentityService.Core.Ports;
-using Library.IdentityService.Infrastructure.DTO.REST;
+using Library.IdentityService.Infrastructure.DTO.REST.Users;
 
 namespace Library.IdentityService.Infrastructure.Adapters
 {

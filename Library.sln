@@ -5,8 +5,6 @@ VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.BookService", "BookService\Library.BookService.csproj", "{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.AuthenticationService", "AuthenticationService\Library.AuthenticationService.csproj", "{C623D24D-9320-47D0-9D4C-95AA359DF589}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.IdentityService", "UserService\Library.IdentityService.csproj", "{11F52A7E-FCAB-4A2B-9E64-22CD05339034}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Logging.NLog", "Library.Logging.NLog\Library.Logging.NLog.csproj", "{7BA84953-507C-422E-9D02-F1CAC5249EB4}"
@@ -51,18 +49,6 @@ Global
 		{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}.Release|x64.Build.0 = Release|Any CPU
 		{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}.Release|x86.ActiveCfg = Release|Any CPU
 		{8E0ECE8B-C72E-4579-8D5E-579D52942ED2}.Release|x86.Build.0 = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|x64.Build.0 = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Debug|x86.Build.0 = Debug|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|x64.ActiveCfg = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|x64.Build.0 = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|x86.ActiveCfg = Release|Any CPU
-		{C623D24D-9320-47D0-9D4C-95AA359DF589}.Release|x86.Build.0 = Release|Any CPU
 		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11F52A7E-FCAB-4A2B-9E64-22CD05339034}.Debug|x64.ActiveCfg = Debug|Any CPU

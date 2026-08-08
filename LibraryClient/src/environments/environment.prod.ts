@@ -12,7 +12,7 @@ export const environment = {
     editors: 'http://localhost:5282/editors',
     authors: 'http://localhost:5282/authors',
     users: 'http://localhost:5022/users',
-    auth: 'http://localhost:5073/auth',
+    auth: 'http://localhost:5139/auth',
   },
   apiPrefix: '', // Non serve prefisso in locale
   api: {
