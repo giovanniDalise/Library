@@ -23,4 +23,4 @@ EXPOSE 5022
 ENV ASPNETCORE_URLS="http://+:5022"
 
 # Avvia l'applicazione solo quando MySQL è pronto
-ENTRYPOINT ["/app/wait-for-it.sh", "mysql:3306", "--", "dotnet", "Library.IdentityService.dll"]
+ENTRYPOINT ["/app/wait-for-it.sh", "mysql-identity:3306", "--", "dotnet", "Library.IdentityService.dll"]

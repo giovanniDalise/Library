@@ -2,4 +2,4 @@
 FROM mysql:8.0
 
 # Copia il file data.sql all'interno del container nella directory di inizializzazione
-COPY data.sql /docker-entrypoint-initdb.d/
+COPY init-library-identity.sql /docker-entrypoint-initdb.d/

@@ -1,89 +1,153 @@
 services:
-  # MySQL con l'immagine personalizzata
-  mysql-container:
-    image: giovannidalise/librarymknwdot-mysql-container:latest  
+  # ============================================================
+  # MYSQL - un container per ogni microservizio (database-per-service)
+  # ============================================================
+
+  mysql-books:
+    image: giovannidalise/librarymknwdot-mysql-books:latest
     build:
-      context: ./MySQLService  # Costruisce l'immagine dal Dockerfile nella cartella MySQLService
-      dockerfile: Dockerfile      
-    container_name: mysql-container
+      context: ./MySQLServiceBooks
+      dockerfile: Dockerfile
+    container_name: mysql-books
     ports:
       - "3307:3306"
-    env_file:
-      - .env  # Carica le variabili di ambiente dal file .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - app-data:/docker-entrypoint-initdb.d  # Monta il volume per l'inizializzazione del DB
+      - mysql-books-data:/var/lib/mysql
     networks:
       - library_default
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # Servizio per BookService
-  bookservice:
-    image: giovannidalise/librarymknwdot-bookservice:latest  
+  mysql-identity:
+    image: giovannidalise/librarymknwdot-mysql-identity:latest
     build:
-      context: ./BookService  # Percorso del servizio BookService
+      context: ./MySQLServiceIdentity
+      dockerfile: Dockerfile
+    container_name: mysql-identity
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library_identity
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql-identity-data:/var/lib/mysql
+    networks:
+      - library_default
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql-reservation:
+    image: giovannidalise/librarymknwdot-mysql-reservation:latest
+    build:
+      context: ./MySQLServiceReservation
+      dockerfile: Dockerfile
+    container_name: mysql-reservation
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library_reservation
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql-reservation-data:/var/lib/mysql
+    networks:
+      - library_default
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # SERVIZI APPLICATIVI
+  # ============================================================
+
+  bookservice:
+    image: giovannidalise/librarymknwdot-bookservice:latest
+    build:
+      context: ./BookService
       dockerfile: Dockerfile
     container_name: bookservice-container
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      ConnectionStrings__BookDbConnection: "Server=mysql-books;Port=3306;Database=library;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
       Media__BasePath: /app/images
       Media__BaseUrl: http://localhost:5282
     ports:
       - "5282:5282"
     depends_on:
-      - mysql-container  # Dipendenza da MySQL
+      mysql-books:
+        condition: service_healthy
     volumes:
       - book-images:/app/images
-      - app-data:/app-data  # Monta il volume condiviso per il BookService
+                                                                          
       - logs-data:/app/logs
     networks:
       - library_default
     restart: always
-    
+
   identityservice:
-    image: giovannidalise/librarymknwdot-identityservice:latest  
+    image: giovannidalise/librarymknwdot-identityservice:latest
     build:
-      context: ./IdentityService  # Percorso del servizio IdentityService   
+      context: ./IdentityService
       dockerfile: Dockerfile
     container_name: identityservice-container
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-identity;Port=3306;Database=library_identity;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
     ports:
       - "5022:5022"
     depends_on:
-      - mysql-container  # Dipendenza da MySQL
+      mysql-identity:
+        condition: service_healthy
     volumes:
-      - app-data:/app-data  # Monta il volume condiviso per il BookService
+                                                                          
       - logs-data:/app/logs
     networks:
       - library_default
-    restart: always    
-    
+    restart: always
+
   # Servizio per LibraryClient (frontend)
   libraryclient:
     image: giovannidalise/librarymknwdot-libraryclient:latest
     build:
-      context: ./LibraryClient  # Percorso della cartella frontend
+      context: ./LibraryClient
       dockerfile: Dockerfile
     container_name: libraryclient-container
     ports:
-      - "4200:80"  
+      - "4200:80"
     depends_on:
-      - bookservice  
+      - bookservice
     networks:
       - library_default
-    restart: always    
-    
+    restart: always
+
   images-init: # one-job service per inizializzare le immagini nel volume
-    image: giovannidalise/librarymknwdot-images-init:latest    
+    image: giovannidalise/librarymknwdot-images-init:latest
     build:
       context: ./LibraryImages
       dockerfile: Dockerfile
     volumes:
       - book-images:/app/images
-      
-  api-gateway: #Service che utilizza nginx.conf che attenzione è doverso da quello del progetto LibraryCLient che serve file statici, questo invece fa Routing API per docker
+
+  api-gateway: # nginx per il routing API in Docker (diverso da quello di LibraryClient che serve i file statici)
     build:
       context: ./ApiGateway
     container_name: api-gateway
@@ -94,12 +158,14 @@ services:
       - identityservice
     networks:
       - library_default
-      
+
 networks:
   library_default:
     driver: bridge
 
 volumes:
-  app-data: {}
+  mysql-books-data: {}
+  mysql-identity-data: {}
+  mysql-reservation-data: {}
   book-images: {}
-  logs-data: {}   
+  logs-data: {}
