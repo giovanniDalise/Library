@@ -1,9 +1,0 @@
-﻿using Library.AuthenticationService.Core.Domain.Models;
-
-namespace Library.BookService.Core.Ports
-{
-    public interface IAuthenticationServicePort
-    {
-        Task<AuthResult> Authenticate(Credentials loginRequest);
-    }
-}

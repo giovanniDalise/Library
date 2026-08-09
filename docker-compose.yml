@@ -40,36 +40,15 @@ services:
       - library_default
     restart: always
     
-  authenticationservice:
-    image: giovannidalise/librarymknwdot-authenticationservice:latest  
+  identityservice:
+    image: giovannidalise/librarymknwdot-identityservice:latest  
     build:
-      context: ./AuthenticationService  # Percorso del servizio AuthenticationService
+      context: ./IdentityService  # Percorso del servizio IdentityService   
       dockerfile: Dockerfile
-    container_name: authenticationservice-container
+    container_name: identityservice-container
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__AuthServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
-    ports:
-      - "5073:5073"
-    depends_on:
-      - mysql-container  # Dipendenza da MySQL
-      - images-init
-    volumes:
-      - app-data:/app-data  # Monta il volume condiviso per il BookService
-      - logs-data:/app/logs
-    networks:
-      - library_default
-    restart: always
-    
-  userservice:
-    image: giovannidalise/librarymknwdot-userservice:latest  
-    build:
-      context: ./UserService  # Percorso del servizio UserService   
-      dockerfile: Dockerfile
-    container_name: userservice-container
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__UserServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
     ports:
       - "5022:5022"
     depends_on:
@@ -112,8 +91,7 @@ services:
       - "8080:80"
     depends_on:
       - bookservice
-      - userservice
-      - authenticationservice
+      - identityservice
     networks:
       - library_default
       

@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   apiUrls: {
-    books: 'http://api-gateway/api/books',
-    editors: 'http://api-gateway/api/editors',
-    authors: 'http://api-gateway/api/authors',    
-    users: 'http://api-gateway/api/users',
-    auth: 'http://api-gateway/api/auth'
+    books: 'http://localhost:8080/api/books',
+    editors: 'http://localhost:8080/api/editors',
+    authors: 'http://localhost:8080/api/authors',
+    users: 'http://localhost:8080/api/users',
+    auth: 'http://localhost:8080/api/auth'
   },
   apiPrefix: '/api',
   api: {
