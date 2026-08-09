@@ -1,54 +1,106 @@
 services:
-  mysql-container:
-    image: giovannidalise/librarymknwdot-mysql-container:latest
-    container_name: mysql-container
+  # ============================================================
+  # MYSQL - un container per ogni microservizio (database-per-service)
+  # ============================================================
+
+  mysql-books:
+    image: giovannidalise/librarymknwdot-mysql-books:latest
+    container_name: mysql-books
     ports:
       - "3307:3306"
-    env_file:
-      - .env
-    volumes:
-      - app-data:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - library_default
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql-identity:
+    image: giovannidalise/librarymknwdot-mysql-identity:latest
+    container_name: mysql-identity
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library_identity
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - library_default
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql-reservation:
+    image: giovannidalise/librarymknwdot-mysql-reservation:latest
+    container_name: mysql-reservation
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library_reservation
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - library_default
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # SERVIZI APPLICATIVI
+  # ============================================================
 
   bookservice:
     image: giovannidalise/librarymknwdot-bookservice:latest
     container_name: bookservice-container
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__BookDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      ConnectionStrings__BookDbConnection: "Server=mysql-books;Port=3306;Database=library;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
       Media__BasePath: /app/images
-      Media__BaseUrl: http://localhost:5282      
+      Media__BaseUrl: http://localhost:5282
     ports:
       - "5282:5282"
     depends_on:
-      - mysql-container
+      mysql-books:
+        condition: service_healthy
     volumes:
-      - book-images:/app/images    
-      - app-data:/app-data
-      - logs-data:/app/logs      
+      - book-images:/app/images
+      - logs-data:/app/logs
     networks:
       - library_default
     restart: always
-    
+
   identityservice:
-    image: giovannidalise/librarymknwdot-identityservice:latest  
+    image: giovannidalise/librarymknwdot-identityservice:latest
     container_name: identityservice-container
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-container;Port=3306;Database=${MYSQL_DATABASE};Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-identity;Port=3306;Database=library_identity;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
     ports:
       - "5022:5022"
     depends_on:
-      - mysql-container  
+      mysql-identity:
+        condition: service_healthy
     volumes:
-      - app-data:/app-data
-      - logs-data:/app/logs      
+      - logs-data:/app/logs
     networks:
       - library_default
-    restart: always   
-    
+    restart: always
+
   libraryclient:
     image: giovannidalise/librarymknwdot-libraryclient:latest
     container_name: libraryclient-container
@@ -58,12 +110,12 @@ services:
       - bookservice
     networks:
       - library_default
-    restart: always    
-    
+    restart: always
+
   images-init:
-    image: giovannidalise/librarymknwdot-images-init:latest  
+    image: giovannidalise/librarymknwdot-images-init:latest
     volumes:
-      - book-images:/app/images              
+      - book-images:/app/images
 
   api-gateway: #Service che utilizza nginx.conf che attenzione è doverso da quello del progetto LibraryCLient che serve file statici, questo invece fa Routing API per docker
     image: giovannidalise/librarymknwdot-api-gateway:latest
@@ -74,12 +126,12 @@ services:
       - bookservice
       - identityservice
     networks:
-      - library_default      
+      - library_default
+
 networks:
   library_default:
     driver: bridge
 
 volumes:
-  app-data: {}
   book-images: {}
   logs-data: {}
