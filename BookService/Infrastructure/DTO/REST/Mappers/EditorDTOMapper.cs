@@ -36,6 +36,8 @@ namespace Library.BookService.Infrastructure.DTO.REST.Mappers
                     TotalRecords = totalBooks
                 }
             };
+            //Select serve principalmente a proiettare/trasformare ogni elemento,
+            //cioè scegliere quali dati vuoi ottenere o trasformarli in un altro tipo.
         }
 
         public static List<EditorResponse> ToResponseList(List<Editor> editors)

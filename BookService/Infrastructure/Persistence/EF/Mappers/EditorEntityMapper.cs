@@ -19,6 +19,8 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Books = entity.Books?.Select(e => new Book
+                // in questo caso con il Select vado proprio a creare un nuovo oggetto che poi
+                // trasformo in una lista dato che l'Editor ha una lista di Books
                 {
                     Id = e.Id,
                     Title = e.Title
@@ -40,6 +42,8 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         public List<Editor> ToDomainList(List<EditorEntity> entities)
         {
             return entities.Select(ToDomain).ToList();
+            //Inoltre il Select oltre a selezionare delle proprietà o creare un oggetto da zero,
+            //può applicare una funzione/metodo a ogni elemento
         }
         public List<EditorEntity> ToEntityList(List<Editor> domains)
         {

@@ -96,6 +96,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             {
                 _logger.Warn($"Invalid attempt with Id: {id}");
                 return BadRequest(new { error = "Id must be greater than 0." });
+                //  BadRequest Codice 400
                 // sintassi per creare un oggetto anonimo per creare un oggetto al volo
                 //public class ErrorResponse
                 //{
@@ -115,6 +116,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 {
                     _logger.Warn($"Editor not found | Id: {id}");
                     return NotFound(new { error = $"Editor with id {id} not found." });
+                    // Not Found Codice 404
                 }
 
                 return Ok(EditorDTOMapper.ToDetailResponse(editor, totalBooks));

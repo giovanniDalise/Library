@@ -33,6 +33,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 int offset = (page - 1) * pageSize;
 
                 IQueryable<EditorEntity> query = _context.Editors;
+                // questa operazione non è async perchè è come se stessi solo costruendo la query non interrogo 
+                // il db e quindi non neccessito del comportamento async per non aspettare la risposta del db
 
                 if (searchEditor.Id > 0)
                 {
@@ -42,6 +44,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 if (!string.IsNullOrEmpty(searchEditor.Name))
                 {
                     query = query.Where(e => e.Name.Contains(searchEditor.Name));
+                    // Where estrae tutti i risultati di una condizione il First solo la prima occorrenza.
                 }
 
                 int total = await query.CountAsync();
@@ -51,6 +54,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Skip(offset)
                     .Take(pageSize)
                     .ToListAsync();
+                // qui è il ToListAsync a chiamare subito il db mentre OrderBy, skip where o take costruiscono
+                // solo la query. Un altro esempio come il ToListAsync per cui utiliziamo l'async con l'await
+                // è il CountAsync
 
                 _logger.Info($"GetEditorsAsync - Completed | {editorEntities.Count} items");
 
@@ -87,7 +93,18 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _logger.Info($"GetEditorDetailAsync - Started | Id: {id}");
             try
             {
+                // async perchè sto già interrogando il db quando chiamo un metodo come FirstOrDefaultAsync
                 var editorEntity = await _context.Editors.FirstOrDefaultAsync(e => e.Id == id);
+                // prende il primo elemento che soddisfa la condizione se ne trova di più
+                // prende semplicemente il primo e ignora gli altri.
+                // Si differenzia da FirstAsync perchè gestisce il caso in cui non lo trova dando il default
+                // se non lo trova da il valore default di oggetto che è null, mentre se avessi utilizzato
+                // FirstAsync non trovandolo avrebbe lanciato un eccezione rompendo l'applicativo
+                // che volendo avrei poi gestito.
+                // Con il First o FirstOrDefault il primo record restituito lo deciderà il db,
+                // quindi non hai garanzia su quale sarà il risultato ragion per cui, tranne in questo caso
+                // dove l'id deve essere univoco viene utilizzato insieme all'order by in modo da garantire
+                // un risultato aspettato secondo un ordinamento.
 
                 if (editorEntity == null)
                 {
