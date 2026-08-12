@@ -21,7 +21,11 @@ export class EditorService {
           .set('page', page)
           .set('pageSize', pageSize)
       const url = this.baseUrl + this.endpoints.getEditorDetail.replace('{id}', id.toString());
+      // nell'enviroment l'endpoint di getEditorDetail è '/getEditorDetail/{id}' e quindi sostituisco con il replace l'id
+      // in input per arrivare al dettaglio      
       return this.http.get<EditorDetail>(url, { params });
+      // Rispetto alla getEditors che è una post come vedi non hai un terzo parametro che corrisponde al Body delle request.
+      //getEditorDetail è una get quindi vuole solo l'endpoint e gli HttpParams dell'url
   }
   
   getEditors(searchFilter:EditorRequest, page:number, pageSize:number):Observable<PagedResponse<Editor>>{
