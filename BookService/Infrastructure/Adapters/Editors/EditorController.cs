@@ -79,7 +79,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         [HttpGet("getEditorDetail/{id}")]
         [AllowAnonymous]
         //GET /api/editors/10?page=1&pageSize=10 il ? segna l'inizio della query ed è posto dopo la route
-        public async Task<ActionResult<PagedResponse<EditorDetailResponse>>> GetEditorDetail(
+        public async Task<ActionResult<EditorDetailResponse>> GetEditorDetail(
             long id,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
