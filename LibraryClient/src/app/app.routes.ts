@@ -11,6 +11,7 @@ import { AuthorDetailComponent } from './pages/authors/author-detail/author-deta
 import { BookDetailComponent } from './pages/books/book-detail/book-detail.component';
 import { EditorsFormComponent } from './components/editors/editors-form/editors-form.component';
 import { AuthorsFormComponent } from './components/authors/authors-form/authors-form.component';
+import { SignupComponent } from './pages/signup/signup-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -28,4 +29,5 @@ export const routes: Routes = [
     { path: 'authors/add', component: AuthorsFormComponent, canActivate: [AuthGuard] },
     { path: 'authors/edit/:authorId', component: AuthorsFormComponent, canActivate: [AuthGuard] },
     { path: 'authors/:id', component: AuthorDetailComponent },
+    { path: 'signup', component: SignupComponent },
 ];

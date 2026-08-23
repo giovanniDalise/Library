@@ -126,7 +126,7 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                     .Take(pageSize)
                     .ToListAsync();
 
-                editorEntity.Books = books.ToList();
+                editorEntity.Books = books;
 
                 _logger.Info($"GetEditorDetailAsync - Completed | Editor: {editorEntity.Name}, Books: {books.Count}");
                 return (_editorMapper.ToDomain(editorEntity), totalBooks);
