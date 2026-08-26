@@ -29,6 +29,7 @@ builder.Services.AddScoped<IJwtPort>(provider =>
 });
 builder.Services.AddScoped<IAuthenticationServicePort, AuthenticationService>();
 
+
 // Configurazione CORS per permettere tutte le richieste (debug)
 builder.Services.AddCors(options =>
 {

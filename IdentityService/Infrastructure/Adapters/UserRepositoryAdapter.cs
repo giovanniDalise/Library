@@ -16,7 +16,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
 
         public UserRepositoryAdapter(IConfiguration configuration, ILoggerPort logger)
         {
-            _connectionString = configuration.GetConnectionString("UserServiceDbConnection");
+            _connectionString = configuration.GetConnectionString("IdentityServiceDbConnection");
             _logger = logger;
         }
 
@@ -25,7 +25,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         {
             get
             {
-                if (_rm == null) _rm = new ResourceManager("Library.UserService.Infrastructure.Queries.Query", Assembly.GetExecutingAssembly());
+                if (_rm == null) _rm = new ResourceManager("Library.IdentityService.Infrastructure.Queries.Query", Assembly.GetExecutingAssembly());
                 return _rm;
             }
         }

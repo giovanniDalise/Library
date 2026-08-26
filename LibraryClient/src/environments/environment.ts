@@ -44,7 +44,7 @@ export const environment = {
       login: '/login'
     },    
     users: {
-      addUser: '/users'
+      addUser: '/addUser'
     }      
   }
 };

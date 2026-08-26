@@ -35,6 +35,9 @@ export const environment = {
     },           
     auth: {
       login: '/login'
+    },    
+    users: {
+      addUser: '/addUser'
     }    
   }   
 };

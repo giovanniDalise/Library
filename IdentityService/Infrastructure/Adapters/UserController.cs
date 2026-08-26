@@ -44,7 +44,8 @@ namespace Library.IdentityService.Infrastructure.Adapters
             return Ok(UserDTOMapper.ToResponse(user));
         }
 
-        [HttpPost]
+        [HttpPost("addUser")]
+        [AllowAnonymous]
         public async Task<ActionResult<long>> AddUser([FromBody] UserRequest request)
         {
             _logger.Info($"AddUser {request.Name} {request.Surname}");
