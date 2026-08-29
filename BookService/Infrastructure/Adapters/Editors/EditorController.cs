@@ -116,7 +116,9 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
                 {
                     _logger.Warn($"Editor not found | Id: {id}");
                     return NotFound(new { error = $"Editor with id {id} not found." });
-                    // Not Found Codice 404
+                    // Not Found Codice 404 Che sarebbe che non è stata trova nessuna risorsa con quell'id
+                    // Non ti confondere con il No Content 204 che sarebbe che c'è un contenuto da restituire nel body
+                    // come per una delete o update puntuale
                 }
 
                 return Ok(EditorDTOMapper.ToDetailResponse(editor, totalBooks));
