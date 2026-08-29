@@ -4,8 +4,8 @@ namespace Library.BookService.Infrastructure.REST.Common
 {
     public static class PaginationValidator
     {
-        // classe statica che non mantiene uno stato (non ha _proprietà per creare istanze e infatti al richiamiamo con "PaginationValidator.")
-        // e offre solo funzionalità
+        // Una classe statica non mantiene uno stato (non creiamo istanze della classe ne abbiamo proprietà (non statiche) della classe
+        // richiamabili con il this) e offre solo funzionalità. Non avendo istanze la chiamiamo cosi "PaginationValidator."
         // Una classe statica non può essere registrata nel container DI. Niente Dipendency Injection.
         // I vantaggi sono che non crea oggetti inutili allocondo memoria e una classe statica ci fa capire che non avendo stato
         // non avremo diverse istanze dello stessa classe. Sarà sempre uguale.
