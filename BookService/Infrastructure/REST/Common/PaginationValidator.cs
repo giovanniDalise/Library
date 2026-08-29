@@ -4,6 +4,11 @@ namespace Library.BookService.Infrastructure.REST.Common
 {
     public static class PaginationValidator
     {
+        // classe statica che non mantiene uno stato (non ha _proprietà per creare istanze e infatti al richiamiamo con "PaginationValidator.")
+        // e offre solo funzionalità
+        // Una classe statica non può essere registrata nel container DI. Niente Dipendency Injection.
+        // I vantaggi sono che non crea oggetti inutili allocondo memoria e una classe statica ci fa capire che non avendo stato
+        // non avremo diverse istanze dello stessa classe. Sarà sempre uguale.
         public static ActionResult? Validate(int page, int pageSize, int maxPageSize = 10)
         {
             if (page < 1)
@@ -14,5 +19,8 @@ namespace Library.BookService.Infrastructure.REST.Common
 
             return null;
         }
+        // Una classe statica puo avere solo metodi statici mentre una classe non statica può avere sia metodi static che non static.
+        // Un metodo statico in una classe non static non può chiamare le proprietà della classe (come il this) dato che appartengono all'instanza
+        // della classe ed uscirebbero dallo scope static
     }
 }
