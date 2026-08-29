@@ -13,11 +13,15 @@ namespace Library.BookService.Infrastructure.REST.Common
         {
             if (page < 1)
                 return new BadRequestObjectResult(new { error = "Page must be greater than or equal to 1." });
-                // se avevo questa validazione nel controller potevo restituire un new BadRequest() direttamente
-                // ma BadRequest è un oggetto disponibile nella classe ControllerBase da cui ereditano i nostri controller.
-                // quindi non avendolo qui possiamo utilizzare invece BadRequestObjectResult che ha lo stesso effetto
-                // Non è il massimo per la scalabilità dato che stiamo dicendo che il nostro validatore sa che dall'altra parte ha un chiamante
-                // ASP.NET (un bool sarebbe stato più generico) ma ci accontentiamo anche perchè un validatore di infrastruttura.
+            // se avevo questa validazione nel controller potevo restituire un new BadRequest()
+            // direttamente che ci da un HTTP 400 Bad Request pi+ il messaggio di errore nel body
+            //{
+            //    "error": "Page must be greater than or equal to 1."
+            //}
+            // ma BadRequest è un oggetto disponibile nella classe ControllerBase da cui ereditano i nostri controller.
+            // quindi non avendolo qui possiamo utilizzare invece BadRequestObjectResult che ha lo stesso effetto
+            // Non è il massimo per la scalabilità dato che stiamo dicendo che il nostro validatore sa che dall'altra parte ha un chiamante
+            // ASP.NET (un bool sarebbe stato più generico) ma ci accontentiamo anche perchè un validatore di infrastruttura.
 
             if (pageSize < 1 || pageSize > maxPageSize)
                 return new BadRequestObjectResult(new { error = $"PageSize must be between 1 and {maxPageSize}." });
