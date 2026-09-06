@@ -121,8 +121,10 @@
     <value>DELETE FROM user WHERE user_id = @id;</value>
   </data>
   <data name="InsertUser" xml:space="preserve">
-    <value>INSERT INTO USER (name, surname, email, password, role) 
-VALUES (@name, @surname, @email, @password, 1);</value>
+    <value>
+        INSERT INTO USER (name, surname, email, password, role, confirmation_token, token_expires_at, is_confirmed) 
+        VALUES (@name, @surname, @email, @password, 1, @confirmationToken, @tokenExpiresAt, FALSE);
+    </value>
   </data>
   <data name="SelectAllUsers" xml:space="preserve">
     <value>SELECT * FROM USER;</value>

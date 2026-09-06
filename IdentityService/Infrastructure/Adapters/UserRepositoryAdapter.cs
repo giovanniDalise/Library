@@ -78,7 +78,6 @@ namespace Library.IdentityService.Infrastructure.Adapters
             {
                 using var connection = new MySqlConnection(_connectionString);
                 await connection.OpenAsync();
-                _logger.Debug("Database connection opened for CreateAsync");
 
                 string query = Rm.GetString("InsertUser");
                 using var command = new MySqlCommand(query, connection);
@@ -87,9 +86,11 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 command.Parameters.AddWithValue("@surname", user.Surname);
                 command.Parameters.AddWithValue("@email", user.Email);
                 command.Parameters.AddWithValue("@password", user.Password);
+                command.Parameters.AddWithValue("@confirmationToken", user.ConfirmationToken);
+                command.Parameters.AddWithValue("@tokenExpiresAt", user.TokenExpiresAt);
 
                 await command.ExecuteNonQueryAsync();
-                _logger.Info($"User created successfully: email={user.Email}, id={command.LastInsertedId}");
+                _logger.Info($"User created successfully: email={user.Email}");
                 return command.LastInsertedId;
             }
             catch (Exception ex)

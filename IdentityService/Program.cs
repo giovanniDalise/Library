@@ -1,3 +1,4 @@
+using Library.IdentityService.Core.Application;
 using Library.IdentityService.Core.Domain.Services;
 using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.Adapters;
@@ -15,9 +16,9 @@ builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("AuthenticationS
 
 var configuration = builder.Configuration;
 
-// Registrazione dei servizi necessari per il BookService
 builder.Services.AddScoped<IUserRepositoryPort, UserRepositoryAdapter>();  // Registrazione dell'interfaccia e dell'implementazione
-builder.Services.AddScoped<IUserServicePort, UserService>();  // Registrazione del BookService
+builder.Services.AddScoped<IUserAppServicePort, UserAppService>();
+builder.Services.AddScoped<IUserServicePort, UserService>();  
 builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>(); // Assicurati di avere questa implementazione disponibile
 builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
 builder.Services.AddScoped<IAuthenticationRepositoryPort, AuthRepositoryAdapter>();

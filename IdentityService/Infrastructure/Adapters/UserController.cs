@@ -10,12 +10,12 @@ namespace Library.IdentityService.Infrastructure.Adapters
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserServicePort _userService;
+        private readonly IUserAppServicePort _userAppService;
         private readonly ILoggerPort _logger;
 
-        public UserController(IUserServicePort userService, ILoggerPort logger)
+        public UserController(IUserAppServicePort userAppService, ILoggerPort logger)
         {
-            _userService = userService;
+            _userAppService = userAppService;
             _logger = logger;
         }
 
@@ -24,7 +24,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<List<UserResponse>>> GetUsers()
         {
             _logger.Info("GetUsers endpoint called");
-            var users = await _userService.GetAllUsersAsync();
+            var users = await _userAppService.GetAllUsersAsync();
             _logger.Info($"GetUsers returned {users.Count} users");
             return Ok(UserDTOMapper.ToResponseList(users));
         }
@@ -33,7 +33,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<UserResponse>> GetUserById(long id)
         {
             _logger.Info($"GetUserById called with id={id}");
-            var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userAppService.GetUserByIdAsync(id);
             if (user == null)
             {
                 _logger.Warn($"User not found with id={id}");
@@ -50,7 +50,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         {
             _logger.Info($"AddUser {request.Name} {request.Surname}");
             var user = UserDTOMapper.ToDomain(request);
-            var id = await _userService.CreateUserAsync(user);
+            var id = await _userAppService.CreateUserAsync(user);
             _logger.Info($"User created with id={id}");
             return Ok(id);
         }
@@ -60,7 +60,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         {
             _logger.Info($"UpdateUser called for id={id}");
             var user = UserDTOMapper.ToDomain(request);
-            var updatedId = await _userService.UpdateUserAsync(id, user);
+            var updatedId = await _userAppService.UpdateUserAsync(id, user);
             _logger.Info($"User updated with id={updatedId}");
             return Ok(updatedId);
         }
@@ -69,7 +69,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<long>> DeleteUser(long id)
         {
             _logger.Info($"DeleteUser called for id={id}");
-            var deletedId = await _userService.DeleteUserAsync(id);
+            var deletedId = await _userAppService.DeleteUserAsync(id);
             _logger.Info($"User deleted with id={deletedId}");
             return Ok(deletedId);
         }
@@ -78,7 +78,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<List<UserResponse>>> FindUsersByString([FromQuery] string param)
         {
             _logger.Info($"FindUsersByString called with param='{param}'");
-            var users = await _userService.GetUsersByTextAsync(param);
+            var users = await _userAppService.GetUsersByTextAsync(param);
             _logger.Info($"FindUsersByString returned {users.Count} users");
             return Ok(UserDTOMapper.ToResponseList(users));
         }
