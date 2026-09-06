@@ -1,4 +1,4 @@
-﻿namespace Library.MailService.Core.Domain.Models
+﻿namespace Library.IdentityService.Core.Domain.Models.Events
 {
     public class UserRegisteredEvent
     {

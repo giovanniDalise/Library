@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibraryClient", "LibraryCli
 		LibraryClient\tsconfig.spec.json = LibraryClient\tsconfig.spec.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.MailService", "Library.MailService\Library.MailService.csproj", "{AE3B9985-913A-4CD6-8D85-703854861197}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.EmailService", "Library.MailService\Library.EmailService.csproj", "{AE3B9985-913A-4CD6-8D85-703854861197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

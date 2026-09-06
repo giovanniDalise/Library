@@ -2,6 +2,7 @@ using Library.IdentityService.Core.Application;
 using Library.IdentityService.Core.Domain.Services;
 using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.Adapters;
+using Library.IdentityService.Infrastructure.Adapters.Events;
 using Library.IdentityService.Infrastructure.Adapters.Jwt;
 using Library.IdentityService.Infrastructure.Adapters.Repository;
 using Library.IdentityService.Infrastructure.Adapters.Security;
@@ -30,6 +31,12 @@ builder.Services.AddScoped<IJwtPort>(provider =>
 });
 builder.Services.AddScoped<IAuthenticationServicePort, AuthenticationService>();
 
+builder.Services.AddSingleton<IEventPublisherPort>(sp =>
+{
+    var logger = sp.GetRequiredService<ILoggerPort>();
+    var hostName = builder.Configuration["RabbitMQ:HostName"] ?? "localhost";
+    return RabbitMQEventPublisher.CreateAsync(hostName, logger).GetAwaiter().GetResult();
+});
 
 // Configurazione CORS per permettere tutte le richieste (debug)
 builder.Services.AddCors(options =>

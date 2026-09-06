@@ -1,4 +1,5 @@
 ﻿using Library.IdentityService.Core.Domain.Models;
+using Library.IdentityService.Core.Domain.Models.Events;
 using Library.IdentityService.Core.Ports;
 
 namespace Library.IdentityService.Core.Application
