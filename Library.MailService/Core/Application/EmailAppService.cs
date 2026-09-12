@@ -3,7 +3,7 @@ using Library.EmailService.Core.Domain.Events;
 using Library.EmailService.Core.Ports;
 using Library.Logging.Abstractions;
 
-namespace Library.MailService.Core.Application
+namespace Library.EmailService.Core.Application
 {
     public class EmailAppService : IEmailAppServicePort
     {

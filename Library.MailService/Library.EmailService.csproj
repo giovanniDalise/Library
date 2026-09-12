@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Infrastructure\Templates\**\*">
+	  <Link>Templates\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
     <PackageReference Include="RabbitMQ.Client" Version="7.2.2" />
@@ -16,7 +23,6 @@
     <Folder Include="Core\Domain\Models\" />
     <Folder Include="Core\Exceptions\" />
     <Folder Include="Infrastructure\DTO\" />
-    <Folder Include="Infrastructure\Templates\" />
   </ItemGroup>
 
   <ItemGroup>

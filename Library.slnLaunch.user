@@ -8,12 +8,12 @@
         "DebugTarget": "http"
       },
       {
-        "Path": "AuthenticationService\\Library.AuthenticationService.csproj",
+        "Path": "IdentityService\\Library.IdentityService.csproj",
         "Action": "Start",
         "DebugTarget": "http"
       },
       {
-        "Path": "UserService\\Library.IdentityService.csproj",
+        "Path": "Library.MailService\\Library.EmailService.csproj",
         "Action": "Start",
         "DebugTarget": "http"
       }

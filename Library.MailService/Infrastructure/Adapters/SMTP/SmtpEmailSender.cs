@@ -28,6 +28,12 @@ namespace Library.MailService.Infrastructure.Adapters.SMTP
             message.Body = new TextPart("html") { Text = htmlBody };
 
             using var client = new SmtpClient();
+
+            if (_options.SkipCertificateValidation)
+            {
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            }
+
             await client.ConnectAsync(_options.Host, _options.Port,
                 MailKit.Security.SecureSocketOptions.StartTls);
             await client.AuthenticateAsync(_options.Username, _options.Password);
