@@ -12,6 +12,7 @@ namespace Library.BookService.Infrastructure.Persistence.EF.Mappers
         public Editor ToDomain (EditorEntity entity)
         {
             if (entity == null)
+                // scrivere (entity == null) o (entity is null) per gli oggetti in c# + più o meno lo stesso
                 throw new ArgumentNullException(nameof(entity));
 
             return new Editor
