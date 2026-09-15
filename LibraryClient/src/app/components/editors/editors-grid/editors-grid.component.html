@@ -9,6 +9,10 @@
       <tbody>
         <tr *ngFor="let editor of editors">
           <td (click)="onViewDetail(editor.id)">{{ editor.name }}</td>
+        <!-- In questo caso come vedi come parametro non ho $event ma l'editor.id che estraggo dall'iterazione sull'editor
+         poi andrò a chiamare nel padre editorPage il viewdeatial() e in quel caso il padre non conosce l'editorid
+         passatogli, perchè noi glielo passiamo dal figlio come un eventemitter ragion per cui nel viewdetail del padre
+         avremo invece un $event -->
         </tr>
       </tbody>
     </table>
