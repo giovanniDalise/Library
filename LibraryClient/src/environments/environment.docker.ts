@@ -37,7 +37,8 @@ export const environment = {
       login: '/login'
     },    
     users: {
-      addUser: '/addUser'
+      addUser: '/addUser',
+      confirmEmail: '/confirm-email?token={token}'
     }    
   }   
 };

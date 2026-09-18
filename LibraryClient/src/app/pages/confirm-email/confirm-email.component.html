@@ -1,0 +1,35 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-center w-100">
+    <div class="detail-card-wrapper">
+      <div class="card shadow rounded p-4 text-center">
+
+        <!-- Loading -->
+        <div *ngIf="isLoading">
+          <div class="spinner-border text-light mb-3" role="status"></div>
+          <p class="text-light">Verifying your email...</p>
+        </div>
+
+        <!-- Successo -->
+        <div *ngIf="!isLoading && success">
+          <i class="bi bi-check-circle text-success fs-1 mb-3"></i>
+          <h2 class="text-light mb-3">Email confirmed!</h2>
+          <p class="text-light">Your account has been activated. You will be redirected to login in a few seconds.</p>
+          <button class="btn btn-action-outline mt-3" (click)="goToLogin()">
+            Go to Login
+          </button>
+        </div>
+
+        <!-- Errore -->
+        <div *ngIf="!isLoading && errorMessage">
+          <i class="bi bi-x-circle text-danger fs-1 mb-3"></i>
+          <h2 class="text-light mb-3">Confirmation failed</h2>
+          <p class="text-light">{{ errorMessage }}</p>
+          <button class="btn btn-action-outline mt-3" (click)="goToLogin()">
+            Go to Login
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

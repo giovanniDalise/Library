@@ -63,5 +63,9 @@ namespace Library.IdentityService.Core.Application
         {
             return await _userDomainService.GetUsersByTextAsync(searchText);
         }
+        public async Task<bool> ConfirmUserAsync(string token)
+        {
+            return await _userDomainService.ConfirmUserAsync(token);
+        }
     }
 }

@@ -12,6 +12,7 @@ import { BookDetailComponent } from './pages/books/book-detail/book-detail.compo
 import { EditorsFormComponent } from './components/editors/editors-form/editors-form.component';
 import { AuthorsFormComponent } from './components/authors/authors-form/authors-form.component';
 import { SignupComponent } from './pages/signup/signup-page.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -30,4 +31,5 @@ export const routes: Routes = [
     { path: 'authors/edit/:authorId', component: AuthorsFormComponent, canActivate: [AuthGuard] },
     { path: 'authors/:id', component: AuthorDetailComponent },
     { path: 'signup', component: SignupComponent },
+    { path: 'confirm-email', component: ConfirmEmailComponent }    
 ];

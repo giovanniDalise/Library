@@ -234,5 +234,26 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 throw new UserRepositoryADOException($"Error updating user with id {id}: {ex.Message}", ex);
             }
         }
+        public async Task<bool> ConfirmUserAsync(string token)
+        {
+            _logger.Debug($"ConfirmUserAsync called for token={token}");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                string query = Rm.GetString("ConfirmUser");
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@token", token);
+
+                var rowsAffected = await command.ExecuteNonQueryAsync();
+                return rowsAffected > 0; // true = confermato, false = token non valido o scaduto
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error confirming user with token={token}", ex);
+                throw new UserRepositoryADOException($"Error confirming user: {ex.Message}", ex);
+            }
+        }
     }
 }
