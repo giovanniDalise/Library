@@ -9,18 +9,22 @@ namespace Library.EmailService.Core.Application
     {
         private readonly IEmailSenderPort _emailSender;
         private readonly ILoggerPort _logger;
+        private readonly string _frontendBaseUrl;
 
-        public EmailAppService(IEmailSenderPort emailSender, ILoggerPort logger)
+
+        public EmailAppService(IEmailSenderPort emailSender, ILoggerPort logger, IConfiguration configuration)
         {
             _emailSender = emailSender;
             _logger = logger;
+            _frontendBaseUrl = configuration["App:FrontendBaseUrl"] ?? "http://localhost:4200";
+
         }
 
         public async Task SendConfirmationEmailAsync(UserRegisteredEvent @event)
         {
             _logger.Info($"SendConfirmationEmailAsync - Start | UserId: {@event.UserId}");
 
-            var confirmUrl = $"http://localhost:4200/confirm-email?token={@event.ConfirmationToken}";
+            var confirmUrl = $"{_frontendBaseUrl}/confirm-email?token={@event.ConfirmationToken}";
 
             var body = await BuildEmailBodyAsync(@event.FullName, confirmUrl, @event.ExpiresAt);
 
