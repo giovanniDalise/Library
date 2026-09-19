@@ -2,6 +2,7 @@
 using Library.IdentityService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 
 namespace Library.IdentityService.Infrastructure.Adapters.Repository
@@ -28,39 +29,42 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
 
             try
             {
-                using (var connection = new MySqlConnection(_connectionString))
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                // recupera password E is_confirmed insieme
+                string sql = "SELECT password, is_confirmed FROM user WHERE email = @Email";
+
+                using var command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Email", email);
+
+                using var reader = await command.ExecuteReaderAsync();
+
+                if (!await reader.ReadAsync())
                 {
-                    _logger.Debug("Opening database connection for credential check");
-                    await connection.OpenAsync();
-
-                    string sql = "SELECT password FROM user WHERE email = @Email";
-                    //non stiamo decriptando ma precuperiamo l'ash della psw associata alla mail a cui è stato
-                    //associato il salt in fase di creazione dell'utenza con la psw. Più sicuro del decrypting.
-
-                    using (var command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@Email", email);
-
-                        var result = await command.ExecuteScalarAsync();
-
-                        if (result == null)
-                        {
-                            _logger.Info($"No user found with email: {email}");
-                            return false;
-                        }
-
-                        string hashedPassword = result.ToString();
-                        var verified = _passwordVerifier.Verify(password, hashedPassword);
-
-                        _logger.Info(
-                            verified
-                                ? $"Password verification succeeded for email: {email}"
-                                : $"Password verification failed for email: {email}"
-                        );
-
-                        return verified;
-                    }
+                    _logger.Info($"No user found with email: {email}");
+                    return false;
                 }
+
+                string hashedPassword = reader.GetString("password");
+                bool isConfirmed = reader.GetBoolean("is_confirmed");
+
+                if (!isConfirmed)
+                {
+                    _logger.Warn($"Login attempt for unconfirmed email: {email}");
+                    throw new AuthRepositoryADOException("Email not confirmed. Please check your inbox.");
+                }
+
+                var verified = _passwordVerifier.Verify(password, hashedPassword);
+                _logger.Info(verified
+                    ? $"Password verification succeeded for email: {email}"
+                    : $"Password verification failed for email: {email}");
+
+                return verified;
+            }
+            catch (AuthRepositoryADOException)
+            {
+                throw;
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.DTO.REST.Auth;
+using Library.IdentityService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,7 +42,6 @@ namespace Library.IdentityService.Infrastructure.Adapters
             try
             {
                 var credentials = AuthDTOMapper.ToDomain(request);
-
                 var authResponse = await _authenticationService.Authenticate(credentials);
 
                 if (authResponse != null)
@@ -53,13 +53,13 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 _logger.Warn($"Authentication failed for email: {request.Email}");
                 return Unauthorized(new { message = "Email o password non validi" });
             }
+            catch (AuthRepositoryADOException ex) when (ex.Message.Contains("Email not confirmed"))
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
             catch (Exception ex)
             {
-                _logger.Error(
-                    $"Unexpected error during authentication for email: {request.Email}",
-                    ex
-                );
-
+                _logger.Error($"Unexpected error during authentication for email: {request.Email}", ex);
                 return StatusCode(500, new { message = "Errore interno del server" });
             }
         }

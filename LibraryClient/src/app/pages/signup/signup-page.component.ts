@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -21,24 +21,24 @@ export class SignupComponent {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   register(): void {
-
-    if (
-      !this.name ||
-      !this.surname ||
-      !this.email ||
-      !this.password ||
-      !this.confirmPassword
-    ) {
-      alert('Please fill in all fields');
+    if (!this.name || !this.surname || !this.email || !this.password || !this.confirmPassword) {
+      this.snackBar.open('Please fill in all fields', 'OK', {
+        duration: 5000,
+        panelClass: ['snackbar-error']
+      });
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match');
+      this.snackBar.open('Passwords do not match', 'OK', {
+        duration: 5000,
+        panelClass: ['snackbar-error']
+      });
       return;
     }
 
@@ -47,18 +47,20 @@ export class SignupComponent {
       surname: this.surname,
       email: this.email,
       password: this.password,
-      role: 1 // ruolo standard utente
+      role: 1
     }).subscribe({
-      next: (userId) => {
-        console.log('User created:', userId);
-
-        alert('Registration completed successfully');
-
+      next: () => {
+        this.snackBar.open('Registration completed! Check your email to confirm your account.', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-success']
+        });
         this.router.navigate(['/login']);
       },
-      error: (err) => {
-        console.error(err);
-        alert('Registration failed');
+      error: () => {
+        this.snackBar.open('Registration failed. Please try again.', 'OK', {
+          duration: 8000,
+          panelClass: ['snackbar-error']
+        });
       }
     });
   }
