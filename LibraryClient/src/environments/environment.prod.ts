@@ -41,11 +41,11 @@ export const environment = {
       delete: '/{id}'
     },          
     auth: {
-      login: '/login'
-    },    
-    users: {
-      addUser: '/addUser',
+      login: '/login',
       confirmEmail: '/confirm-email?token={token}'
+    },      
+    users: {
+      addUser: '/addUser'
     }  
   }  
 };

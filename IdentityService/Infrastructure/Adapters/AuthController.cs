@@ -2,6 +2,7 @@
 using Library.IdentityService.Infrastructure.DTO.REST.Auth;
 using Library.IdentityService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.IdentityService.Infrastructure.Adapters
@@ -57,11 +58,32 @@ namespace Library.IdentityService.Infrastructure.Adapters
             {
                 return Unauthorized(new { message = ex.Message });
             }
+            catch (EmailNotConfirmedException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
             catch (Exception ex)
             {
                 _logger.Error($"Unexpected error during authentication for email: {request.Email}", ex);
                 return StatusCode(500, new { message = "Errore interno del server" });
             }
+        }
+
+        [HttpGet("confirm-email")]
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail([FromQuery] string token)
+        {
+            _logger.Info($"ConfirmEmail called");
+
+            if (string.IsNullOrEmpty(token))
+                return BadRequest(new { error = "Token is required" });
+
+            var confirmed = await _authenticationService.ConfirmUserAsync(token);
+
+            if (!confirmed)
+                return BadRequest(new { error = "Token not valid or expired" });
+
+            return Ok(new { message = "Email confirmed successfully" });
         }
     }
 }

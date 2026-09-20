@@ -5,5 +5,6 @@ namespace Library.IdentityService.Core.Ports
     public interface IAuthenticationServicePort
     {
         Task<AuthResult> Authenticate(Credentials loginRequest);
+        Task<bool> ConfirmUserAsync(string token);
     }
 }

@@ -55,23 +55,6 @@ namespace Library.IdentityService.Infrastructure.Adapters
             return Ok(id);
         }
 
-        [HttpGet("confirm-email")]
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail([FromQuery] string token)
-        {
-            _logger.Info($"ConfirmEmail called");
-
-            if (string.IsNullOrEmpty(token))
-                return BadRequest(new { error = "Token is required" });
-
-            var confirmed = await _userAppService.ConfirmUserAsync(token);
-
-            if (!confirmed)
-                return BadRequest(new { error = "Token not valid or expired" });
-
-            return Ok(new { message = "Email confirmed successfully" });
-        }
-
         [HttpPut("{id}")]
         public async Task<ActionResult<long>> UpdateUser(long id, [FromBody] UserRequest request)
         {

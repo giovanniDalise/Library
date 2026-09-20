@@ -17,10 +17,5 @@ export class UserService {
 
     addUser(user: UserRequest): Observable<number> {
         return this.http.post<number>(this.baseUrl + this.endpoints.addUser,user);  
-    }
-
-    confirmEmail(token: string): Observable<any> {
-        const url = this.baseUrl + this.endpoints.confirmEmail.replace('{token}', token);
-        return this.http.get(url);
-    }    
+    }  
 }

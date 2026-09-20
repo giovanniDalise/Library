@@ -11,7 +11,5 @@ namespace Library.IdentityService.Core.Ports
         Task<long> DeleteUserAsync(long id);
         Task<List<User>> GetUsersByTextAsync(string searchText);
         //Task<List<User>> GetUsersByObjectAsync(User searchUser);
-        Task<bool> ConfirmUserAsync(string token);
-
     }
 }

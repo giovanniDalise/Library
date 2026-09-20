@@ -58,5 +58,10 @@ export class AuthenticationService {
     console.log("sessionStorage non disponibile"); // Log per il caso in cui sessionStorage non sia disponibile
     return null;
   }
+
+  confirmEmail(token: string): Observable<any> {
+      const url = this.baseUrl + this.endpoints.confirmEmail.replace('{token}', token);
+      return this.http.get(url);
+  }    
   
 }

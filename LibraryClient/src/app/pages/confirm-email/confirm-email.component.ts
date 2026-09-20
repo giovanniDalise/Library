@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
+import { AuthorService } from '../../services/author.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-confirm-email',
@@ -19,7 +21,7 @@ export class ConfirmEmailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class ConfirmEmailComponent implements OnInit {
       return;
     }
 
-    this.userService.confirmEmail(token).subscribe({
+    this.authService.confirmEmail(token).subscribe({
       next: () => {
         this.isLoading = false;
         this.success = true;
@@ -44,7 +46,7 @@ export class ConfirmEmailComponent implements OnInit {
       }
     });
   }
-  
+
   goToLogin(): void {
     this.router.navigate(['/login']);
   }  

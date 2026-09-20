@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmUser" xml:space="preserve">
-    <value>UPDATE USER SET is_confirmed = TRUE, confirmation_token = NULL, token_expires_at = NULL 
-WHERE confirmation_token = @token AND token_expires_at &gt; NOW() AND is_confirmed = FALSE;</value>
-  </data>
   <data name="DeleteUserById" xml:space="preserve">
     <value>DELETE FROM user WHERE user_id = @id;</value>
   </data>

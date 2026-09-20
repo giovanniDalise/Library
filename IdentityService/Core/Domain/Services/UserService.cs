@@ -44,9 +44,5 @@ namespace Library.IdentityService.Core.Domain.Services
         //{
         //    return await _userRepositoryPort.FindByObjectAsync(user);
         //}
-        public async Task<bool> ConfirmUserAsync(string token)
-        {
-            return await _userRepositoryPort.ConfirmUserAsync(token);
-        }
     }
 }
