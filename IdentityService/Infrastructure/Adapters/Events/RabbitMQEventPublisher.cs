@@ -11,6 +11,8 @@ namespace Library.IdentityService.Infrastructure.Adapters.Events
         private readonly IConnection _connection;
         private readonly IChannel _channel;
         private readonly ILoggerPort _logger;
+        private const string UserRegisteredQueue = "IdentityService_UserRegistered";
+        private const string UserRegisteredExchange = "IdentityService_UserRegistered_Exchange";
 
         private RabbitMQEventPublisher(IConnection connection, IChannel channel, ILoggerPort logger)
         {
@@ -29,25 +31,25 @@ namespace Library.IdentityService.Infrastructure.Adapters.Events
 
         public async Task PublishAsync<T>(T @event, string queueName)
         {
-            await _channel.QueueDeclareAsync(
-                queue: queueName,
-                durable: true,
-                exclusive: false,
-                autoDelete: false);
+            // usa l'exchange invece della coda diretta
+            var exchangeName = $"{queueName}_Exchange";
+
+            await _channel.ExchangeDeclareAsync(exchangeName, ExchangeType.Direct, durable: true);
+            await _channel.QueueDeclareAsync(queueName, durable: true, exclusive: false, autoDelete: false);
+            await _channel.QueueBindAsync(queueName, exchangeName, queueName);
 
             var json = JsonSerializer.Serialize(@event);
             var body = Encoding.UTF8.GetBytes(json);
-
             var props = new BasicProperties { Persistent = true };
 
             await _channel.BasicPublishAsync(
-                exchange: "",
+                exchange: exchangeName,
                 routingKey: queueName,
                 mandatory: false,
                 basicProperties: props,
                 body: body);
 
-            _logger.Info($"RabbitMQEventPublisher - Published to queue: {queueName}");
+            _logger.Info($"RabbitMQEventPublisher - Published to exchange: {exchangeName}");
         }
 
         public async ValueTask DisposeAsync()

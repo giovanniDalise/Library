@@ -44,7 +44,7 @@ namespace Library.IdentityService.Core.Application
                 FullName = $"{user.Name} {user.Surname}",
                 ConfirmationToken = user.ConfirmationToken,
                 ExpiresAt = user.TokenExpiresAt.Value
-            }, "user.registered");
+            }, "IdentityService_UserRegistered");
 
             return id;
         }

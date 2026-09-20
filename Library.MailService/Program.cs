@@ -1,11 +1,11 @@
 using Library.EmailService.Core.Domain.Services;
 using Library.EmailService.Core.Ports;
-using Library.EmailService.Infrastructure.Adapters.RabbitMQ;
 using Library.Logging.Abstractions;
 using Library.Logging.NLog;
 using Library.MailService.Infrastructure.Adapters.SMTP;
 using Library.MailService.Infrastructure.Options;
 using Library.EmailService.Core.Application;
+using Library.EmailService.Infrastructure.Adapters.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
