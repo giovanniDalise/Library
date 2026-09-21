@@ -122,15 +122,15 @@
   </data>
   <data name="InsertUser" xml:space="preserve">
     <value>
-        INSERT INTO USER (name, surname, email, password, role, confirmation_token, token_expires_at, is_confirmed) 
+        INSERT INTO user (name, surname, email, password, role, confirmation_token, token_expires_at, is_confirmed) 
         VALUES (@name, @surname, @email, @password, 1, @confirmationToken, @tokenExpiresAt, FALSE);
     </value>
   </data>
   <data name="SelectAllUsers" xml:space="preserve">
-    <value>SELECT * FROM USER;</value>
+    <value>SELECT * FROM user;</value>
   </data>
   <data name="SelectUserById" xml:space="preserve">
-    <value>SELECT * FROM USER WHERE user_id = @id; </value>
+    <value>SELECT * FROM user WHERE user_id = @id; </value>
   </data>
   <data name="SelectUserByText" xml:space="preserve">
     <value>SELECT *  
