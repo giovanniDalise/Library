@@ -21,9 +21,18 @@ namespace Library.IdentityService.Infrastructure.Adapters.Events
             _logger = logger;
         }
 
-        public static async Task<RabbitMQEventPublisher> CreateAsync(string hostName, ILoggerPort logger)
+        public static async Task<RabbitMQEventPublisher> CreateAsync(
+            string hostName,
+            string userName,
+            string password,
+            ILoggerPort logger)
         {
-            var factory = new ConnectionFactory { HostName = hostName };
+            var factory = new ConnectionFactory
+            {
+                HostName = hostName,
+                UserName = userName,
+                Password = password
+            };
             var connection = await factory.CreateConnectionAsync();
             var channel = await connection.CreateChannelAsync();
             return new RabbitMQEventPublisher(connection, channel, logger);

@@ -1,6 +1,6 @@
 services:
   # ============================================================
-  # MYSQL - un container per ogni microservizio (database-per-service)
+  # MYSQL - un container per ogni microservizio
   # ============================================================
 
   mysql-books:
@@ -76,6 +76,30 @@ services:
       retries: 5
 
   # ============================================================
+  # RABBITMQ
+  # ============================================================
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - library_default
+    restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
   # SERVIZI APPLICATIVI
   # ============================================================
 
@@ -97,7 +121,6 @@ services:
         condition: service_healthy
     volumes:
       - book-images:/app/images
-                                                                          
       - logs-data:/app/logs
     networks:
       - library_default
@@ -112,19 +135,48 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__IdentityServiceDbConnection: "Server=mysql-identity;Port=3306;Database=library_identity;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
+      RabbitMQ__HostName: rabbitmq
+      RabbitMQ__UserName: ${RABBITMQ_USER}
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
     ports:
       - "5022:5022"
     depends_on:
       mysql-identity:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     volumes:
-                                                                          
       - logs-data:/app/logs
     networks:
       - library_default
     restart: always
 
-  # Servizio per LibraryClient (frontend)
+  emailservice:
+    image: giovannidalise/librarymknwdot-emailservice:latest
+    build:
+      context: ./EMailService
+      dockerfile: Dockerfile
+    container_name: emailservice-container
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      RabbitMQ__HostName: rabbitmq
+      RabbitMQ__UserName: ${RABBITMQ_USER}
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
+      Email__Host: ${MAIL_HOST}
+      Email__Port: ${MAIL_PORT}
+      Email__Username: ${MAIL_USERNAME}
+      Email__Password: ${MAIL_PASSWORD}
+      Email__FromAddress: ${MAIL_FROM}
+      App__FrontendBaseUrl: ${FRONTEND_BASE_URL}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - logs-data:/app/logs
+    networks:
+      - library_default
+    restart: always
+
   libraryclient:
     image: giovannidalise/librarymknwdot-libraryclient:latest
     build:
@@ -139,7 +191,7 @@ services:
       - library_default
     restart: always
 
-  images-init: # one-job service per inizializzare le immagini nel volume
+  images-init:
     image: giovannidalise/librarymknwdot-images-init:latest
     build:
       context: ./LibraryImages
@@ -147,7 +199,7 @@ services:
     volumes:
       - book-images:/app/images
 
-  api-gateway: # nginx per il routing API in Docker (diverso da quello di LibraryClient che serve i file statici)
+  api-gateway:
     build:
       context: ./ApiGateway
     container_name: api-gateway
@@ -169,3 +221,4 @@ volumes:
   mysql-reservation-data: {}
   book-images: {}
   logs-data: {}
+  rabbitmq-data: {}

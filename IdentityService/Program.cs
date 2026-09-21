@@ -35,7 +35,10 @@ builder.Services.AddSingleton<IEventPublisherPort>(sp =>
 {
     var logger = sp.GetRequiredService<ILoggerPort>();
     var hostName = builder.Configuration["RabbitMQ:HostName"] ?? "localhost";
-    return RabbitMQEventPublisher.CreateAsync(hostName, logger).GetAwaiter().GetResult();
+    var userName = builder.Configuration["RabbitMQ:UserName"] ?? "guest";
+    var password = builder.Configuration["RabbitMQ:Password"] ?? "guest";
+    return RabbitMQEventPublisher.CreateAsync(hostName, userName, password, logger)
+        .GetAwaiter().GetResult();
 });
 
 // Configurazione CORS per permettere tutte le richieste (debug)

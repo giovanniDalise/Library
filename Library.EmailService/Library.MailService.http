@@ -1,0 +1,6 @@
+@Library.MailService_HostAddress = http://localhost:5227
+
+GET {{Library.MailService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

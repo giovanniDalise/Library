@@ -1,0 +1,18 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+
+RUN mkdir -p /app/logs
+
+COPY bin/Release/net10.0/publish/ ./
+
+RUN apt-get update && apt-get install -y apt-transport-https curl \
+    && apt-get install -y netcat-openbsd
+
+RUN curl -o wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
+    chmod +x wait-for-it.sh
+
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS="http://+:5090"
+
+ENTRYPOINT ["/app/wait-for-it.sh", "rabbitmq:5672", "--", "dotnet", "Library.EmailService.dll"]
