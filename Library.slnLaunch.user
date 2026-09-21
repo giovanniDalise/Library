@@ -13,7 +13,7 @@
         "DebugTarget": "http"
       },
       {
-        "Path": "Library.EmailService\\Library.EmailService.csproj",
+        "Path": "EMailService\\Library.EmailService.csproj",
         "Action": "Start",
         "DebugTarget": "http"
       }
