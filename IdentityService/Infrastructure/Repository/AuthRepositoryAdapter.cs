@@ -114,7 +114,7 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 using var connection = new MySqlConnection(_connectionString);
                 await connection.OpenAsync();
 
-                string sql = "UPDATE USER SET is_confirmed = TRUE, confirmation_token = NULL, token_expires_at = NULL WHERE confirmation_token = @token AND token_expires_at > NOW() AND is_confirmed = FALSE";
+                string sql = "UPDATE user SET is_confirmed = TRUE, confirmation_token = NULL, token_expires_at = NULL WHERE confirmation_token = @token AND token_expires_at > NOW() AND is_confirmed = FALSE";
                 using var command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@token", token);
 
