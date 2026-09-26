@@ -80,6 +80,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
         [AllowAnonymous]
         //GET /api/editors/10?page=1&pageSize=10 il ? segna l'inizio della query ed è posto dopo la route
         public async Task<ActionResult<EditorDetailResponse>> GetEditorDetail(
+            // RouteParameters potresti anche scrivere esplicemente [FromRoute] long id ma non c'è bisogno dato che lo 
+            // specifichi nella route {id}
             long id,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
