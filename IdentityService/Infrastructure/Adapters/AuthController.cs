@@ -35,7 +35,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
             {
                 _logger.Warn($"Invalid login attempt: missing credentials (email={request.Email})");
-                return Unauthorized(new { message = "Email o password non validi" });
+                return Unauthorized(new { message = "Email o password not valid" });
             }
 
             _logger.Debug($"Attempting authentication for email: {request.Email}");
@@ -65,7 +65,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
             catch (Exception ex)
             {
                 _logger.Error($"Unexpected error during authentication for email: {request.Email}", ex);
-                return StatusCode(500, new { message = "Errore interno del server" });
+                return StatusCode(500, new { message = "Internal Server Error" });
             }
         }
 
@@ -84,6 +84,13 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 return BadRequest(new { error = "Token not valid or expired" });
 
             return Ok(new { message = "Email confirmed successfully" });
+        }
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<ActionResult> ForgotPassword([FromBody] string email)
+        {
+            _logger.Info("ForgotPassword called");
+            return Ok(new { message = "" });
         }
     }
 }
