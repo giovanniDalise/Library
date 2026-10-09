@@ -87,10 +87,16 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
         [HttpPost("forgot-password")]
         [AllowAnonymous]
-        public async Task<ActionResult> ForgotPassword([FromBody] string email)
+        public async Task<ActionResult> ForgotPasswordAsync([FromBody] string email)
         {
             _logger.Info("ForgotPassword called");
-            return Ok(new { message = "" });
+
+            if (string.IsNullOrEmpty(email))
+                return BadRequest(new { message = "Email is required" });
+
+            await _authenticationService.ForgotPasswordAsync(email);
+
+            return Ok(new { message = "If this email exists, you will receive a reset link shortly" });
         }
     }
 }
