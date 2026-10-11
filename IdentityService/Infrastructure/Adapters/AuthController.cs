@@ -85,6 +85,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
 
             return Ok(new { message = "Email confirmed successfully" });
         }
+
         [HttpPost("forgot-password")]
         [AllowAnonymous]
         public async Task<ActionResult> ForgotPasswordAsync([FromBody] string email)
@@ -95,6 +96,9 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 return BadRequest(new { message = "Email is required" });
 
             await _authenticationService.ForgotPasswordAsync(email);
+            //Come vedi non abbiamo un bool di result come retorno alla chiamata e sotto diamo sempre Ok con un messaggio generico
+            // "Se questa email esiste.." e non diciamo mai “email non trovata” o “email trovata” perché darebbe informazioni
+            // a un attaccante su quali email sono registrate nel sistema
 
             return Ok(new { message = "If this email exists, you will receive a reset link shortly" });
         }

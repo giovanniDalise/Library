@@ -1,4 +1,5 @@
 ﻿using Library.IdentityService.Core.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Library.IdentityService.Core.Ports
 {
@@ -6,5 +7,7 @@ namespace Library.IdentityService.Core.Ports
     {
         Task<AuthResult> Authenticate(Credentials loginRequest);
         Task<bool> ConfirmUserAsync(string token);
+        Task ForgotPasswordAsync(string email);
+
     }
 }

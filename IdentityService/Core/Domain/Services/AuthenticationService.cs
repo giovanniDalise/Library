@@ -40,6 +40,7 @@ namespace Library.IdentityService.Core.Domain.Services
                 {
                     // token scaduto — genera nuovo e reinvia mail
                     var newToken = Guid.NewGuid().ToString("N");
+                    //N formato token senza trattini
                     var newExpiry = DateTime.UtcNow.AddHours(24);
 
                     await _repositoryPort.UpdateConfirmationTokenAsync(
@@ -54,7 +55,7 @@ namespace Library.IdentityService.Core.Domain.Services
                         FullName = $"{user.Name} {user.Surname}",
                         ConfirmationToken = newToken,
                         ExpiresAt = newExpiry
-                    }, "user.registered");
+                    }, "IdentityService_UserRegistered");
 
                     throw new EmailNotConfirmedException(
                         "Email not confirmed. We sent you a new confirmation link.");
@@ -72,5 +73,13 @@ namespace Library.IdentityService.Core.Domain.Services
         {
             return await _repositoryPort.ConfirmUserAsync(token);
         }
+
+        public async Task ForgotPasswordAsync(string email)
+        {
+            var newToken = Guid.NewGuid().ToString("N");
+            var newExpiry = DateTime.UtcNow.AddHours(24);
+
+        }
+
     }
 }

@@ -15,9 +15,11 @@ CREATE TABLE user (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
     role BIGINT NOT NULL,
-	confirmation_token VARCHAR(255) NULL,
-	token_expires_at DATETIME NULL,
-	is_confirmed BOOLEAN NOT NULL DEFAULT FALSE,
+    confirmation_token VARCHAR(255) NULL,
+    token_expires_at DATETIME NULL,
+    is_confirmed BOOLEAN NOT NULL DEFAULT FALSE,
+    reset_token VARCHAR(255) NULL,
+    reset_token_expires_at DATETIME NULL,
     FOREIGN KEY (role) REFERENCES role(role_id)
 );
 
