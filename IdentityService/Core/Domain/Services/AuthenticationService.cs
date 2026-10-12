@@ -3,6 +3,7 @@ using Library.IdentityService.Core.Domain.Models;
 using Library.IdentityService.Core.Domain.Models.Events;
 using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace Library.IdentityService.Core.Domain.Services
 {
@@ -76,10 +77,46 @@ namespace Library.IdentityService.Core.Domain.Services
 
         public async Task ForgotPasswordAsync(string email)
         {
-            var newToken = Guid.NewGuid().ToString("N");
-            var newExpiry = DateTime.UtcNow.AddHours(24);
+            var user = await _repositoryPort.GetByEmailAsync(email);
+            if (user == null)
+            {
+                return;
+            }
+            var (isConfirmed, token, expiresAt) =  await _repositoryPort.GetUserConfirmationInfoAsync(email);
+
+            if (!isConfirmed)
+            {
+                if (expiresAt == null || expiresAt < DateTime.UtcNow)
+                {
+                    // token scaduto — genera nuovo e reinvia mail
+                    var newToken = Guid.NewGuid().ToString("N");
+                    //N formato token senza trattini
+                    var newExpiry = DateTime.UtcNow.AddHours(24);
+
+                    await _repositoryPort.UpdateConfirmationTokenAsync(
+                        email, newToken, newExpiry);
+
+
+                    await _eventPublisher.PublishAsync(new UserRegisteredEvent
+                    {
+                        UserId = user.Id ?? 0,
+                        Email = user.Email,
+                        FullName = $"{user.Name} {user.Surname}",
+                        ConfirmationToken = newToken,
+                        ExpiresAt = newExpiry
+                    }, "IdentityService_UserRegistered");
+
+                    throw new EmailNotConfirmedException(
+                        "Email not confirmed. We sent you a new confirmation link.");
+                }
+
+                throw new EmailNotConfirmedException(
+                    "Email not confirmed. Please check your inbox.");
+            }
+
+            var resetToken = Guid.NewGuid().ToString("N");
+            var resetTokenExpiry = DateTime.UtcNow.AddHours(24);
 
         }
-
     }
 }
