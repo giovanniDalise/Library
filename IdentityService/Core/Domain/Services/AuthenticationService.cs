@@ -117,6 +117,17 @@ namespace Library.IdentityService.Core.Domain.Services
             var resetToken = Guid.NewGuid().ToString("N");
             var resetTokenExpiry = DateTime.UtcNow.AddHours(24);
 
+            await _repositoryPort.UpdateResetTokenAsync(
+                email, resetToken, resetTokenExpiry);
+
+            await _eventPublisher.PublishAsync(new PasswordResetEvent
+            {
+                Email = user.Email,
+                FullName = $"{user.Name} {user.Surname}",
+                ResetToken = resetToken,
+                ExpiresAt = resetTokenExpiry
+            }, "IdentityService_PasswordReset");
+
         }
     }
 }
