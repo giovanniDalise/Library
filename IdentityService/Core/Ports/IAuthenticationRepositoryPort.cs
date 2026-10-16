@@ -8,6 +8,7 @@ namespace Library.IdentityService.Core.Ports
         Task<string> GetUserRole(string email);
         Task<(bool IsConfirmed, string? Token, DateTime? ExpiresAt)> GetUserConfirmationInfoAsync(string email);
         Task UpdateConfirmationTokenAsync(string email, string token, DateTime expiresAt);
+        Task UpdateResetTokenAsync(string email, string resetToken, DateTime resetTokenExpiry);
         Task<bool> ConfirmUserAsync(string token);
         Task<User> GetByEmailAsync(string email);
     }

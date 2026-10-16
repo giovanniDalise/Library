@@ -207,5 +207,33 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 throw new AuthRepositoryADOException($"Error getting user by email: {e.Message}", e);
             }
         }
+        public async Task UpdateResetTokenAsync(string email, string resetToken, DateTime resetTokenExpiry)
+        {
+            _logger.Info($"UpdateResetTokenAsync for email: {email}");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                // using viene utilizzato per il rilascio automatico della risorsa(in questo caso la connessione al db)
+                // quando non viene più utilizzata (ossia quando usciamo dallo scope del metodo o quando questo va in eccezione)
+                await connection.OpenAsync();
+
+                string sql = "Update user SET reset_token = @token, reset_token_expires_at = @resetTokenExpiry where email = @email";
+                using var command = new MySqlCommand(sql, connection);
+
+                command.Parameters.AddWithValue("@token", resetToken);
+                command.Parameters.AddWithValue("@resetTokenExpiry", resetTokenExpiry);
+                command.Parameters.AddWithValue("@email", email);
+
+                await command.ExecuteNonQueryAsync();
+
+                _logger.Info($"UpdateResetTokenAsync completed for email: {email}");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"UpdateResetTokenAsync for email: {email}", ex);
+                throw new AuthRepositoryADOException($"Error updating reset token {ex.Message}", ex);
+            }
+        }
     }
 }

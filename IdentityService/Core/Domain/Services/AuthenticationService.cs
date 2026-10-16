@@ -93,8 +93,7 @@ namespace Library.IdentityService.Core.Domain.Services
                     //N formato token senza trattini
                     var newExpiry = DateTime.UtcNow.AddHours(24);
 
-                    await _repositoryPort.UpdateConfirmationTokenAsync(
-                        email, newToken, newExpiry);
+                    await _repositoryPort.UpdateConfirmationTokenAsync(email, newToken, newExpiry);
 
 
                     await _eventPublisher.PublishAsync(new UserRegisteredEvent
@@ -117,8 +116,7 @@ namespace Library.IdentityService.Core.Domain.Services
             var resetToken = Guid.NewGuid().ToString("N");
             var resetTokenExpiry = DateTime.UtcNow.AddHours(24);
 
-            await _repositoryPort.UpdateResetTokenAsync(
-                email, resetToken, resetTokenExpiry);
+            await _repositoryPort.UpdateResetTokenAsync(email, resetToken, resetTokenExpiry);
 
             await _eventPublisher.PublishAsync(new PasswordResetEvent
             {
