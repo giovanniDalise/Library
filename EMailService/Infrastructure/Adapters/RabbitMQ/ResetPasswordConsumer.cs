@@ -1,7 +1,10 @@
-﻿using Library.EmailService.Core.Ports;
+﻿using Library.EmailService.Core.Domain.Events;
+using Library.EmailService.Core.Ports;
 using Library.Logging.Abstractions;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System.Text;
+using System.Text.Json;
 
 namespace Library.EmailService.Infrastructure.Adapters.RabbitMQ
 {
@@ -26,6 +29,52 @@ namespace Library.EmailService.Infrastructure.Adapters.RabbitMQ
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.Info("ResetPasswordConsumer - Starting");
+
+            await InitializeConnectionAsync();
+            await SetupQueuesAsync();
+
+            var consumer = new AsyncEventingBasicConsumer(_channel);
+            consumer.ReceivedAsync += async (_, ea) =>
+            {
+                var retryCount = GetRetryCount(ea.BasicProperties);
+                var json = Encoding.UTF8.GetString(ea.Body.ToArray());
+
+                try
+                {
+                    var @event = JsonSerializer.Deserialize<PasswordResetEvent>(json);
+
+                    if (@event != null)
+                    {
+                        await _emailAppService.SendResetPasswordEmailAsync(@event);
+
+                        await _channel!.BasicAckAsync(ea.DeliveryTag, false);
+                        _logger.Info($"ResetPasswordConsumer - Processed | Email: {@event.Email}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"ResetPasswordConsumer - Error | Attempt: {retryCount + 1}", ex);
+
+                    await _channel!.BasicAckAsync(ea.DeliveryTag, false);
+
+                    if (retryCount < MaxRetries)
+                    {
+                        await PublishToRetryAsync(json, retryCount + 1);
+                        _logger.Warn($"ResetPasswordConsumer - Sent to Retry | Attempt: {retryCount + 1}/{MaxRetries}");
+                    }
+                    else
+                    {
+                        await PublishToDlqAsync(json, ex.Message);
+                        _logger.Error("ResetPasswordConsumer - Max retries reached, sent to DLQ");
+                    }
+                }
+            };
+            await _channel!.BasicConsumeAsync(MainQueue, autoAck: false, consumer);
+
+            _logger.Info($"ResetPasswordConsumer - Listening on queue: {MainQueue}");
+
+            await Task.Delay(Timeout.Infinite, stoppingToken);
         }
     }
 }

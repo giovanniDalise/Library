@@ -30,5 +30,21 @@ namespace Library.EmailService.Core.Domain.Services
 
             _logger.Info($"MailService - Completed | To: {to}");
         }
+
+        public async Task SendResetPasswordEmailAsync(string to, string fullName, string resetUrl, DateTime expiresAt)
+        {
+            _logger.Info($"EmailService - SendResetPasswordEmailAsync | To: {to}");
+
+            var templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", "ResetPasswordEmail.html");
+            var template = await File.ReadAllTextAsync(templatePath);
+
+            var body = template
+                .Replace("{{FullName}}", fullName)
+                .Replace("{{ResetUrl}}", resetUrl)
+                .Replace("{{ExpiresAt}}", expiresAt.ToString("dd/MM/yyyy HH:mm"));
+
+            await _emailSender.SendAsync(to, "Reset your password", body);
+            _logger.Info($"EmailService - Completed | To: {to}");
+        }
     }
 }

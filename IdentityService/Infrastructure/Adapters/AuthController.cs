@@ -110,5 +110,12 @@ namespace Library.IdentityService.Infrastructure.Adapters
             // a un attaccante su quali email sono registrate nel sistema
             return Ok(new { message = "If this email exists, you will receive a reset link shortly" });
         }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<ActionResult> ResetPassword([FromBody] string troken, string password)
+        {
+
+        }
     }
 }

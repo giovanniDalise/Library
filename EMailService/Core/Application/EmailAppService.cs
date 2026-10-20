@@ -7,44 +7,36 @@ namespace Library.EmailService.Core.Application
 {
     public class EmailAppService : IEmailAppServicePort
     {
-        private readonly IEmailSenderPort _emailSender;
+        private readonly IEmailServicePort _emailService;
         private readonly ILoggerPort _logger;
         private readonly string _frontendBaseUrl;
 
-
-        public EmailAppService(IEmailSenderPort emailSender, ILoggerPort logger, IConfiguration configuration)
+        public EmailAppService(
+            IEmailServicePort emailService,
+            ILoggerPort logger,
+            IConfiguration configuration)
         {
-            _emailSender = emailSender;
+            _emailService = emailService;
             _logger = logger;
             _frontendBaseUrl = configuration["App:FrontendBaseUrl"] ?? "http://localhost:4200";
-
         }
 
         public async Task SendConfirmationEmailAsync(UserRegisteredEvent @event)
         {
-            _logger.Info($"SendConfirmationEmailAsync - Start | UserId: {@event.UserId}");
-
+            _logger.Info($"EmailAppService - SendConfirmationEmailAsync | UserId: {@event.UserId}");
             var confirmUrl = $"{_frontendBaseUrl}/confirm-email?token={@event.ConfirmationToken}";
-
-            var body = await BuildEmailBodyAsync(@event.FullName, confirmUrl, @event.ExpiresAt);
-
-            await _emailSender.SendAsync(
-                to: @event.Email,
-                subject: "Confirm your registration",
-                htmlBody: body);
-
-            _logger.Info($"SendConfirmationEmailAsync - Completed | Email: {@event.Email}");
+            await _emailService.SendConfirmationEmailAsync(
+                @event.Email, @event.FullName, confirmUrl, @event.ExpiresAt);
+            _logger.Info($"EmailAppService - Completed | Email: {@event.Email}");
         }
 
-        private async Task<string> BuildEmailBodyAsync(string fullName, string confirmUrl, DateTime expiresAt)
+        public async Task SendResetPasswordEmailAsync(PasswordResetEvent @event)
         {
-            var templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", "ConfirmationEmail.html");
-            var template = await File.ReadAllTextAsync(templatePath);
-
-            return template
-                .Replace("{{FullName}}", fullName)
-                .Replace("{{ConfirmUrl}}", confirmUrl)
-                .Replace("{{ExpiresAt}}", expiresAt.ToString("dd/MM/yyyy HH:mm"));
+            _logger.Info($"EmailAppService - SendResetPasswordEmailAsync | Email: {@event.Email}");
+            var resetUrl = $"{_frontendBaseUrl}/reset-password?token={@event.ResetToken}";
+            await _emailService.SendResetPasswordEmailAsync(
+                @event.Email, @event.FullName, resetUrl, @event.ExpiresAt);
+            _logger.Info($"EmailAppService - Completed | Email: {@event.Email}");
         }
     }
 }

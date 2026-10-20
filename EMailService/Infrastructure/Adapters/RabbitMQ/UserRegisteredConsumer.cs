@@ -37,45 +37,81 @@ namespace Library.EmailService.Infrastructure.Adapters.RabbitMQ
         {
             _logger.Info("UserRegisteredConsumer - Starting");
 
+            // Crea la connessione e il channel per comunicare con RabbitMQ.
             await InitializeConnectionAsync();
+
+            // Crea e configura gli Exchange, le Queue e i relativi Binding.
             await SetupQueuesAsync();
 
+            // Crea un consumer asincrono che riceverà i messaggi da RabbitMQ.
             var consumer = new AsyncEventingBasicConsumer(_channel);
+
+            // Registra una funzione che verrà eseguita ogni volta
+            // che RabbitMQ consegna un messaggio al consumer.
+            // "_" rappresenta il mittente, mentre "ea" contiene i dati del messaggio.
             consumer.ReceivedAsync += async (_, ea) =>
             {
+                // Legge dall'header il numero di retry già effettuati.
                 var retryCount = GetRetryCount(ea.BasicProperties);
+
+                // Converte il corpo del messaggio da byte a stringa JSON.
                 var json = Encoding.UTF8.GetString(ea.Body.ToArray());
 
                 try
                 {
+                    // Deserializza il JSON trasformandolo in un oggetto UserRegisteredEvent.
                     var @event = JsonSerializer.Deserialize<UserRegisteredEvent>(json);
+
+                    // Verifica che la deserializzazione abbia prodotto un oggetto valido.
                     if (@event != null)
                     {
+                        // Invia l'email di conferma all'utente registrato.
+                        // Se l'operazione fallisce con un'eccezione, passa al catch.
                         await _emailAppService.SendConfirmationEmailAsync(@event);
+
+                        // Conferma a RabbitMQ che il messaggio è stato elaborato.
+                        // false significa che viene confermato solo questo messaggio.
                         await _channel!.BasicAckAsync(ea.DeliveryTag, false);
                         _logger.Info($"UserRegisteredConsumer - Processed | Email: {@event.Email}");
                     }
                 }
                 catch (Exception ex)
                 {
+                    // Registra l'errore e il numero del tentativo corrente.
                     _logger.Error($"UserRegisteredConsumer - Error | Attempt: {retryCount + 1}", ex);
+
+                    // Conferma il messaggio originale, evitando che RabbitMQ
+                    // lo riconsegni automaticamente alla Main Queue.
                     await _channel!.BasicAckAsync(ea.DeliveryTag, false);
 
+                    // Se non abbiamo ancora raggiunto il numero massimo di retry...
                     if (retryCount < MaxRetries)
                     {
+                        // Pubblica una nuova copia del messaggio nella Retry Queue,
+                        // incrementando il contatore dei tentativi.
                         await PublishToRetryAsync(json, retryCount + 1);
                         _logger.Warn($"UserRegisteredConsumer - Sent to Retry | Attempt: {retryCount + 1}/{MaxRetries}");
                     }
                     else
                     {
+                        // Se i retry sono esauriti, pubblica il messaggio nella DLQ
+                        // aggiungendo le informazioni relative all'errore.
                         await PublishToDlqAsync(json, ex.Message);
                         _logger.Error("UserRegisteredConsumer - Max retries reached, sent to DLQ");
                     }
                 }
             };
 
+            // Avvia il consumer sulla Main Queue.
+            // autoAck: false significa che il messaggio deve essere confermato
+            // esplicitamente dal codice tramite BasicAckAsync.
             await _channel!.BasicConsumeAsync(MainQueue, autoAck: false, consumer);
+
+            // Registra nei log che il consumer è in ascolto sulla Main Queue.
             _logger.Info($"UserRegisteredConsumer - Listening on queue: {MainQueue}");
+
+            // Mantiene attivo il servizio senza occupare inutilmente la CPU.
+            // L'attesa termina quando stoppingToken viene cancellato durante lo shutdown.
             await Task.Delay(Timeout.Infinite, stoppingToken);
         }
     }
