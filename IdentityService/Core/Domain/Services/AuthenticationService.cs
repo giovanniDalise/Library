@@ -146,5 +146,11 @@ namespace Library.IdentityService.Core.Domain.Services
             //Infine sulla management UI di RabbitMQ hai visibilità chiara su quanti messaggi di ogni tipo sono 
             //in coda, in retry o in DLQ — informazione preziosa per il monitoring e il debugging.
         }
+        public async Task ResetPasswordAsync(string token, string newPassword)
+        {
+            await _repositoryPort.GetUserByResetTokenAsync(token);
+
+        }
+
     }
 }

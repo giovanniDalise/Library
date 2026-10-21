@@ -191,6 +191,8 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 command.Parameters.AddWithValue("@Email", email);
 
                 using var reader = await command.ExecuteReaderAsync();
+
+                // se non trova l'utente restituisce null
                 if (!await reader.ReadAsync()) return null;
 
                 return new User
@@ -233,6 +235,36 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
             {
                 _logger.Error($"UpdateResetTokenAsync for email: {email}", ex);
                 throw new AuthRepositoryADOException($"Error updating reset token {ex.Message}", ex);
+            }
+        }
+        public async Task<(User? User, DateTime? ResetTokenExpiresAt)> GetUserByResetTokenAsync(string token)
+        {
+            _logger.Info($"GetUserByResetTokenAsync");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                string sql = "Select * from user where reset_token = @token";
+                using var command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@token", token);
+
+                using var reader = await command.ExecuteReaderAsync();
+                if (!await reader.ReadAsync()) return (null, null);
+
+                return 
+                (
+                    new User(){Id = reader.GetInt64("user_id")},
+                    reader.IsDBNull(reader.GetOrdinal("reset_token_expires_at")) ? null : reader.GetDateTime("reset_token_expires_at")
+                    //Con GetOrdinal prima si prende il numero della colonna con quel nome,
+                    // successivamente vede se il campo di quella colonna è vuoto nel caso lo sia restituisce
+                    // null altrimenti fa il GetDateTime per prendersi il valore in DateTime
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"GetUserByResetTokenAsync", ex);
+                throw new AuthRepositoryADOException($"Error getting user by reset token {ex.Message}", ex);
             }
         }
     }

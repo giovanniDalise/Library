@@ -8,6 +8,6 @@ namespace Library.IdentityService.Core.Ports
         Task<AuthResult> Authenticate(Credentials loginRequest);
         Task<bool> ConfirmUserAsync(string token);
         Task ForgotPasswordAsync(string email);
-
+        Task ResetPasswordAsync(string token, string newPassword);
     }
 }
