@@ -11,7 +11,7 @@ namespace Library.IdentityService.Core.Ports
         Task UpdateResetTokenAsync(string email, string resetToken, DateTime resetTokenExpiry);
         Task<bool> ConfirmUserAsync(string token);
         Task<User> GetByEmailAsync(string email);
-        Task<(User? User, DateTime ResetTokenExpiresAt)> GetUserByResetTokenAsync(string token);
+        Task<(User? User, DateTime? ResetTokenExpiresAt)> GetUserByResetTokenAsync(string token);
 
     }
 }
