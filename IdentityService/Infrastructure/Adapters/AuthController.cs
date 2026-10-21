@@ -1,9 +1,14 @@
-﻿using Library.IdentityService.Core.Ports;
+﻿using Library.IdentityService.Core.Exceptions;
+using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.DTO.REST.Auth;
 using Library.IdentityService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Mysqlx.Session;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Text.RegularExpressions;
 
 namespace Library.IdentityService.Infrastructure.Adapters
 {
@@ -29,7 +34,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             // Verifica se le credenziali sono vuote
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
@@ -113,9 +118,37 @@ namespace Library.IdentityService.Infrastructure.Adapters
 
         [HttpPost("reset-password")]
         [AllowAnonymous]
-        public async Task<ActionResult> ResetPassword([FromBody] string troken, string password)
+        public async Task<ActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
+            // dovevo passare giusto token e nuova password ma non puo passare due parametri [FromBody]
+            // e quindi ho fatto un oggetto con li contiene entrambi.
         {
+            _logger.Info("ResetPassword called");
 
+            if (string.IsNullOrEmpty(request.Token))
+                return BadRequest(new { message = "Token is required" });
+
+            if (string.IsNullOrEmpty(request.NewPassword))
+                return BadRequest(new { message = "New Password is required" });
+
+            try
+            {
+                await _authenticationService.ResetPasswordAsync(request.Token, request.NewPassword);
+                return Ok(new { message = "Password reset successfully" });
+            }
+            //Catch separati — InvalidResetTokenException è un errore di business(token scaduto, non valido)
+            //che restituisce 400 BadRequest con messaggio leggibile.
+            //Gli errori inaspettati restituiscono 500 — non vuoi mostrare all’utente messaggi generici
+            //come “Error in reset Password” ma nemmeno dettagli interni.
+            catch (InvalidResetTokenException ex)
+            {
+                _logger.Warn($"ResetPassword - invalid token: {ex.Message}");
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("ResetPassword - unexpected error", ex);
+                return StatusCode(500, new { message = "Internal server error" });
+            }
         }
     }
 }

@@ -1,9 +1,14 @@
 ﻿
 using Library.IdentityService.Core.Domain.Models;
 using Library.IdentityService.Core.Domain.Models.Events;
+using Library.IdentityService.Core.Exceptions;
 using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.VisualBasic;
+using Mysqlx.Session;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Principal;
 
 namespace Library.IdentityService.Core.Domain.Services
 {
@@ -117,6 +122,11 @@ namespace Library.IdentityService.Core.Domain.Services
             var resetTokenExpiry = DateTime.UtcNow.AddHours(24);
 
             await _repositoryPort.UpdateResetTokenAsync(email, resetToken, resetTokenExpiry);
+            //Abbiamo due token diversi (confirmation_token e reset_token)sono due operazioni di sicurezza
+            //con cicli di vita indipendenti. Se usassi la stessa colonna, un utente non ancora confermato
+            //che richiede anche un reset password vedrebbe il proprio token di conferma sovrascritto da
+            //quello di reset — perdendo la possibilità di confermare l’account.
+            //Con colonne separate i due processi coesistono senza interferirsi.
 
             await _eventPublisher.PublishAsync(new PasswordResetEvent
             {
@@ -125,7 +135,16 @@ namespace Library.IdentityService.Core.Domain.Services
                 ResetToken = resetToken,
                 ExpiresAt = resetTokenExpiry
             }, "IdentityService_PasswordReset");
-
+            //Coda separata(IdentityService_PasswordReset vs IdentityService_UserRegistered)
+            //La logica è identica tra l'execute delle due code, unica cosa che cambia sono i template.
+            //Il vantaggio principale è la scalabilità e l’isolamento dei fallimenti.Se il template dell’email 
+            //di reset è rotto o il processo di reset ha un bug, i messaggi di registrazione continuano a 
+            //essere processati normalmente — le DLQ sono separate quindi i messaggi morti di un flusso non inquinano l’altro.
+            //Inoltre in futuro potresti voler gestire i due tipi di email con priorità diverse — ad esempio 
+            //il reset password è più urgente della conferma registrazione, quindi potresti avere un 
+            //consumer più aggressivo sul retry del reset.Con code separate puoi farlo senza toccare la logica dell’altro consumer.
+            //Infine sulla management UI di RabbitMQ hai visibilità chiara su quanti messaggi di ogni tipo sono 
+            //in coda, in retry o in DLQ — informazione preziosa per il monitoring e il debugging.
         }
     }
 }

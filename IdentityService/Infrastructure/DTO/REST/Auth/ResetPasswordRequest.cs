@@ -1,7 +1,8 @@
 ﻿namespace Library.IdentityService.Infrastructure.DTO.REST.Auth
 {
-    public class AuthResponseDTO
+    public class ResetPasswordRequest
     {
         public string Token { get; set; }
+        public string NewPassword { get; set; }
     }
 }

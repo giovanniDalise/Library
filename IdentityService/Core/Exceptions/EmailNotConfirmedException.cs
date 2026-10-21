@@ -1,4 +1,4 @@
-﻿namespace Library.IdentityService.Infrastructure.Exceptions
+﻿namespace Library.IdentityService.Core.Exceptions
 {
     public class EmailNotConfirmedException : Exception
     {
