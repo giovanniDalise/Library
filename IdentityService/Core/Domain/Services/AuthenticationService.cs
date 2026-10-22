@@ -157,8 +157,7 @@ namespace Library.IdentityService.Core.Domain.Services
             //Lo usi perché quando hai salvato reset_token_expires_at nel DB hai usato DateTime.UtcNow.AddHours(24)
             //quindi il confronto deve essere fatto con lo stesso riferimento temporale.
             //Se usassi DateTime.Now(ora locale) e il server fosse in un fuso orario diverso dal client avresti
-            //un confronto sbagliato.
-            // quindi se la data expired è più piccola di quella di ora allora il token è scaduto.
+            //un confronto sbagliato.Quindi se la data expired è più piccola di quella di ora allora il token è scaduto.
 
             var hashedPassword = _passwordHasherPort.Hash(newPassword);
 

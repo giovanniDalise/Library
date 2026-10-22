@@ -254,7 +254,13 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
 
                 return 
                 (
-                    new User(){Id = reader.GetInt64("user_id")},
+                    new User()
+                    {
+                        Id = reader.GetInt64("user_id"),
+                        Name = reader.GetString("name"),
+                        Surname = reader.GetString("surname"),
+                        Email = reader.GetString("email")
+                    },
                     reader.IsDBNull(reader.GetOrdinal("reset_token_expires_at")) ? null : reader.GetDateTime("reset_token_expires_at")
                     //Con GetOrdinal prima si prende il numero della colonna con quel nome,
                     // successivamente vede se il campo di quella colonna è vuoto nel caso lo sia restituisce
