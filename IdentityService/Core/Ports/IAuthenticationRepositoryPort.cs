@@ -12,6 +12,8 @@ namespace Library.IdentityService.Core.Ports
         Task<bool> ConfirmUserAsync(string token);
         Task<User> GetByEmailAsync(string email);
         Task<(User? User, DateTime? ResetTokenExpiresAt)> GetUserByResetTokenAsync(string token);
+        Task UpdateForgottenPasswordAsync(long? userId, string hashedPassword);
+
 
     }
 }

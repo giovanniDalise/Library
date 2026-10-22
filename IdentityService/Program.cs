@@ -17,10 +17,10 @@ builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("AuthenticationS
 
 var configuration = builder.Configuration;
 
-builder.Services.AddScoped<IUserRepositoryPort, UserRepositoryAdapter>();  // Registrazione dell'interfaccia e dell'implementazione
+builder.Services.AddScoped<IUserRepositoryPort, UserRepositoryAdapter>();
 builder.Services.AddScoped<IUserAppServicePort, UserAppService>();
 builder.Services.AddScoped<IUserServicePort, UserService>();  
-builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>(); // Assicurati di avere questa implementazione disponibile
+builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>(); 
 builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
 builder.Services.AddScoped<IAuthenticationRepositoryPort, AuthRepositoryAdapter>();
 builder.Services.AddScoped<IJwtPort>(provider =>

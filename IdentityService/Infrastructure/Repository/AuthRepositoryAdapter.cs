@@ -267,5 +267,42 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 throw new AuthRepositoryADOException($"Error getting user by reset token {ex.Message}", ex);
             }
         }
+
+        public async Task UpdateForgottenPasswordAsync(long? userId, string hashedPassword)
+        {
+            if (userId == null)
+                throw new AuthRepositoryADOException("UserId cannot be null");
+
+            _logger.Info($"UpdateForgottenPasswordAsync - Start | UserId: {userId}");
+
+            using var connection = new MySqlConnection(_connectionString);
+            await connection.OpenAsync();
+            using var transaction = await connection.BeginTransactionAsync();
+
+            try
+            {
+                // 1 — aggiorna password
+                string updatePasswordSql = "UPDATE user SET password = @password WHERE user_id = @userId";
+                using var updatePasswordCmd = new MySqlCommand(updatePasswordSql, connection, transaction);
+                updatePasswordCmd.Parameters.AddWithValue("@password", hashedPassword);
+                updatePasswordCmd.Parameters.AddWithValue("@userId", userId);
+                await updatePasswordCmd.ExecuteNonQueryAsync();
+
+                // 2 — pulisci token
+                string clearTokenSql = "UPDATE user SET reset_token = NULL, reset_token_expires_at = NULL WHERE user_id = @userId";
+                using var clearTokenCmd = new MySqlCommand(clearTokenSql, connection, transaction);
+                clearTokenCmd.Parameters.AddWithValue("@userId", userId);
+                await clearTokenCmd.ExecuteNonQueryAsync();
+
+                await transaction.CommitAsync();
+                _logger.Info($"UpdateForgottenPasswordAsync - Completed | UserId: {userId}");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.Error($"UpdateForgottenPasswordAsync - Error | UserId: {userId}", ex);
+                throw new AuthRepositoryADOException("Error updating forgotten password", ex);
+            }
+        }
     }
 }

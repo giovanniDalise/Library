@@ -3,12 +3,6 @@ using Library.IdentityService.Core.Domain.Models;
 using Library.IdentityService.Core.Domain.Models.Events;
 using Library.IdentityService.Core.Exceptions;
 using Library.IdentityService.Core.Ports;
-using Library.IdentityService.Infrastructure.Exceptions;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.VisualBasic;
-using Mysqlx.Session;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Principal;
 
 namespace Library.IdentityService.Core.Domain.Services
 {
@@ -17,16 +11,21 @@ namespace Library.IdentityService.Core.Domain.Services
         private readonly IJwtPort _jwtPort;
         private readonly IAuthenticationRepositoryPort _repositoryPort;
         private readonly IEventPublisherPort _eventPublisher;
+        private readonly IPasswordHasherPort _passwordHasherPort;
+
 
         public AuthenticationService(
             IJwtPort jwtPort,
             IAuthenticationRepositoryPort authenticationRepositoryPort,
-            IEventPublisherPort eventPublisher
+            IEventPublisherPort eventPublisher,
+            IPasswordHasherPort passwordHasherPort
         )
         {
             _jwtPort = jwtPort;
             _repositoryPort = authenticationRepositoryPort;
             _eventPublisher = eventPublisher;
+            _passwordHasherPort = passwordHasherPort;
+
         }
 
         public async Task<AuthResult> Authenticate(Credentials loginRequest)
@@ -148,7 +147,23 @@ namespace Library.IdentityService.Core.Domain.Services
         }
         public async Task ResetPasswordAsync(string token, string newPassword)
         {
-            await _repositoryPort.GetUserByResetTokenAsync(token);
+            var (user, resetTokenExpiresAt) = await _repositoryPort.GetUserByResetTokenAsync(token);
+
+            if (user == null)
+                throw new InvalidResetTokenException("Token not valid");
+            if(resetTokenExpiresAt < DateTime.UtcNow)
+                throw new InvalidResetTokenException("Token expired");
+            //ora corrente in UTC (Coordinated Universal Time) — il fuso orario standard internazionale senza offset.
+            //Lo usi perché quando hai salvato reset_token_expires_at nel DB hai usato DateTime.UtcNow.AddHours(24)
+            //quindi il confronto deve essere fatto con lo stesso riferimento temporale.
+            //Se usassi DateTime.Now(ora locale) e il server fosse in un fuso orario diverso dal client avresti
+            //un confronto sbagliato.
+            // quindi se la data expired è più piccola di quella di ora allora il token è scaduto.
+
+            var hashedPassword = _passwordHasherPort.Hash(newPassword);
+
+            await _repositoryPort.UpdateForgottenPasswordAsync(user.Id, hashedPassword);
+
 
         }
 
