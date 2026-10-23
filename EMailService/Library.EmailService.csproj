@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Core\Domain\Models\" />
     <Folder Include="Core\Exceptions\" />
-    <Folder Include="Infrastructure\DTO\" />
   </ItemGroup>
 
   <ItemGroup>

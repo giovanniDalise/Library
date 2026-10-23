@@ -46,5 +46,19 @@ namespace Library.EmailService.Core.Domain.Services
             await _emailSender.SendAsync(to, "Reset your password", body);
             _logger.Info($"EmailService - Completed | To: {to}");
         }
+        public async Task SendPasswordResetConfirmEmailAsync(string to, string fullName, DateTime changedAt)
+        {
+            _logger.Info($"EmailService - SendPasswordResetConfirmEmailAsync | To: {to}");
+
+            var templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", "PasswordResetConfirmEmail.html");
+            var template = await File.ReadAllTextAsync(templatePath);
+
+            var body = template
+                .Replace("{{FullName}}", fullName)
+                .Replace("{{ChangedAt}}", changedAt.ToString("dd/MM/yyyy HH:mm"));
+
+            await _emailSender.SendAsync(to, "Your password has been changed", body);
+            _logger.Info($"EmailService - Completed | To: {to}");
+        }
     }
 }

@@ -163,7 +163,12 @@ namespace Library.IdentityService.Core.Domain.Services
 
             await _repositoryPort.UpdateForgottenPasswordAsync(user.Id, hashedPassword);
 
-
+            await _eventPublisher.PublishAsync(new PasswordResetConfirmEvent
+            {
+                Email = user.Email,
+                FullName = $"{user.Name} {user.Surname},",
+                ChangedAt = DateTime.UtcNow
+            }, "IdentityService_PasswordResetConfirm");
         }
 
     }

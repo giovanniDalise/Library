@@ -6,6 +6,6 @@ namespace Library.EmailService.Core.Ports
     {
         Task SendConfirmationEmailAsync(UserRegisteredEvent @event);
         Task SendResetPasswordEmailAsync(PasswordResetEvent @event);
-
+        Task SendPasswordResetConfirmEmailAsync(PasswordResetConfirmEvent @event);
     }
 }

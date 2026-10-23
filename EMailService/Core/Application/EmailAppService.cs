@@ -38,5 +38,11 @@ namespace Library.EmailService.Core.Application
                 @event.Email, @event.FullName, resetUrl, @event.ExpiresAt);
             _logger.Info($"EmailAppService - Completed | Email: {@event.Email}");
         }
+        public async Task SendPasswordResetConfirmEmailAsync(PasswordResetConfirmEvent @event)
+        {
+            _logger.Info($"EmailAppService - SendPasswordResetConfirmAsync | Email: {@event.Email}");
+            await _emailService.SendPasswordResetConfirmEmailAsync(@event.Email, @event.FullName, @event.ChangedAt);
+            _logger.Info($"EmailAppService - Completed | Email: {@event.Email}");
+        }
     }
 }
