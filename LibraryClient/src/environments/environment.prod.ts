@@ -42,7 +42,9 @@ export const environment = {
     },          
     auth: {
       login: '/login',
-      confirmEmail: '/confirm-email?token={token}'
+      confirmEmail: '/confirm-email?token={token}',
+      forgotPassword: '/forgot-password',
+      resetPassword: '/reset-password'      
     },      
     users: {
       addUser: '/addUser'
