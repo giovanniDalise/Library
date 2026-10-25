@@ -33,6 +33,10 @@ namespace Library.EmailService.Core.Application
         public async Task SendResetPasswordEmailAsync(PasswordResetEvent @event)
         {
             _logger.Info($"EmailAppService - SendResetPasswordEmailAsync | Email: {@event.Email}");
+            // Es. Email contiene link: http://localhost:4200/reset-password?token=abc123
+            // Poi il FE prende quel token e lo reinvia per il reset password successivo dove sarà fatto
+            // sull'utente WHERE reset_token = "abc123". Quindi ti serve per identificare l'utente che farà il cambio psw
+            // al passo successivo.
             var resetUrl = $"{_frontendBaseUrl}/reset-password?token={@event.ResetToken}";
             await _emailService.SendResetPasswordEmailAsync(
                 @event.Email, @event.FullName, resetUrl, @event.ExpiresAt);
