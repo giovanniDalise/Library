@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../models/common/ApiResponse';
+import { ResetPasswordRequest } from '../models/authentincation/reset-password-request';
 
 
 interface AuthResponse {
@@ -69,4 +70,9 @@ export class AuthenticationService {
     // e finché il campo si chiama message, il Fe riesce a mapparco com ApiResponse e in entrambi i lati funziona.
     return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.forgotPassword, email);
   }
+
+  resetPassword(request:ResetPasswordRequest):Observable<ApiResponse>{
+    return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.resetPassword, request);
+  }
+
 }
