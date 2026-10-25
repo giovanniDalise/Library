@@ -245,7 +245,7 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 using var connection = new MySqlConnection(_connectionString);
                 await connection.OpenAsync();
 
-                string sql = "Select user_id, reset_token_expires_at from user where reset_token = @token";
+                string sql = "Select name, surname, email, user_id, reset_token_expires_at from user where reset_token = @token";
                 using var command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@token", token);
 

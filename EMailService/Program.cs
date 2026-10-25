@@ -33,11 +33,23 @@ builder.Services.AddSingleton(sp =>
     new UserRegisteredConsumer(
         sp.GetRequiredService<IEmailAppServicePort>(),
         sp.GetRequiredService<ILoggerPort>(),
-        rabbitHost,
-        rabbitUser,
-        rabbitPassword));
+        rabbitHost, rabbitUser, rabbitPassword));
+
+builder.Services.AddSingleton(sp =>
+    new ResetPasswordConsumer(
+        sp.GetRequiredService<IEmailAppServicePort>(),
+        sp.GetRequiredService<ILoggerPort>(),
+        rabbitHost, rabbitUser, rabbitPassword));
+
+builder.Services.AddSingleton(sp =>
+    new PasswordResetConfirmConsumer(
+        sp.GetRequiredService<IEmailAppServicePort>(),
+        sp.GetRequiredService<ILoggerPort>(),
+        rabbitHost, rabbitUser, rabbitPassword));
 
 builder.Services.AddHostedService(sp => sp.GetRequiredService<UserRegisteredConsumer>());
+builder.Services.AddHostedService(sp => sp.GetRequiredService<ResetPasswordConsumer>());
+builder.Services.AddHostedService(sp => sp.GetRequiredService<PasswordResetConfirmConsumer>());
 
 var app = builder.Build();
 app.Run();

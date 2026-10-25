@@ -133,7 +133,7 @@ namespace Library.IdentityService.Core.Domain.Services
                 FullName = $"{user.Name} {user.Surname}",
                 ResetToken = resetToken,
                 ExpiresAt = resetTokenExpiry
-            }, "IdentityService_PasswordReset");
+            }, "IdentityService_ResetPassword");
             //Coda separata(IdentityService_PasswordReset vs IdentityService_UserRegistered)
             //La logica è identica tra l'execute delle due code, unica cosa che cambia sono i template.
             //Il vantaggio principale è la scalabilità e l’isolamento dei fallimenti.Se il template dell’email 

@@ -64,11 +64,12 @@ export class AuthenticationService {
   confirmEmail(token: string): Observable<ApiResponse>{
       const url = this.baseUrl + this.endpoints.confirmEmail.replace('{token}', token);
       return this.http.get<ApiResponse>(url);
-  }    
+  }   
+   
   sendResetLink(email: string):Observable<ApiResponse> {
     // non devi creare un oggetto ApiResponse sul BE. Il Be ci restitisce qualcosa cosa { "message": "If this email exists..." }
     // e finché il campo si chiama message, il Fe riesce a mapparco com ApiResponse e in entrambi i lati funziona.
-    return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.forgotPassword, email);
+    return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.forgotPassword, {email});
   }
 
   resetPassword(request:ResetPasswordRequest):Observable<ApiResponse>{

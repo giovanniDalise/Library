@@ -4,11 +4,7 @@ using Library.IdentityService.Infrastructure.DTO.REST.Auth;
 using Library.IdentityService.Infrastructure.Exceptions;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Mysqlx.Session;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.Text.RegularExpressions;
 
 namespace Library.IdentityService.Infrastructure.Adapters
 {
@@ -93,16 +89,16 @@ namespace Library.IdentityService.Infrastructure.Adapters
 
         [HttpPost("forgot-password")]
         [AllowAnonymous]
-        public async Task<ActionResult> ForgotPasswordAsync([FromBody] string email)
+        public async Task<ActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request)
         {
             _logger.Info("ForgotPassword called");
 
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(request.Email))
                 return BadRequest(new { message = "Email is required" });
 
             try
             {
-                await _authenticationService.ForgotPasswordAsync(email);
+                await _authenticationService.ForgotPasswordAsync(request.Email);
             }
             catch (Exception ex)
             {
