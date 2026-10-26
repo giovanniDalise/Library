@@ -65,11 +65,29 @@ export class AuthenticationService {
       const url = this.baseUrl + this.endpoints.confirmEmail.replace('{token}', token);
       return this.http.get<ApiResponse>(url);
   }   
-   
+
   sendResetLink(email: string):Observable<ApiResponse> {
     // non devi creare un oggetto ApiResponse sul BE. Il Be ci restitisce qualcosa cosa { "message": "If this email exists..." }
     // e finché il campo si chiama message, il Fe riesce a mapparco com ApiResponse e in entrambi i lati funziona.
     return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.forgotPassword, {email});
+  // Nel body inviamo un oggetto JSON { "email": "mario@example.com" },
+    // che il BE deserializza nel DTO ForgotPasswordRequest tramite [FromBody].
+    // In questo modo il contratto della richiesta è esplicito e coerente
+    // tra FE e BE.
+    //
+    // Avremmo potuto inviare anche direttamente l'email come stringa senza le graffe che creano l'oggetto anonimo
+    // (this.baseUrl + this.endpoints.forgotPassword, email);,
+    // ma avremmo dovuto serializzarla correttamente come stringa JSON
+    // (es. "mario@example.com") e impostare il Content-Type appropriato (application/json), 
+    //
+    // this.http.post(this.baseUrl + this.endpoints.forgotPassword, JSON.stringify(email), {
+    // headers: { 'Content-Type': 'application/json' }});
+    //
+    //mantenendo nel BE un parametro [FromBody] string.
+    // Inviando invece un oggetto, Angular serializza automaticamente il body
+    // in JSON e il BE può utilizzare il DTO ForgotPasswordRequest.
+    // Per coerenza al nostro progetto dove utiliziamo tutti DTO per chiarezza va bene aver creato 
+    // ForgotPasswordRequest anche con la sola proprietà string email 
   }
 
   resetPassword(request:ResetPasswordRequest):Observable<ApiResponse>{
