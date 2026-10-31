@@ -13,7 +13,7 @@ namespace Library.IdentityService.Core.Ports
         Task<User> GetByEmailAsync(string email);
         Task<(User? User, DateTime? ResetTokenExpiresAt)> GetUserByResetTokenAsync(string token);
         Task UpdateForgottenPasswordAsync(long? userId, string hashedPassword);
-
+        Task<UserLoginInfo?> GetLoginInfoByEmailAsync(string email);
 
     }
 }

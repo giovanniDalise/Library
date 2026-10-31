@@ -3,6 +3,8 @@ using Library.IdentityService.Core.Domain.Models;
 using Library.IdentityService.Core.Domain.Models.Events;
 using Library.IdentityService.Core.Exceptions;
 using Library.IdentityService.Core.Ports;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 
 namespace Library.IdentityService.Core.Domain.Services
 {
@@ -12,67 +14,77 @@ namespace Library.IdentityService.Core.Domain.Services
         private readonly IAuthenticationRepositoryPort _repositoryPort;
         private readonly IEventPublisherPort _eventPublisher;
         private readonly IPasswordHasherPort _passwordHasherPort;
-
+        private readonly IPasswordVerifierPort _passwordVerifier;
+        private static string? _dummyHash;
+        //Il dummy hash è facoltativo e riguarda un problema molto specifico.
+        //Verificare una password con bcrypt è lento di proposito, qualche decina
+        //o centinaio di millisecondi.Senza il dummy, succede questo:
+        //Email inesistente: il metodo ritorna subito, risposta velocissima.
+        //Email esistente con password sbagliata: il metodo fa il verify bcrypt, risposta più lenta.
+        //Chi vuole sapere se un’email è registrata può misurare i tempi di risposta
+        //e capire la differenza, anche se il messaggio d’errore è identico.
+        //Con il dummy, se l’utente non esiste si fa comunque un verify contro
+        //un hash finto, quindi i due casi impiegano più o meno lo stesso tempo.
 
         public AuthenticationService(
             IJwtPort jwtPort,
             IAuthenticationRepositoryPort authenticationRepositoryPort,
             IEventPublisherPort eventPublisher,
-            IPasswordHasherPort passwordHasherPort
+            IPasswordHasherPort passwordHasherPort,
+            IPasswordVerifierPort passwordVerifier
         )
         {
             _jwtPort = jwtPort;
             _repositoryPort = authenticationRepositoryPort;
             _eventPublisher = eventPublisher;
             _passwordHasherPort = passwordHasherPort;
-
+            _passwordVerifier = passwordVerifier;
         }
 
-        public async Task<AuthResult> Authenticate(Credentials loginRequest)
+        public async Task<AuthResult?> Authenticate(Credentials loginRequest)
         {
-            bool authenticated = await _repositoryPort.CheckUserCredentials(
-                loginRequest.Email, loginRequest.Password);
+            var user = await _repositoryPort.GetLoginInfoByEmailAsync(loginRequest.Email);
 
-            if (!authenticated) return null;
+            // Verifica sempre un hash, anche se l'utente non esiste,
+            // così i tempi di risposta non rivelano se l'email è registrata.
+            _dummyHash ??= _passwordHasherPort.Hash("dummy-password");
+            bool passwordValid = _passwordVerifier.Verify(
+                loginRequest.Password, user?.PasswordHash ?? _dummyHash);
 
-            // credenziali ok — controlla conferma email
-            var (isConfirmed, token, expiresAt) =
-                await _repositoryPort.GetUserConfirmationInfoAsync(loginRequest.Email);
+            if (user is null || !passwordValid) return null;
 
-            if (!isConfirmed)
+            if (!user.IsConfirmed)
+                await HandleUnconfirmedUserAsync(user);
+
+            string jwtToken = await _jwtPort.GenerateJwtToken(
+                new JwtUserClaims(user.Id, user.Email, user.RoleName));
+
+            return new AuthResult { Token = jwtToken };
+        }
+        private async Task HandleUnconfirmedUserAsync(UserLoginInfo user)
+        {
+            if (user.TokenExpiresAt is null || user.TokenExpiresAt < DateTime.UtcNow)
             {
-                if (expiresAt == null || expiresAt < DateTime.UtcNow)
+                var newToken = Guid.NewGuid().ToString("N");
+                var newExpiry = DateTime.UtcNow.AddHours(24);
+
+                await _repositoryPort.UpdateConfirmationTokenAsync(user.Email, newToken, newExpiry);
+
+                await _eventPublisher.PublishAsync(new UserRegisteredEvent
                 {
-                    // token scaduto — genera nuovo e reinvia mail
-                    var newToken = Guid.NewGuid().ToString("N");
-                    //N formato token senza trattini
-                    var newExpiry = DateTime.UtcNow.AddHours(24);
-
-                    await _repositoryPort.UpdateConfirmationTokenAsync(
-                        loginRequest.Email, newToken, newExpiry);
-
-                    var user = await _repositoryPort.GetByEmailAsync(loginRequest.Email);
-
-                    await _eventPublisher.PublishAsync(new UserRegisteredEvent
-                    {
-                        UserId = user.Id ?? 0,
-                        Email = user.Email,
-                        FullName = $"{user.Name} {user.Surname}",
-                        ConfirmationToken = newToken,
-                        ExpiresAt = newExpiry
-                    }, "IdentityService_UserRegistered");
-
-                    throw new EmailNotConfirmedException(
-                        "Email not confirmed. We sent you a new confirmation link.");
-                }
+                    UserId = user.Id,
+                    Email = user.Email,
+                    FullName = $"{user.Name} {user.Surname}",
+                    ConfirmationToken = newToken,
+                    ExpiresAt = newExpiry
+                }, "IdentityService_UserRegistered");
 
                 throw new EmailNotConfirmedException(
-                    "Email not confirmed. Please check your inbox.");
+                    "Email not confirmed. We sent you a new confirmation link.");
             }
 
-            string role = await _repositoryPort.GetUserRole(loginRequest.Email);
-            string jwtToken = await _jwtPort.GenerateJwtToken(loginRequest.Email, role);
-            return new AuthResult { Token = jwtToken };
+            throw new EmailNotConfirmedException(
+                "Email not confirmed. Please check your inbox.");
         }
         public async Task<bool> ConfirmUserAsync(string token)
         {

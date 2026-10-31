@@ -1,7 +1,9 @@
-﻿namespace Library.IdentityService.Core.Ports
+﻿using Library.IdentityService.Core.Domain.Models;
+
+namespace Library.IdentityService.Core.Ports
 {
     public interface IJwtPort
     {
-        Task<string> GenerateJwtToken(string email, string role);
+        Task<string> GenerateJwtToken(JwtUserClaims user);
     }
 }

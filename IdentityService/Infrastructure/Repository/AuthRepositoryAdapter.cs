@@ -310,5 +310,43 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 throw new AuthRepositoryADOException("Error updating forgotten password", ex);
             }
         }
+        public async Task<UserLoginInfo?> GetLoginInfoByEmailAsync(string email)
+        {
+            _logger.Debug($"GetLoginInfoByEmailAsync for email: {email}");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                string sql = @"
+            SELECT u.user_id, u.name, u.surname, u.email, u.password,
+                   r.name AS role_name, u.is_confirmed, u.token_expires_at
+            FROM user u
+            JOIN role r ON u.role = r.role_id
+            WHERE u.email = @Email";
+                using var command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Email", email);
+
+                using var reader = await command.ExecuteReaderAsync();
+                if (!await reader.ReadAsync()) return null;
+
+                return new UserLoginInfo(
+                    reader.GetInt64("user_id"),
+                    reader.GetString("email"),
+                    reader.GetString("name"),
+                    reader.GetString("surname"),
+                    reader.GetString("password"),
+                    reader.GetString("role_name"),
+                    reader.GetBoolean("is_confirmed"),
+                    reader.IsDBNull(reader.GetOrdinal("token_expires_at"))
+                        ? null
+                        : reader.GetDateTime("token_expires_at"));
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"GetLoginInfoByEmailAsync error for email: {email}", e);
+                throw new AuthRepositoryADOException($"Error getting login info: {e.Message}", e);
+            }
+        }
     }
 }
