@@ -93,51 +93,17 @@ namespace Library.IdentityService.Core.Domain.Services
 
         public async Task ForgotPasswordAsync(string email)
         {
-            var user = await _repositoryPort.GetByEmailAsync(email);
-            if (user == null)
-            {
-                return;
-            }
-            var (isConfirmed, token, expiresAt) =  await _repositoryPort.GetUserConfirmationInfoAsync(email);
+            var user = await _repositoryPort.GetLoginInfoByEmailAsync(email);
+            if (user == null) return;
 
-            if (!isConfirmed)
-            {
-                if (expiresAt == null || expiresAt < DateTime.UtcNow)
-                {
-                    // token scaduto — genera nuovo e reinvia mail
-                    var newToken = Guid.NewGuid().ToString("N");
-                    //N formato token senza trattini
-                    var newExpiry = DateTime.UtcNow.AddHours(24);
-
-                    await _repositoryPort.UpdateConfirmationTokenAsync(email, newToken, newExpiry);
-
-
-                    await _eventPublisher.PublishAsync(new UserRegisteredEvent
-                    {
-                        UserId = user.Id ?? 0,
-                        Email = user.Email,
-                        FullName = $"{user.Name} {user.Surname}",
-                        ConfirmationToken = newToken,
-                        ExpiresAt = newExpiry
-                    }, "IdentityService_UserRegistered");
-
-                    throw new EmailNotConfirmedException(
-                        "Email not confirmed. We sent you a new confirmation link.");
-                }
-
-                throw new EmailNotConfirmedException(
-                    "Email not confirmed. Please check your inbox.");
-            }
+            if (!user.IsConfirmed)
+                await HandleUnconfirmedUserAsync(user);
 
             var resetToken = Guid.NewGuid().ToString("N");
             var resetTokenExpiry = DateTime.UtcNow.AddHours(24);
 
-            await _repositoryPort.UpdateResetTokenAsync(email, resetToken, resetTokenExpiry);
-            //Abbiamo due token diversi (confirmation_token e reset_token)sono due operazioni di sicurezza
-            //con cicli di vita indipendenti. Se usassi la stessa colonna, un utente non ancora confermato
-            //che richiede anche un reset password vedrebbe il proprio token di conferma sovrascritto da
-            //quello di reset — perdendo la possibilità di confermare l’account.
-            //Con colonne separate i due processi coesistono senza interferirsi.
+            await _repositoryPort.UpdateResetTokenAsync(user.Email, resetToken, resetTokenExpiry);
+            // Token di conferma e di reset su colonne separate: cicli di vita indipendenti.
 
             await _eventPublisher.PublishAsync(new PasswordResetEvent
             {
@@ -146,16 +112,7 @@ namespace Library.IdentityService.Core.Domain.Services
                 ResetToken = resetToken,
                 ExpiresAt = resetTokenExpiry
             }, "IdentityService_ResetPassword");
-            //Coda separata(IdentityService_PasswordReset vs IdentityService_UserRegistered)
-            //La logica è identica tra l'execute delle due code, unica cosa che cambia sono i template.
-            //Il vantaggio principale è la scalabilità e l’isolamento dei fallimenti.Se il template dell’email 
-            //di reset è rotto o il processo di reset ha un bug, i messaggi di registrazione continuano a 
-            //essere processati normalmente — le DLQ sono separate quindi i messaggi morti di un flusso non inquinano l’altro.
-            //Inoltre in futuro potresti voler gestire i due tipi di email con priorità diverse — ad esempio 
-            //il reset password è più urgente della conferma registrazione, quindi potresti avere un 
-            //consumer più aggressivo sul retry del reset.Con code separate puoi farlo senza toccare la logica dell’altro consumer.
-            //Infine sulla management UI di RabbitMQ hai visibilità chiara su quanti messaggi di ogni tipo sono 
-            //in coda, in retry o in DLQ — informazione preziosa per il monitoring e il debugging.
+            // Coda separata da UserRegistered: isolamento dei fallimenti, DLQ distinte, monitoring chiaro.
         }
         public async Task ResetPasswordAsync(string token, string newPassword)
         {

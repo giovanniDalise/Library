@@ -22,90 +22,6 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
             _passwordVerifier = passwordVerifier;
             _logger = logger;
         }
-
-        public async Task<bool> CheckUserCredentials(string email, string password)
-        {
-            _logger.Debug($"Checking user credentials for email: {email}");
-
-            try
-            {
-                using (var connection = new MySqlConnection(_connectionString))
-                {
-                    _logger.Debug("Opening database connection for credential check");
-                    await connection.OpenAsync();
-
-                    string sql = "SELECT password FROM user WHERE email = @Email";
-                    //non stiamo decriptando ma precuperiamo l'ash della psw associata alla mail a cui è stato
-                    //associato il salt in fase di creazione dell'utenza con la psw. Più sicuro del decrypting.
-
-                    using (var command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@Email", email);
-
-                        var result = await command.ExecuteScalarAsync();
-
-                        if (result == null)
-                        {
-                            _logger.Info($"No user found with email: {email}");
-                            return false;
-                        }
-
-                        string hashedPassword = result.ToString();
-                        var verified = _passwordVerifier.Verify(password, hashedPassword);
-
-                        _logger.Info(
-                            verified
-                                ? $"Password verification succeeded for email: {email}"
-                                : $"Password verification failed for email: {email}"
-                        );
-
-                        return verified;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"Error while checking credentials for email: {email}", e);
-                throw new AuthRepositoryADOException($"Error checking user credentials: {e.Message}", e);
-            }
-        }
-
-        public async Task<string> GetUserRole(string email)
-        {
-            _logger.Debug($"Retrieving user role for email: {email}");
-
-            try
-            {
-                using (var connection = new MySqlConnection(_connectionString))
-                {
-                    _logger.Debug("Opening database connection for role retrieval");
-                    await connection.OpenAsync();
-
-                    string sql = @"
-                        SELECT r.name 
-                        FROM user u 
-                        JOIN role r ON u.role = r.role_id 
-                        WHERE u.email = @Email";
-
-                    using (var command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@Email", email);
-
-                        var result = await command.ExecuteScalarAsync();
-
-                        _logger.Info($"Role retrieved for email {email}: {result}");
-
-                        return result?.ToString()
-                               ?? throw new AuthRepositoryADOException("Role not found.");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"Error while retrieving role for email: {email}", e);
-                throw new AuthRepositoryADOException($"Error getting user role by email: {e.Message}", e);
-            }
-        }
         public async Task<bool> ConfirmUserAsync(string token)
         {
             _logger.Debug($"ConfirmUserAsync called for token={token}");
@@ -127,34 +43,6 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
                 throw new AuthRepositoryADOException($"Error confirming user: {ex.Message}", ex);
             }
         }
-        public async Task<(bool IsConfirmed, string? Token, DateTime? ExpiresAt)> GetUserConfirmationInfoAsync(string email)
-        {
-            _logger.Debug($"GetUserConfirmationInfoAsync for email: {email}");
-            try
-            {
-                using var connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                string sql = "SELECT is_confirmed, confirmation_token, token_expires_at FROM user WHERE email = @Email";
-                using var command = new MySqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@Email", email);
-
-                using var reader = await command.ExecuteReaderAsync();
-                if (!await reader.ReadAsync()) return (false, null, null);
-
-                return (
-                    reader.GetBoolean("is_confirmed"),
-                    reader.IsDBNull(reader.GetOrdinal("confirmation_token")) ? null : reader.GetString("confirmation_token"),
-                    reader.IsDBNull(reader.GetOrdinal("token_expires_at")) ? null : reader.GetDateTime("token_expires_at")
-                );
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"GetUserConfirmationInfoAsync error for email: {email}", e);
-                throw new AuthRepositoryADOException($"Error getting confirmation info: {e.Message}", e);
-            }
-        }
-
         public async Task UpdateConfirmationTokenAsync(string email, string token, DateTime expiresAt)
         {
             _logger.Debug($"UpdateConfirmationTokenAsync for email: {email}");
@@ -176,37 +64,6 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
             {
                 _logger.Error($"UpdateConfirmationTokenAsync error for email: {email}", e);
                 throw new AuthRepositoryADOException($"Error updating confirmation token: {e.Message}", e);
-            }
-        }
-        public async Task<User> GetByEmailAsync(string email)
-        {
-            _logger.Debug($"GetByEmailAsync for email: {email}");
-            try
-            {
-                using var connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                string sql = "SELECT user_id, name, surname, email FROM user WHERE email = @Email";
-                using var command = new MySqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@Email", email);
-
-                using var reader = await command.ExecuteReaderAsync();
-
-                // se non trova l'utente restituisce null
-                if (!await reader.ReadAsync()) return null;
-
-                return new User
-                {
-                    Id = reader.GetInt64("user_id"),
-                    Name = reader.GetString("name"),
-                    Surname = reader.GetString("surname"),
-                    Email = reader.GetString("email")
-                };
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"GetByEmailAsync error for email: {email}", e);
-                throw new AuthRepositoryADOException($"Error getting user by email: {e.Message}", e);
             }
         }
         public async Task UpdateResetTokenAsync(string email, string resetToken, DateTime resetTokenExpiry)
