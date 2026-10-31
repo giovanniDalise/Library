@@ -11,29 +11,28 @@ using Library.Logging.NLog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Aggiungi NLogAdapter come ILoggerPort
-builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("UserService"));
-builder.Services.AddSingleton<ILoggerPort>(_ => new NLogAdapter("AuthenticationService"));
+// Logger per classe: ogni classe chiede ILoggerPort<NomeClasse>
+builder.Services.AddSingleton(typeof(ILoggerPort<>), typeof(NLogAdapter<>));
 
 var configuration = builder.Configuration;
 
 builder.Services.AddScoped<IUserRepositoryPort, UserRepositoryAdapter>();
 builder.Services.AddScoped<IUserAppServicePort, UserAppService>();
-builder.Services.AddScoped<IUserServicePort, UserService>();  
-builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>(); 
+builder.Services.AddScoped<IUserServicePort, UserService>();
+builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>();
 builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
 builder.Services.AddScoped<IAuthenticationRepositoryPort, AuthRepositoryAdapter>();
 builder.Services.AddScoped<IJwtPort>(provider =>
 {
     var jwtExpirationMs = configuration.GetValue<double>("JwtSettings:ExpirationMilliseconds");
-    var logger = provider.GetRequiredService<ILoggerPort>(); // recupero il logger dal DI
+    var logger = provider.GetRequiredService<ILoggerPort<JwtAdapter>>(); // <-- CAMBIATA
     return new JwtAdapter(configuration, jwtExpirationMs, logger);
 });
 builder.Services.AddScoped<IAuthenticationServicePort, AuthenticationService>();
 
 builder.Services.AddSingleton<IEventPublisherPort>(sp =>
 {
-    var logger = sp.GetRequiredService<ILoggerPort>();
+    var logger = sp.GetRequiredService<ILoggerPort<RabbitMQEventPublisher>>(); // <-- CAMBIATA
     var hostName = builder.Configuration["RabbitMQ:HostName"] ?? "localhost";
     var userName = builder.Configuration["RabbitMQ:UserName"] ?? "guest";
     var password = builder.Configuration["RabbitMQ:Password"] ?? "guest";

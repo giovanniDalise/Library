@@ -3,8 +3,6 @@ using Library.IdentityService.Core.Domain.Models;
 using Library.IdentityService.Core.Domain.Models.Events;
 using Library.IdentityService.Core.Exceptions;
 using Library.IdentityService.Core.Ports;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
 
 namespace Library.IdentityService.Core.Domain.Services
 {

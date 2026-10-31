@@ -5,37 +5,33 @@ namespace Library.Logging.NLog;
 
 public class NLogAdapter : ILoggerPort
 {
+    private static readonly object _configLock = new();
+    private static bool _configured;
+
     private readonly Logger _logger;
 
     public NLogAdapter(string loggerName)
     {
-        // AppContext.BaseDirectory punta alla cartella di esecuzione del servizio
-        var configFilePath = Path.Combine(AppContext.BaseDirectory, "NLog.config");
-
-        // Se vuoi essere sicuro che il file esista
-        if (!File.Exists(configFilePath))
-            throw new FileNotFoundException($"NLog config file not found at: {configFilePath}");
-
-        // Carica la configurazione
-        LogManager.Setup().LoadConfigurationFromFile(configFilePath, optional: false);
-
+        EnsureConfigured();
         _logger = LogManager.GetLogger(loggerName);
     }
 
-    public void Debug(string message)
+    private static void EnsureConfigured()
     {
-        _logger.Debug(message);
+        lock (_configLock)
+        {
+            if (_configured) return;
+            var configFilePath = Path.Combine(AppContext.BaseDirectory, "NLog.config");
+            if (!File.Exists(configFilePath))
+                throw new FileNotFoundException($"NLog config file not found at: {configFilePath}");
+            LogManager.Setup().LoadConfigurationFromFile(configFilePath, optional: false);
+            _configured = true;
+        }
     }
 
-    public void Info(string message)
-    {
-        _logger.Info(message);
-    }
-
-    public void Warn(string message)
-    {
-        _logger.Warn(message);
-    }
+    public void Debug(string message) { _logger.Debug(message); }
+    public void Info(string message) { _logger.Info(message); }
+    public void Warn(string message) { _logger.Warn(message); }
 
     public void Error(string message, Exception? ex = null)
     {

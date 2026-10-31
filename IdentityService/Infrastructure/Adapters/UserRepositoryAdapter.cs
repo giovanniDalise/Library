@@ -14,7 +14,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         private readonly string _connectionString;
         private readonly ILoggerPort _logger;
 
-        public UserRepositoryAdapter(IConfiguration configuration, ILoggerPort logger)
+        public UserRepositoryAdapter(IConfiguration configuration, ILoggerPort<UserRepositoryAdapter> logger)
         {
             _connectionString = configuration.GetConnectionString("IdentityServiceDbConnection");
             _logger = logger;

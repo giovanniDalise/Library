@@ -22,7 +22,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public AuthController(
             IAuthenticationServicePort authenticationService,
             IJwtPort jwtPort,
-            ILoggerPort logger)
+            ILoggerPort<AuthController> logger)
         {
             _authenticationService = authenticationService;
             _jwtPort = jwtPort;

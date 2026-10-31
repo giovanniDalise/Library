@@ -16,7 +16,7 @@ namespace Library.IdentityService.Infrastructure.Adapters.Repository
         public AuthRepositoryAdapter(
             IConfiguration configuration,
             IPasswordVerifierPort passwordVerifier,
-            ILoggerPort logger)
+            ILoggerPort<AuthRepositoryAdapter> logger)
         {
             _connectionString = configuration.GetConnectionString("IdentityServiceDbConnection");
             _passwordVerifier = passwordVerifier;

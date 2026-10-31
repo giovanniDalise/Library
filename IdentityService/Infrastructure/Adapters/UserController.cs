@@ -13,7 +13,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         private readonly IUserAppServicePort _userAppService;
         private readonly ILoggerPort _logger;
 
-        public UserController(IUserAppServicePort userAppService, ILoggerPort logger)
+        public UserController(IUserAppServicePort userAppService, ILoggerPort<UserController> logger)
         {
             _userAppService = userAppService;
             _logger = logger;
