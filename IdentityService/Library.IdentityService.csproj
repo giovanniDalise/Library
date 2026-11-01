@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Library.Logging.Abstractions\Library.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\Library.Logging.NLog\Library.Logging.NLog.csproj" />
+    <ProjectReference Include="..\Library.Security\Library.Security.csproj" />    
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>    </None>

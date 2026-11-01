@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibraryClient", "LibraryCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.EmailService", "EMailService\Library.EmailService.csproj", "{C39425EA-C4B8-5B80-8C88-65B4A9C8E592}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Security", "Library.Security\Library.Security.csproj", "{03BEFFB1-2E5E-4EBE-8040-1C8092484586}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,18 @@ Global
 		{C39425EA-C4B8-5B80-8C88-65B4A9C8E592}.Release|x64.Build.0 = Release|Any CPU
 		{C39425EA-C4B8-5B80-8C88-65B4A9C8E592}.Release|x86.ActiveCfg = Release|Any CPU
 		{C39425EA-C4B8-5B80-8C88-65B4A9C8E592}.Release|x86.Build.0 = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|x64.Build.0 = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Debug|x86.Build.0 = Debug|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|x64.ActiveCfg = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|x64.Build.0 = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|x86.ActiveCfg = Release|Any CPU
+		{03BEFFB1-2E5E-4EBE-8040-1C8092484586}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

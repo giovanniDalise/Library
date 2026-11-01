@@ -1,39 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using Library.Security;
 
 namespace Library.BookService.Security
 {
-
     public static class SecurityConfig
     {
         public static void ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]);
+            services.AddLibraryJwtAuthentication(configuration);
 
-            // Configurazione dell'autenticazione JWT
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
-
-            // Configurazione delle policy di autorizzazione
+            // Solo se qualcuno usa la policy; altrimenti eliminala.
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("ROLE_ADMIN"));
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"));
             });
 
-            // Abilitazione del CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     <PackageReference Include="MySql.Data" Version="9.6.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
@@ -17,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Library.Logging.Abstractions\Library.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\Library.Logging.NLog\Library.Logging.NLog.csproj" />
+    <ProjectReference Include="..\Library.Security\Library.Security.csproj" />    
 	<None Update="NLog.config">
     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     <CopyToPublishDirectory>Always</CopyToPublishDirectory>	</None>

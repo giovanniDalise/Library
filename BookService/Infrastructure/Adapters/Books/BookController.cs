@@ -13,6 +13,7 @@ namespace Library.BookService.Infrastructure.Adapters.Books
 {
     [Route("books")]
     [ApiController]
+    [Authorize]
     public class BookController : ControllerBase
     {
         private readonly IBookAppServicePort _bookAppService;

@@ -1,13 +1,26 @@
-﻿using Library.Logging.Abstractions;
+﻿using Library.IdentityService.Core.Ports;
+using Library.IdentityService.Infrastructure.DTO.REST.Users;
+using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Library.IdentityService.Core.Ports;
-using Library.IdentityService.Infrastructure.DTO.REST.Users;
+using System.Net;
+using System.Runtime.ConstrainedExecution;
+using static Google.Protobuf.Compiler.CodeGeneratorResponse.Types;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Library.IdentityService.Infrastructure.Adapters
 {
     [Route("users")]
     [ApiController]
+    [Authorize]
+    //[Authorize] 
+    //Possiamo avere due strategie opposte, entrambe valide:
+    //Controller senza authorize : pubblico per default, protetto solo dove serve (inserendo poi nella api[Authorize(Roles = "admin")])
+    //[AllowAnonymous] in questo caso non serve e sarebbe ridondante
+    //Controller con authorize: protetto per default, aperto solo dove serve.
+    //Qui quasi tutto è sensibile(dati di altri utenti, modifica, cancellazione) e qui serve [AllowAnonymous]
+    //Il vantaggio di “protetto per default” è che se un domani aggiungi un endpoint e ti dimentichi
+    //l’attributo, l’endpoint resta chiuso invece che aperto.
     public class UserController : ControllerBase
     {
         private readonly IUserAppServicePort _userAppService;
@@ -20,7 +33,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<UserResponse>>> GetUsers()
         {
             _logger.Info("GetUsers endpoint called");
@@ -30,6 +43,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<UserResponse>> GetUserById(long id)
         {
             _logger.Info($"GetUserById called with id={id}");
@@ -56,6 +70,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> UpdateUser(long id, [FromBody] UserRequest request)
         {
             _logger.Info($"UpdateUser called for id={id}");
@@ -66,6 +81,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<long>> DeleteUser(long id)
         {
             _logger.Info($"DeleteUser called for id={id}");
@@ -75,6 +91,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
         }
 
         [HttpGet("findByString")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<UserResponse>>> FindUsersByString([FromQuery] string param)
         {
             _logger.Info($"FindUsersByString called with param='{param}'");
