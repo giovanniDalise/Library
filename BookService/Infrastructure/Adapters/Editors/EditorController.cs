@@ -12,6 +12,8 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
 {
     [Route("editors")]
     [ApiController]
+    [Authorize]
+
     public class EditorController : ControllerBase
     {
         private readonly IEditorAppServicePort _editorAppService;

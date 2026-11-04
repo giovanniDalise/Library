@@ -12,6 +12,8 @@ namespace Library.BookService.Infrastructure.Adapters.Authors
 {
     [Route("authors")]
     [ApiController]
+    [Authorize]
+
     public class AuthorController:ControllerBase
     {
         private readonly IAuthorAppServicePort _authorAppService;
