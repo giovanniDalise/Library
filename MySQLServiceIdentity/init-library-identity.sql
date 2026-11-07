@@ -20,6 +20,9 @@ CREATE TABLE user (
     is_confirmed BOOLEAN NOT NULL DEFAULT FALSE,
     reset_token VARCHAR(255) NULL,
     reset_token_expires_at DATETIME NULL,
+	phone_number VARCHAR(20) NULL,
+    profile_image_url VARCHAR(500) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role) REFERENCES role(role_id)
 );
 
