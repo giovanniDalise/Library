@@ -3,10 +3,7 @@ using Library.IdentityService.Infrastructure.DTO.REST.Users;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Runtime.ConstrainedExecution;
-using static Google.Protobuf.Compiler.CodeGeneratorResponse.Types;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Claims;
 
 namespace Library.IdentityService.Infrastructure.Adapters
 {
@@ -37,9 +34,42 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<List<UserResponse>>> GetUsers()
         {
             _logger.Info("GetUsers endpoint called");
-            var users = await _userAppService.GetAllUsersAsync();
-            _logger.Info($"GetUsers returned {users.Count} users");
-            return Ok(UserDTOMapper.ToResponseList(users));
+            try
+            {
+                var users = await _userAppService.GetAllUsersAsync();
+                _logger.Info($"GetUsers returned {users.Count} users");
+                return Ok(UserDTOMapper.ToResponseList(users));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Unexpected error while retrieving users", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("me")]
+        public async Task<ActionResult<UserResponse>> GetPersonalUser()
+        {
+            _logger.Info("GetPersonalUser called");
+            try
+            {
+                var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (!long.TryParse(idClaim, out var userId))
+                    return Unauthorized();
+
+                var user = await _userAppService.GetUserByIdAsync(userId);
+
+                if(user == null)
+                    return NotFound();
+
+                return Ok(UserDTOMapper.ToResponse(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Unexpected error while retrieving personal user", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{id}")]
@@ -47,15 +77,23 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<UserResponse>> GetUserById(long id)
         {
             _logger.Info($"GetUserById called with id={id}");
-            var user = await _userAppService.GetUserByIdAsync(id);
-            if (user == null)
+            try
             {
-                _logger.Warn($"User not found with id={id}");
-                return NotFound();
-            }
+                var user = await _userAppService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    _logger.Warn($"User not found with id={id}");
+                    return NotFound();
+                }
 
-            _logger.Info($"User found with id={id}");
-            return Ok(UserDTOMapper.ToResponse(user));
+                _logger.Info($"User found with id={id}");
+                return Ok(UserDTOMapper.ToResponse(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Unexpected error while retrieving user id={id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost("addUser")]
@@ -63,10 +101,18 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<long>> AddUser([FromBody] UserRequest request)
         {
             _logger.Info($"AddUser {request.Name} {request.Surname}");
-            var user = UserDTOMapper.ToDomain(request);
-            var id = await _userAppService.CreateUserAsync(user);
-            _logger.Info($"User created with id={id}");
-            return Ok(id);
+            try
+            {
+                var user = UserDTOMapper.ToDomain(request);
+                var id = await _userAppService.CreateUserAsync(user);
+                _logger.Info($"User created with id={id}");
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Unexpected error while creating user {request.Email}", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut("{id}")]
@@ -74,10 +120,18 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<long>> UpdateUser(long id, [FromBody] UserRequest request)
         {
             _logger.Info($"UpdateUser called for id={id}");
-            var user = UserDTOMapper.ToDomain(request);
-            var updatedId = await _userAppService.UpdateUserAsync(id, user);
-            _logger.Info($"User updated with id={updatedId}");
-            return Ok(updatedId);
+            try
+            {
+                var user = UserDTOMapper.ToDomain(request);
+                var updatedId = await _userAppService.UpdateUserAsync(id, user);
+                _logger.Info($"User updated with id={updatedId}");
+                return Ok(updatedId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Unexpected error while updating user id={id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpDelete("{id}")]
@@ -85,19 +139,17 @@ namespace Library.IdentityService.Infrastructure.Adapters
         public async Task<ActionResult<long>> DeleteUser(long id)
         {
             _logger.Info($"DeleteUser called for id={id}");
-            var deletedId = await _userAppService.DeleteUserAsync(id);
-            _logger.Info($"User deleted with id={deletedId}");
-            return Ok(deletedId);
-        }
-
-        [HttpGet("findByString")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<List<UserResponse>>> FindUsersByString([FromQuery] string param)
-        {
-            _logger.Info($"FindUsersByString called with param='{param}'");
-            var users = await _userAppService.GetUsersByTextAsync(param);
-            _logger.Info($"FindUsersByString returned {users.Count} users");
-            return Ok(UserDTOMapper.ToResponseList(users));
+            try
+            {
+                var deletedId = await _userAppService.DeleteUserAsync(id);
+                _logger.Info($"User deleted with id={deletedId}");
+                return Ok(deletedId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Unexpected error while deleting user id={id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

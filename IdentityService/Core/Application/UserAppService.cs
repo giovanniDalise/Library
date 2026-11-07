@@ -22,7 +22,7 @@ namespace Library.IdentityService.Core.Application
             return await _userDomainService.GetAllUsersAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(long id)
+        public async Task<User?> GetUserByIdAsync(long id)
         {
             return await _userDomainService.GetUserByIdAsync(id);
         }
@@ -57,11 +57,6 @@ namespace Library.IdentityService.Core.Application
         public async Task<long> DeleteUserAsync(long id)
         {
             return await _userDomainService.DeleteUserAsync(id);
-        }
-
-        public async Task<List<User>> GetUsersByTextAsync(string searchText)
-        {
-            return await _userDomainService.GetUsersByTextAsync(searchText);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Library.IdentityService.Core.Domain.Services
         {
             return await _userRepositoryPort.ReadAsync();
         }
-        public async Task<User> GetUserByIdAsync(long id)
+        public async Task<User?> GetUserByIdAsync(long id)
         {
             return await _userRepositoryPort.GetByIdAsync(id);
         }
@@ -36,13 +36,5 @@ namespace Library.IdentityService.Core.Domain.Services
         {
             return await _userRepositoryPort.DeleteAsync(id);
         }
-        public async Task<List<User>> GetUsersByTextAsync(string searchText)
-        {
-            return await _userRepositoryPort.FindByTextAsync(searchText);
-        }
-        //public async Task<List<User>> GetUsersByObjectAsync(User user)
-        //{
-        //    return await _userRepositoryPort.FindByObjectAsync(user);
-        //}
     }
 }

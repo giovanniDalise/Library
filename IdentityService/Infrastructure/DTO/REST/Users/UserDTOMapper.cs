@@ -22,7 +22,10 @@ namespace Library.IdentityService.Infrastructure.DTO.REST.Users
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email,
-                Role = user.Role
+                Role = user.Role,
+                PhoneNumber = user.PhoneNumber,
+                ProfileImageUrl = user.ProfileImageUrl,
+                CreatedAt = user.CreatedAt
             };
 
         public static List<UserResponse> ToResponseList(IEnumerable<User> users)

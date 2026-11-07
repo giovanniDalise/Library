@@ -23,7 +23,6 @@ namespace Library.BookService.Infrastructure.Adapters.Editors
             _editorAppService = editorAppService;
             _logger = logger;
         }
-
         [HttpPost("GetEditors")]
         [AllowAnonymous]
         //POST /api/authors/GetEditors?page=1&pageSize=10

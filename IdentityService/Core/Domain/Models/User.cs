@@ -11,5 +11,8 @@
         public string? ConfirmationToken { get; set; }
         public DateTime? TokenExpiresAt { get; set; }
         public bool IsConfirmed { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? ProfileImageUrl { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

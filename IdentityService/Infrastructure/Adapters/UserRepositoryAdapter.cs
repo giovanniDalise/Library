@@ -100,10 +100,10 @@ namespace Library.IdentityService.Infrastructure.Adapters
             }
         }
 
-        public async Task<User> GetByIdAsync(long id)
+        public async Task<User?> GetByIdAsync(long id)
         {
             _logger.Debug($"GetByIdAsync called for id={id}");
-            var user = new User();
+            User? user = null;
 
             try
             {
@@ -124,8 +124,9 @@ namespace Library.IdentityService.Infrastructure.Adapters
                         Name = reader.GetString("name"),
                         Surname = reader.GetString("surname"),
                         Email = reader.GetString("email"),
-                        Password = reader.GetString("password"),
-                        Role = reader.GetInt32("role")
+                        PhoneNumber = reader.IsDBNull(reader.GetOrdinal("phone_number")) ? null : reader.GetString("phone_number"),
+                        ProfileImageUrl = reader.IsDBNull(reader.GetOrdinal("profile_image_url")) ? null : reader.GetString("profile_image_url"),
+                        CreatedAt = reader.GetDateTime("created_at")
                     };
                     _logger.Info($"User retrieved with id={id}");
                 }
@@ -137,46 +138,6 @@ namespace Library.IdentityService.Infrastructure.Adapters
             }
 
             return user;
-        }
-
-        public async Task<List<User>> FindByTextAsync(string searchText)
-        {
-            _logger.Debug($"FindByTextAsync called with searchText='{searchText}'");
-            var users = new List<User>();
-
-            try
-            {
-                using var connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-                _logger.Debug("Database connection opened for FindByTextAsync");
-
-                string query = Rm.GetString("SelectUserByText");
-                using var command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@searchText", searchText);
-
-                using var reader = await command.ExecuteReaderAsync();
-                while (await reader.ReadAsync())
-                {
-                    users.Add(new User
-                    {
-                        Id = reader.GetInt32("user_id"),
-                        Name = reader.GetString("name"),
-                        Surname = reader.GetString("surname"),
-                        Email = reader.GetString("email"),
-                        Password = reader.GetString("password"),
-                        Role = reader.GetInt32("role")
-                    });
-                }
-
-                _logger.Info($"FindByTextAsync retrieved {users.Count} users matching '{searchText}'");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Error retrieving users matching '{searchText}'", ex);
-                throw new UserRepositoryADOException($"Error retrieving users matching '{searchText}': {ex.Message}", ex);
-            }
-
-            return users;
         }
 
         public async Task<long> DeleteAsync(long id)
