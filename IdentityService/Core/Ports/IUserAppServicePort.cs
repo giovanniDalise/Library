@@ -9,5 +9,6 @@ namespace Library.IdentityService.Core.Ports
         Task<long> CreateUserAsync(User user);
         Task<long> UpdateUserAsync(long id, User user);
         Task<long> DeleteUserAsync(long id);
+        Task<User?> UpdateProfileImageAsync(long userId, Stream content, string contentType);
     }
 }

@@ -114,6 +114,7 @@ services:
       ConnectionStrings__BookDbConnection: "Server=mysql-books;Port=3306;Database=library;Uid=${MYSQL_USER};Pwd=${MYSQL_PASSWORD};"
       Media__BasePath: /app/images
       Media__BaseUrl: http://localhost:5282
+      Jwt__Secret: ${JWT_SECRET}      
     ports:
       - "5282:5282"
     depends_on:
@@ -138,6 +139,9 @@ services:
       RabbitMQ__HostName: rabbitmq
       RabbitMQ__UserName: ${RABBITMQ_USER}
       RabbitMQ__Password: ${RABBITMQ_PASSWORD}
+      Jwt__Secret: ${JWT_SECRET}
+      Storage__AccessKeyId: ${STORAGE_ACCESS_KEY_ID}
+      Storage__SecretAccessKey: ${STORAGE_SECRET_ACCESS_KEY}      
     ports:
       - "5022:5022"
     depends_on:

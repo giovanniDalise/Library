@@ -145,4 +145,7 @@ SET name = @name, surname = @surname, email = @email, password = @password, role
 WHERE user_id = @id;
 </value>
   </data>
+  <data name="UpdateUserProfileImage" xml:space="preserve">
+    <value>UPDATE user SET profile_image_url = @key WHERE user_id = @id;</value>
+  </data>
 </root>

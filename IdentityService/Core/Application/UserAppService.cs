@@ -58,5 +58,9 @@ namespace Library.IdentityService.Core.Application
         {
             return await _userDomainService.DeleteUserAsync(id);
         }
+        public async Task<User?> UpdateProfileImageAsync(long userId, Stream content, string contentType)
+        {
+            return await _userDomainService.UpdateProfileImageAsync(userId, content, contentType);
+        }
     }
 }

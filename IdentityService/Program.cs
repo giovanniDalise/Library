@@ -6,6 +6,7 @@ using Library.IdentityService.Infrastructure.Adapters.Events;
 using Library.IdentityService.Infrastructure.Adapters.Jwt;
 using Library.IdentityService.Infrastructure.Adapters.Repository;
 using Library.IdentityService.Infrastructure.Adapters.Security;
+using Library.IdentityService.Infrastructure.Adapters.Storage;
 using Library.Logging.Abstractions;
 using Library.Logging.NLog;
 using Library.Security;
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IUserServicePort, UserService>();
 builder.Services.AddScoped<IPasswordHasherPort, BCryptPasswordHasherAdapter>();
 builder.Services.AddScoped<IPasswordVerifierPort, BCryptPasswordVerifierAdapter>();
 builder.Services.AddScoped<IAuthenticationRepositoryPort, AuthRepositoryAdapter>();
+builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection("Storage"));
+builder.Services.AddSingleton<IProfileImageStoragePort, S3ProfileImageStorageAdapter>();
 builder.Services.AddScoped<IJwtPort>(provider =>
 {
     var jwtExpirationMs = configuration.GetValue<double>("JwtSettings:ExpirationMilliseconds");

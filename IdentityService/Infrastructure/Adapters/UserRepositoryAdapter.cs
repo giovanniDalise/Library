@@ -195,5 +195,26 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 throw new UserRepositoryADOException($"Error updating user with id {id}: {ex.Message}", ex);
             }
         }
+        public async Task<bool> UpdateProfileImageAsync(long userId, string key)
+        {
+            _logger.Debug($"UpdateProfileImageAsync called for id={userId}");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                string query = Rm.GetString("UpdateUserProfileImage");
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@key", key);
+                command.Parameters.AddWithValue("@id", userId);
+
+                return await command.ExecuteNonQueryAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error updating profile image for id={userId}", ex);
+                throw new UserRepositoryADOException($"Error updating profile image: {ex.Message}", ex);
+            }
+        }
     }
 }

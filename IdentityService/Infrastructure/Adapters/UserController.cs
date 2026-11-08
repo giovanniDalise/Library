@@ -1,4 +1,5 @@
-﻿using Library.IdentityService.Core.Ports;
+﻿using Library.IdentityService.Core.Exceptions;
+using Library.IdentityService.Core.Ports;
 using Library.IdentityService.Infrastructure.DTO.REST.Users;
 using Library.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +23,8 @@ namespace Library.IdentityService.Infrastructure.Adapters
     {
         private readonly IUserAppServicePort _userAppService;
         private readonly ILoggerPort _logger;
+        private const long MaxPhotoBytes = 2 * 1024 * 1024;
+
 
         public UserController(IUserAppServicePort userAppService, ILoggerPort<UserController> logger)
         {
@@ -148,6 +151,38 @@ namespace Library.IdentityService.Infrastructure.Adapters
             catch (Exception ex)
             {
                 _logger.Error($"Unexpected error while deleting user id={id}", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("me/photo")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<UserResponse>> UpdateMyPhoto(IFormFile photo)
+        {
+            _logger.Info("UpdateMyPhoto called");
+            try
+            {
+                if (!long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+                    return Unauthorized();
+                if (photo is null || photo.Length == 0)
+                    return BadRequest("Photo is required.");
+                if (photo.Length > MaxPhotoBytes)
+                    return BadRequest("Photo must be 2 MB or smaller.");
+
+                await using var stream = photo.OpenReadStream();
+                var user = await _userAppService.UpdateProfileImageAsync(userId, stream, photo.ContentType);
+                if (user == null) return NotFound();
+
+                return Ok(UserDTOMapper.ToResponse(user));
+            }
+            catch (ProfileImageStorageException ex)
+            {
+                _logger.Warn($"Invalid profile image: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Unexpected error while updating profile photo", ex);
                 return StatusCode(500, "Internal server error");
             }
         }
