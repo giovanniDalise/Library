@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home-page.component';
 import { BookFormComponent } from './components/books/book-form/book-form.component';
 import { LoginComponent } from './pages/login/login-page.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -49,3 +48,23 @@ export const routes: Routes = [
         ]
     }
 ];
+
+/* Prima non avevamo il MainLayoutComponent con le sue rotte figle.
+Ogni rotta era una pagina che occupava tutto lo schermo, e ogni pagina cambiava l’intera finestra.
+
+Ora ci sono due gruppi:
+
+Senza barra: rotte normali, come prima.
+
+Con barra: una rotta madre con component: MainLayoutComponent e dentro children. La madre disegna la 
+barra e un <router-outlet>, cioè il “buco”. Le pagine figlie (libri, editori, autori, profilo)
+compaiono dentro quel buco. Quando navighi tra due figlie, la barra non viene ricreata: cambia 
+solo il contenuto sotto. Questo è il motivo per cui ci serviva il signal.
+
+path: '' sulla madre significa che non aggiunge niente all’indirizzo: /books resta /books.
+
+Perché le rotte dei form stanno prima?
+Il router prova le rotte in ordine e prende la prima che combacia. Dentro il layout c’è books/:id, 
+dove :id accetta qualsiasi valore, anche la parola add. Se books/add stesse dopo, il router aprirebbe 
+il dettaglio di un libro con id add. Mettendo i form sopra, books/add viene riconosciuta per prima. 
+È la regola “le statiche prima di quelle con parametro” che già usavi, applicata ai due gruppi. */

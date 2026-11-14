@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorsGridComponent } from '../../../components/editors/editors-grid/editors-grid.component';
 import { EditorsFiltersComponent } from '../../../components/editors/editors-filters/editors-filters.component';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserRoleService } from '../../../services/user-role.service';
 import { PaginationState } from '../../../models/pagination/pagination-state';
 import { EditorRequest } from '../../../models/editor/editor/editor-request';
@@ -13,7 +13,7 @@ import { PaginationComponent } from '../../../components/shared/pagination/pagin
 @Component({
   selector: 'app-editors-page',
   standalone: true,
-  imports: [EditorsGridComponent, EditorsFiltersComponent, RouterLink, CommonModule, PaginationComponent],
+  imports: [EditorsGridComponent, EditorsFiltersComponent, CommonModule, PaginationComponent],
   templateUrl: './editors-page.component.html',
   styleUrl: './editors-page.component.scss'
 })
