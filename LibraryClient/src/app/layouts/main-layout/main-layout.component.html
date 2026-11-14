@@ -1,0 +1,25 @@
+<nav class="main-nav">
+  <a class="nav-brand" routerLink="/books">Library MKNW</a>
+
+  <div class="nav-links">
+    <a class="btn btn-nav-outline" routerLink="/books" routerLinkActive="active">Books</a>
+    <a class="btn btn-nav-outline" routerLink="/editors" routerLinkActive="active">Editors</a>
+    <a class="btn btn-nav-outline" routerLink="/authors" routerLinkActive="active">Authors</a>
+  </div>
+
+  <div class="nav-user">
+    <ng-container *ngIf="!isLoggedIn(); else logged">
+      <a class="btn btn-nav-outline" routerLink="/login">Login</a>
+    </ng-container>
+    <ng-template #logged>
+      <a class="btn btn-nav-outline" routerLink="/profile" routerLinkActive="active">
+        <i class="bi bi-person-circle"></i> Profile
+      </a>
+      <button class="btn btn-nav-outline" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </ng-template>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

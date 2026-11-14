@@ -1,0 +1,32 @@
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  border-bottom: 1px solid #999;
+}
+
+.nav-brand {
+  color: #fffafa;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links,
+.nav-user {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-user {
+  margin-left: auto;
+}
+
+.btn.btn-nav-outline.active {
+  background-color: #f0f0f0;
+  color: #111;
+  border-color: #f0f0f0;
+}

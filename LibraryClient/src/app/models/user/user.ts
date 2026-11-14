@@ -5,4 +5,7 @@ export interface User {
     email:string;
     password:string;
     role:number;
+    phoneNumber: string | null;
+    profileImageUrl: string | null;
+    createdAt: string | null;    
 }

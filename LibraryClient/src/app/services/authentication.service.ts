@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../models/common/ApiResponse';
 import { ResetPasswordRequest } from '../models/authentincation/reset-password-request';
+import {  signal, computed } from '@angular/core';
 
 
 interface AuthResponse {
@@ -18,6 +19,8 @@ export class AuthenticationService {
 
   private baseUrl = environment.apiUrls.auth;
   private endpoints = environment.api.auth;
+  private readonly _token = signal<string | null>(null);
+  readonly isLoggedIn = computed(() => this._token() !== null);  
 
   constructor(private http: HttpClient) { }
 
@@ -27,16 +30,17 @@ export class AuthenticationService {
         // Salva il token appena viene ricevuto
         if (response && response.token) {
           sessionStorage.setItem('authToken', response.token);
+          this._token.set(response.token);
         }
       })
     );
   }
-  
 
   logout(): void {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       sessionStorage.removeItem('authToken');
     }
+    this._token.set(null);
   }
 
   isAuthenticated(): boolean {
@@ -93,5 +97,9 @@ export class AuthenticationService {
   resetPassword(request:ResetPasswordRequest):Observable<ApiResponse>{
     return this.http.post<ApiResponse>(this.baseUrl + this.endpoints.resetPassword, request);
   }
+  
+  restoreSession(): void {
+    this._token.set(this.getToken());
+  }  
 
 }

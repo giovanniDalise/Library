@@ -40,7 +40,8 @@ export const environment = {
       resetPassword: '/reset-password'      
     },    
     users: {
-      addUser: '/addUser'
-    }    
+      addUser: '/addUser',
+      me: '/me',
+      photo: '/me/photo'          }    
   }   
 };
