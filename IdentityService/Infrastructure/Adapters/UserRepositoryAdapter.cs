@@ -216,5 +216,10 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 throw new UserRepositoryADOException($"Error updating profile image: {ex.Message}", ex);
             }
         }
+        public async Task<User?> UpdateProfileAsync(long userId, string name, string surname, string? phoneNumber)
+        {
+            return null;
+        }
+
     }
 }

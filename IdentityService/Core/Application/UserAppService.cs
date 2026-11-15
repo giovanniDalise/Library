@@ -62,5 +62,10 @@ namespace Library.IdentityService.Core.Application
         {
             return await _userDomainService.UpdateProfileImageAsync(userId, content, contentType);
         }
+        public async Task<User?> UpdateProfileAsync(long userId, string name, string surname, string? phoneNumber)
+        {
+            return await _userDomainService.UpdateProfileAsync(userId, name, surname, phoneNumber);
+        }
+
     }
 }

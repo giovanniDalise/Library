@@ -74,5 +74,16 @@ namespace Library.IdentityService.Core.Domain.Services
 
             return await GetUserByIdAsync(userId);
         }
+
+        public async Task<User?> UpdateProfileAsync(long userId, string name, string surname, string? phoneNumber)
+        {
+            var current = await _userRepositoryPort.GetByIdAsync(userId);
+            if (current is null) return null;
+
+            var phone = string.IsNullOrWhiteSpace(phoneNumber) ? null : phoneNumber.Trim();
+            await _userRepositoryPort.UpdateProfileAsync(userId, name.Trim(), surname.Trim(), phone);
+
+            return await GetUserByIdAsync(userId);
+        }
     }
 }

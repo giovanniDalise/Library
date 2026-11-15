@@ -86,7 +86,7 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 if (!long.TryParse(idClaim, out var userId))
                     return Unauthorized();
 
-                var user = await _userAppService.UpdateProfileAsync(request.Name, request.Surname, request.PhoneNumber);
+                var user = await _userAppService.UpdateProfileAsync(userId,request.Name, request.Surname, request.PhoneNumber);
 
                 if (user == null)
                     return NotFound();
