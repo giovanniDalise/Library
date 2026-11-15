@@ -75,6 +75,31 @@ namespace Library.IdentityService.Infrastructure.Adapters
             }
         }
 
+        [HttpPut("me")]
+        public async Task<ActionResult<UserResponse>> UpdatePersonalUser([FromBody] UpdatePersonalProfileRequest request)
+        {
+            _logger.Info("UpdatePersonalUser called");
+            try
+            {
+                var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (!long.TryParse(idClaim, out var userId))
+                    return Unauthorized();
+
+                var user = await _userAppService.UpdateProfileAsync(request.Name, request.Surname, request.PhoneNumber);
+
+                if (user == null)
+                    return NotFound();
+
+                return Ok(UserDTOMapper.ToResponse(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Unexpected error while editing personal user", ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<UserResponse>> GetUserById(long id)
