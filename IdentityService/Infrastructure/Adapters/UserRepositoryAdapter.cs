@@ -209,6 +209,10 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 command.Parameters.AddWithValue("@id", userId);
 
                 return await command.ExecuteNonQueryAsync() > 0;
+                //ExecuteNonQueryAsync esegue una query che non restituisce dati come update, insert e delete
+                //ExecuteNonQueryAsync restituisce un intero che indica quanti rige sono state coinvolte nell'operazione
+                //Quindi con la condizione finale >0 andiamo a restituire true se sono maggiori di zero e false se non 
+                // lo sono soddisfacendo il tipo bool di ritorno all'UpdateProfileImageAsync
             }
             catch (Exception ex)
             {
@@ -216,10 +220,28 @@ namespace Library.IdentityService.Infrastructure.Adapters
                 throw new UserRepositoryADOException($"Error updating profile image: {ex.Message}", ex);
             }
         }
-        public async Task<User?> UpdateProfileAsync(long userId, string name, string surname, string? phoneNumber)
+        public async Task<bool> UpdateProfileAsync(long userId, string name, string surname, string? phoneNumber)
         {
-            return null;
-        }
+            _logger.Debug($"UpdateProfileAsync called for userId={userId}");
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
 
+                string query = Rm.GetString("UpdateUserProfile");
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", userId);
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@surname", surname);
+                command.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+
+                return await command.ExecuteNonQueryAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error updating profile for userId {userId}",ex);
+                throw new UserRepositoryADOException($"Error updating profile: {ex.Message}",ex);
+            }
+        }
     }
 }
